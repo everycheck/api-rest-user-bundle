@@ -1,0 +1,28 @@
+
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+
+services:
+    auth_token_user_provider:
+        class: UserBundle\Security\AuthTokenUserProvider
+        arguments: ["@auth_token_repository", "@user_repository"]
+        public:    false
+
+    auth_token_repository:
+        class:   Doctrine\ORM\EntityManager
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: ["UserBundle:AuthToken"]
+
+    user_repository:
+        class:   Doctrine\ORM\EntityManager
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: ["UserBundle:User"]
+
+    auth_token_authenticator:
+        class:     UserBundle\Security\AuthTokenAuthenticator
+        arguments: ["@security.http_utils"]
+        public:    false
+        
+    password_generator:
+        class:     UserBundle\Service\UserPasswordGenerator
+        arguments: ["@security.password_encoder","%generate_password%"]
