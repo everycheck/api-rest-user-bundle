@@ -19,14 +19,15 @@ class AuthTokenAuthenticator implements SimplePreAuthenticatorInterface, Authent
     const TOKEN_VALIDITY_DURATION = 24 * 3600;
     const AUTH_TOKEN_NAME = 'X-Auth-Token';
 
-    public function __construct(HttpUtils $httpUtils,$serialiser)
+    public function __construct(HttpUtils $httpUtils,$serializer)
     {
         $this->httpUtils = $httpUtils;
-        $this->response = new ResponseBuilder($serialiser);
+        $this->response = new ResponseBuilder($serializer);
     }
 
     public function createToken(Request $request, $providerKey)
     {
+
         $urlAllowWithoutToken = [
             'POST'=>[
                 '/auth-tokens',

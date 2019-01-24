@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9060f52f7534f1296e8e7124f2a94599",
-    "content-hash": "d6aa396ac1bd4b5ae80f3920617ae497",
+    "hash": "67f0398d5c1ed6e80f8349f5dd7f8e45",
+    "content-hash": "05b6d58286702af84a6cdd47143bfb78",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1102,16 +1102,16 @@
         },
         {
             "name": "everycheck/api-rest-utils",
-            "version": "1.0.1",
+            "version": "1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/everycheck/api-rest-utils.git",
-                "reference": "b773f6c3d2b47bde0b76d0bc954211b506204908"
+                "reference": "d23e8449beaf927cb0c253b122ac0a85cf85acf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/everycheck/api-rest-utils/zipball/b773f6c3d2b47bde0b76d0bc954211b506204908",
-                "reference": "b773f6c3d2b47bde0b76d0bc954211b506204908",
+                "url": "https://api.github.com/repos/everycheck/api-rest-utils/zipball/d23e8449beaf927cb0c253b122ac0a85cf85acf8",
+                "reference": "d23e8449beaf927cb0c253b122ac0a85cf85acf8",
                 "shasum": ""
             },
             "require": {
@@ -1140,7 +1140,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2019-01-24 14:19:27"
+            "time": "2019-01-24 16:52:39"
         },
         {
             "name": "fig/link-util",
@@ -5029,6 +5029,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
+        "php": ">=5.5.9",
         "ext-pdo_mysql": "*"
     },
     "platform-dev": [],

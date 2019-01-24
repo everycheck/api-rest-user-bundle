@@ -10,16 +10,11 @@ use EveryCheck\ApiRest\Utils\ResponseBuilder;
 
 use UserBundle\Entity\Credentials;
 use UserBundle\Entity\User;
+use UserBundle\Entity\AuthToken;
 use UserBundle\Form\CredentialsType;
 
 class AuthTokenController extends Controller
 {
-    public function __construct()
-    {
-        $this->response = $response  = new ResponseBuilder($this->get('jms_serializer'));
-        $this->em = $this->get('doctrine.orm.entity_manager');
-    }
-
     /**
      * @Route("/auth-tokens",
      *     name="post_auth_tokens",
@@ -28,11 +23,14 @@ class AuthTokenController extends Controller
      */
     public function postAuthTokensAction(Request $request)
     {
+        $this->response = new ResponseBuilder($this->get('jms_serializer'));
+        $this->em = $this->get('doctrine.orm.entity_manager');
+
         $credentials = new Credentials();
         $form = $this->createForm(CredentialsType::class, $credentials);
-        $form->submit($request->request->all());
 
-        if ($form->isValid() ==  false)
+        $form->submit(json_decode($request->getContent(), true),true);
+        if ($form->isValid() == false)
         {
             return $this->response->formError($form);
         }
@@ -58,38 +56,27 @@ class AuthTokenController extends Controller
         $this->em->persist($authToken);
         $this->em->flush();
 
-        return $this->response->ok($authToken);
+        return $this->response->created($authToken);
     }
 
     /**
      * @Route("/auth-tokens/{id}",
      *     requirements={"id" = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"},
      *     name="delete_auth_tokens",
-     *     methods={"POST"}
+     *     methods={"DELETE"}
      * )
      */
-    public function deleteAuthTokenAction(Request $request,$id)
+    public function deleteAuthTokenAction(Request $request)
     {        
-        $authToken = $this->em->getRepository(AuthToken::class)->find($id);
-        if (empty($authToken))
-        {
-            return $this->response->forbiddenAcl();
-        }
+        $this->response = new ResponseBuilder($this->get('jms_serializer'));        
+        $entity = $this->get('doctrine.orm.entity_manager')
+                    ->getRepository(AuthToken::class)
+                    ->findOneByUuid($request->get('id'));
 
-        $connectedUser = $this->get('security.token_storage')->getToken()->getUser();
-        if (empty($connectedUser) || $connectedUser instanceof User)
-        {
-            return $this->response->forbiddenAcl();
-        }
-        
-        if($authToken->getUser()->getId() === $connectedUser->getId())
-        {
-            return $this->response->forbiddenAcl();
-        }           
-
-        $this->em->remove($authToken);
-        $this->em->flush();
+        $this->get('doctrine.orm.entity_manager')->remove($entity);
+        $this->get('doctrine.orm.entity_manager')->flush();
 
         return $this->response->deleted();
+
     }
 }

@@ -10,18 +10,27 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * User
  *
+ * @ORM\Entity
  * @ORM\Table(name="s_user")
  * @UniqueEntity("email")
  * @UniqueEntity("username")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")   
+     * @ORM\GeneratedValue(strategy="AUTO")  
+     * @JMS\Exclude 
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="uuid", unique=true)
+     * @JMS\Accessor(getter="getUuidAsString") 
+     */
+    private $uuid;
 
     /**
      * @ORM\Column(name="username", type="string", length=255, unique=true)  
@@ -61,6 +70,31 @@ class User implements UserInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
+        return $this;
+    }
+
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    public function getUuidAsString()
+    {
+        return $this->uuid->toString();
+    }
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function setupUuid()
+    {
+        $this->setUuid(\Ramsey\Uuid\Uuid::uuid4());
+        return $this;
     }
 
     public function setEmail($email)
@@ -114,6 +148,11 @@ class User implements UserInterface
     public function getSalt()
     {
         return null;
+    }
+
+    public function getRoles()
+    {
+        return [];
     }
 
     public function getUsername()

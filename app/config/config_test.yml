@@ -14,3 +14,9 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+test_api_rest:
+  directory:
+      payloads: Resources/payload
+      responses: Resources/response
+    

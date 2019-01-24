@@ -3,13 +3,13 @@ namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /** 
  * AuthToken
  *
  * @ORM\Entity
  * @ORM\Table(name="s_auth_tokens")
+ * @ORM\HasLifecycleCallbacks()
  */
 class AuthToken
 {
@@ -17,8 +17,15 @@ class AuthToken
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Exclude
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="uuid", unique=true)
+     * @JMS\Accessor(getter="getUuidAsString") 
+     */
+    private $uuid;
 
     /**
      * @ORM\Column(type="string", unique=true)
@@ -32,6 +39,7 @@ class AuthToken
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
+     * @JMS\Exclude
      */
     protected $user;
 
@@ -40,9 +48,29 @@ class AuthToken
         return $this->id;
     }
 
-    public function setId($id)
+    public function setUuid($uuid)
     {
-        $this->id = $id;
+        $this->uuid = $uuid;
+        return $this;
+    }
+
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    public function getUuidAsString()
+    {
+        return $this->uuid->toString();
+    }
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function setupUuid()
+    {
+        $this->setUuid(\Ramsey\Uuid\Uuid::uuid4());
+        return $this;
     }
 
     public function getValue()

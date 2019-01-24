@@ -20,7 +20,7 @@ services:
 
     auth_token_authenticator:
         class:     UserBundle\Security\AuthTokenAuthenticator
-        arguments: ["@security.http_utils"]
+        arguments: ["@security.http_utils","@jms_serializer"]
         public:    false
         
     password_generator:

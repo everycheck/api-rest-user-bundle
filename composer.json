@@ -16,7 +16,8 @@
             "Tests\\": "tests/"
         }
     },
-    "require": {
+    "require": {           
+        "php": ">=5.5.9",
         "ext-pdo_mysql": "*",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
@@ -24,7 +25,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "ircmaxell/random-lib": "^1.2",
         "jms/serializer-bundle": "^1.0|^2.0",
-        "ramsey/uuid-doctrine": "^1.4",
+        "ramsey/uuid-doctrine": "^1.5",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^5.0",
         "symfony/monolog-bundle": "^3.1",
@@ -35,8 +36,6 @@
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
-        "doctrine/doctrine-fixtures-bundle": "^2.3",
-        "phpunit/phpunit": "^6.0|^7.0",
         "everycheck/test-api-rest-bundle": "^1.2"
     },
     "scripts": {
@@ -62,6 +61,10 @@
         ],
         "test":[
             "php -d memory_limit=-1 vendor/bin/phpunit -c . --colors=always"
+        ],
+        "run-test": [
+            "bin/console test:database:build-all -v",
+            "@test"
         ]
     },
     "extra": {

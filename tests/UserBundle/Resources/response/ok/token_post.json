@@ -1,0 +1,5 @@
+{
+	"uuid":"@uuid@",
+	"value":"@string@",
+	"created_at":"@string@.isDateTime()"
+	}

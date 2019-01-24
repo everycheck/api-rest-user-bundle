@@ -14,11 +14,6 @@ use UserBundle\Form\UserType;
 class UserController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->response = $response  = new ResponseBuilder($this->get('jms_serializer'));
-    }
-
     /**
      * @Route("/users/current",
      *     name="get_current_user",
@@ -26,7 +21,8 @@ class UserController extends Controller
      * )
      */
     public function getCurrentUserAction(Request $request)
-    {
+    {        
+        $this->response = new ResponseBuilder($this->get('jms_serializer'));
         return $this->response->ok($this->get('security.token_storage')->getToken()->getUser());
     }
 
@@ -38,11 +34,12 @@ class UserController extends Controller
      * )
      */
     public function getUserAction(Request $request)
-    {                
+    {        
+        $this->response = new ResponseBuilder($this->get('jms_serializer'));        
         return $this->response->ok(
             $this->get('doctrine.orm.entity_manager')
                     ->getRepository(User::class)
-                    ->findByUuid($request->get('id'))
+                    ->findOneByUuid($request->get('id'))
             );
     }
 
@@ -52,8 +49,9 @@ class UserController extends Controller
      *     methods={"GET"}
      * )
      */
-    public function getUsersAction(Request $request,ParamFetcher $paramFetcher)
+    public function getUsersAction(Request $request)
     {
+        $this->response = new ResponseBuilder($this->get('jms_serializer'));
         return $this->response->ok(
             $this->get('doctrine.orm.entity_manager')
                     ->getRepository(User::class)
@@ -69,10 +67,12 @@ class UserController extends Controller
      */
     public function postUsersAction(Request $request)
     {
+        $this->response = new ResponseBuilder($this->get('jms_serializer'));
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
-        $form->submit($request->request->all());
+        $form->submit(json_decode($request->getContent(), true),true);
 
         if ($form->isValid() ==  false)
         {
@@ -85,7 +85,28 @@ class UserController extends Controller
         $em->persist($user);
         $em->flush();
 
-        $this->response->created($user);
+        return $this->response->created($user);
+    }
+
+    /**
+     * @Route("/users/{id}",
+     *     name="delete_users",
+     *     requirements={"id" = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"},
+     *     methods={"DELETE"}
+     * )
+     */
+    public function deleteUserAction(Request $request)
+    {        
+        $this->response = new ResponseBuilder($this->get('jms_serializer'));        
+        $entity = $this->get('doctrine.orm.entity_manager')
+                    ->getRepository(User::class)
+                    ->findOneByUuid($request->get('id'));
+
+        $this->get('doctrine.orm.entity_manager')->remove($entity);
+        $this->get('doctrine.orm.entity_manager')->flush();
+
+        return $this->response->deleted();
+
     }
 
 

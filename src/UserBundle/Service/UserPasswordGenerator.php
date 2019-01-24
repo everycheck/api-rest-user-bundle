@@ -10,7 +10,7 @@ class UserPasswordGenerator
 		$this->generatePassword = $generatePassword;
 		$this->passwordEncoder = $passwordEncoder;
 
-		$this->generator = (new RandomLib\Factory)->getHighStrengthGenerator()
+		//$this->generator = (new \RandomLib\Factory)->getHighStrengthGenerator();
 	}
 
 	public function setUpPassword(User $user, $password = null)
