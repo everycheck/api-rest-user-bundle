@@ -34,17 +34,11 @@ class AuthTokenUserProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $user)
     {
-        // Le systéme d'authentification est stateless, on ne doit donc jamais appeler la méthode refreshUser
         throw new UnsupportedUserException();
     }
 
     public function supportsClass($class)
     {
-        return 'UserBundle\Entity\User' === $class;
-    }
-
-    public function updateLastConnexionDateForUser(User $user)
-    {
-        $this->userRepository->updateLastConnexionDateForUser($user);
+        return User::class === $class;
     }
 }

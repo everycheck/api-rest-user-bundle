@@ -4,3 +4,4 @@
 parameters:
     database_url: 'sqlite:///%kernel.root_dir%/../var/local.sqlite'
     secret: ThisTokenIsNotSoSecretChangeIt
+    generate_password: false

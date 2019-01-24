@@ -11,37 +11,26 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterface;
 use Symfony\Component\Security\Http\HttpUtils;
-use Symfony\Component\HttpFoundation\Response;
+
+use EveryCheck\ApiRest\Utils\ResponseBuilder;
 
 class AuthTokenAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface
 {
-    /**
-    * Durée de validité du token en secondes, 12 heures
-    */
-    const TOKEN_VALIDITY_DURATION = 12 * 3600;
+    const TOKEN_VALIDITY_DURATION = 24 * 3600;
+    const AUTH_TOKEN_NAME = 'X-Auth-Token';
 
-    protected $httpUtils;
-
-    public function __construct(HttpUtils $httpUtils)
+    public function __construct(HttpUtils $httpUtils,$serialiser)
     {
         $this->httpUtils = $httpUtils;
+        $this->response = new ResponseBuilder($serialiser);
     }
 
     public function createToken(Request $request, $providerKey)
     {
-
         $urlAllowWithoutToken = [
             'POST'=>[
-                '/api/auth-tokens',
-                '/api/request-magic-link',
-                '/api/magic-link/',
-                '/api/reset-password/request-token',
-                '/api/reset-password/new-password',
-                '/api/mailgun/webhook'
+                '/auth-tokens',
             ],
-            'GET'=>[
-                '/api/logos/',
-            ]
         ];            
         foreach ($urlAllowWithoutToken as $method => $AllowedUrls)
         {
@@ -57,10 +46,11 @@ class AuthTokenAuthenticator implements SimplePreAuthenticatorInterface, Authent
             }    
         }
 
-        $authTokenHeader = $request->headers->get('X-Auth-Token');
+        $authTokenHeader = $request->headers->get($this::AUTH_TOKEN_NAME);
 
-        if (!$authTokenHeader) {
-            throw new BadCredentialsException('X-Auth-Token header is required');
+        if (empty($authTokenHeader)) 
+        {
+            throw new BadCredentialsException($this::AUTH_TOKEN_NAME.' header is required');
         }
 
         return new PreAuthenticatedToken(
@@ -72,25 +62,24 @@ class AuthTokenAuthenticator implements SimplePreAuthenticatorInterface, Authent
 
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
-        if (!$userProvider instanceof AuthTokenUserProvider) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'The user provider must be an instance of AuthTokenUserProvider (%s was given).',
-                    get_class($userProvider)
-                )
+        if (!$userProvider instanceof AuthTokenUserProvider) 
+        {
+            $errorMessage = sprintf(
+                'The user provider must be an instance of AuthTokenUserProvider (%s was given).',
+                get_class($userProvider)
             );
+            throw new \InvalidArgumentException($errorMessage);
         }
 
         $authTokenHeader = $token->getCredentials();
         $authToken = $userProvider->getAuthToken($authTokenHeader);
 
-        if (!$authToken || !$this->isTokenValid($authToken) || !$authToken->getUser()->isActive()) {
+        if (!$authToken || !$authToken->getUser()->isActive()) 
+        {
             throw new BadCredentialsException('Invalid authentication token');
         }
 
         $user = $authToken->getUser();
-
-        $userProvider->updateLastConnexionDateForUser($user);
 
         $pre = new PreAuthenticatedToken(
             $user,
@@ -99,10 +88,7 @@ class AuthTokenAuthenticator implements SimplePreAuthenticatorInterface, Authent
             $user->getRoles()
         );
 
-        // Nos utilisateurs n'ont pas de role particulier, on doit donc forcer l'authentification du token
         $pre->setAuthenticated(true);
-
-
         return $pre;
     }
 
@@ -111,21 +97,8 @@ class AuthTokenAuthenticator implements SimplePreAuthenticatorInterface, Authent
         return $token instanceof PreAuthenticatedToken && $token->getProviderKey() === $providerKey;
     }
 
-    /**
-    * Vérifie la validité du token
-    */
-    private function isTokenValid($authToken)
-    {
-        return true;//(time() - $authToken->getCreatedAt()->getTimestamp()) < self::TOKEN_VALIDITY_DURATION;
-    }
-
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-
-        $response = new Response(json_encode(array('message' => $exception->getMessageKey())),401);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-
+        return $this->response->unauthorized();
     }
 }

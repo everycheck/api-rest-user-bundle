@@ -2,4 +2,4 @@
 
 ## About
  
-more on that later
+Provides user management for your API REST project with symfony

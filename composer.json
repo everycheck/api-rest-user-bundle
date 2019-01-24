@@ -20,7 +20,9 @@
         "ext-pdo_mysql": "*",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
+        "everycheck/api-rest-utils": "^1.0.1",
         "incenteev/composer-parameter-handler": "^2.0",
+        "ircmaxell/random-lib": "^1.2",
         "jms/serializer-bundle": "^1.0|^2.0",
         "ramsey/uuid-doctrine": "^1.4",
         "sensio/distribution-bundle": "^5.0",
@@ -34,8 +36,8 @@
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
-        "phpunit/phpunit": "^6.0",
-        "everycheck/test-api-rest-bundle": "dev-master"
+        "phpunit/phpunit": "^6.0|^7.0",
+        "everycheck/test-api-rest-bundle": "^1.2"
     },
     "scripts": {
         "symfony-scripts": [

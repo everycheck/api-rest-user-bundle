@@ -1,123 +1,95 @@
 <?php
 namespace UserBundle\Controller;
 
-use UserBundle\Entity\FailAuthLog;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
-use UserBundle\Form\Type\CredentialsType;
-use UserBundle\Entity\AuthToken;
+
+use EveryCheck\ApiRest\Utils\ResponseBuilder;
+
+
 use UserBundle\Entity\Credentials;
 use UserBundle\Entity\User;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use UserBundle\Form\CredentialsType;
 
 class AuthTokenController extends Controller
 {
-    /**  
-     * @ApiDoc(
-     *    description="Create a new auth-token for user related to credential",
-     *    section="auth-token",
-     *    input={"class"=CredentialsType::class, "name"=""},
-     *    statusCodes = {
-     *        201 = "Created with sucess",
-     *        400 = "Invalid form"
-     *    },
-     *    responseMap={
-     *         201 = {"class"=AuthToken::class},
-     *         400 = { "class"=CredentialsType::class, "form_errors"=true, "name" = ""}
-     *    })
-     * @Rest\View(statusCode=Response::HTTP_CREATED , serializerGroups={"Default","user_detailed","user_name"})
-     * @Rest\Post("/auth-tokens")
+    public function __construct()
+    {
+        $this->response = $response  = new ResponseBuilder($this->get('jms_serializer'));
+        $this->em = $this->get('doctrine.orm.entity_manager');
+    }
+
+    /**
+     * @Route("/auth-tokens",
+     *     name="post_auth_tokens",
+     *     methods={"POST"}
+     * )
      */
     public function postAuthTokensAction(Request $request)
     {
         $credentials = new Credentials();
         $form = $this->createForm(CredentialsType::class, $credentials);
-
-        $ip = $request->getClientIp();
-
         $form->submit($request->request->all());
 
-        if (!$form->isValid()) 
+        if ($form->isValid() ==  false)
         {
-            return $this->get('form_error_to_array')->getErrorResponse($form);
+            return $this->response->formError($form);
         }
 
-        $em = $this->get('doctrine.orm.entity_manager');
-
-        $user = $em->getRepository('UserBundle:User')->findOneByUsername($credentials->getLogin());
-
-        if($em->getRepository('UserBundle:FailAuthLog')->hasIpMadeTooManyRequest($ip))
-        {
-            return $this->tooManyRequest();
-        }
+        $user = $this->em->getRepository(User::class)->findOneByUsername($credentials->getLogin());
 
         if (!$user || !$user->isActive()) 
         {
-            return $this->invalidCredentials($user,$ip);
+            return $this->response->unauthorized();
         }
 
         $encoder = $this->get('security.password_encoder');
-        $isPasswordValid = $encoder->isPasswordValid($user, $credentials->getPassword());
-
-        if (!$isPasswordValid) 
-        {;
-            return $this->invalidCredentials($user,$ip);
+        if ( $encoder->isPasswordValid($user, $credentials->getPassword()) == false) 
+        {
+            return $this->response->unauthorized();
         }
 
         $authToken = new AuthToken();
         $authToken->setValue(base64_encode(random_bytes(50)));
         $authToken->setCreatedAt(new \DateTime('now'));
         $authToken->setUser($user);
-        $authToken->setIp($ip);
-        $authToken->setUserAgent($request->headers->get('User-Agent'));
 
-        $em->persist($authToken);
-        $em->flush();
+        $this->em->persist($authToken);
+        $this->em->flush();
 
-        return $authToken;
+        return $this->response->ok($authToken);
     }
 
-
-
-    /**  
-     * @ApiDoc(
-     *    description="Delete an existing auth-token to unlog user",
-     *    section="auth-token",
+    /**
+     * @Route("/auth-tokens/{id}",
+     *     requirements={"id" = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"},
+     *     name="delete_auth_tokens",
+     *     methods={"POST"}
      * )
-     *
-     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
-     * @Rest\Delete("/auth-tokens/{id}")
      */
-    public function removeAuthTokenAction(Request $request)
-    {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $authToken = $em->getRepository('UserBundle:AuthToken')->find($request->get('id'));
-        /* @var $authToken AuthToken */
+    public function deleteAuthTokenAction(Request $request,$id)
+    {        
+        $authToken = $this->em->getRepository(AuthToken::class)->find($id);
+        if (empty($authToken))
+        {
+            return $this->response->forbiddenAcl();
+        }
 
         $connectedUser = $this->get('security.token_storage')->getToken()->getUser();
-
-        if ($authToken && $connectedUser instanceof User && $authToken->getUser()->getId() === $connectedUser->getId()) {
-            $em->remove($authToken);
-            $em->flush();
-        }
-        else
+        if (empty($connectedUser) || $connectedUser instanceof User)
         {
-            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException("Id does not match credentials");
+            return $this->response->forbiddenAcl();
         }
-    }
+        
+        if($authToken->getUser()->getId() === $connectedUser->getId())
+        {
+            return $this->response->forbiddenAcl();
+        }           
 
-    private function invalidCredentials($user,$ip)
-    {
-        $this->get('doctrine.orm.entity_manager')
-                ->getRepository('UserBundle:FailAuthLog')
-                ->logFailedAuth($user,$ip);
-        return \FOS\RestBundle\View\View::create(['message' => 'Invalid credentials'], Response::HTTP_BAD_REQUEST);
-    }
+        $this->em->remove($authToken);
+        $this->em->flush();
 
-    private function tooManyRequest(){
-        return \FOS\RestBundle\View\View::create(['message' => 'Please wait'], Response::HTTP_TOO_MANY_REQUESTS);
+        return $this->response->deleted();
     }
 }

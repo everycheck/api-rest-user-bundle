@@ -5,15 +5,20 @@ namespace UserBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-// use CoreBundle\ControllerTrait\BasicResponseTrait;
-// use CoreBundle\ControllerTrait\AccessEntityManagerTrait;
+use EveryCheck\ApiRest\Utils\ResponseBuilder;
+
 use UserBundle\Entity\User;
 use UserBundle\Form\UserType;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->response = $response  = new ResponseBuilder($this->get('jms_serializer'));
+    }
+
     /**
      * @Route("/users/current",
      *     name="get_current_user",
@@ -22,7 +27,7 @@ class UserController extends Controller
      */
     public function getCurrentUserAction(Request $request)
     {
-        return $this->get('security.token_storage')->getToken()->getUser();
+        return $this->response->ok($this->get('security.token_storage')->getToken()->getUser());
     }
 
     /**
@@ -34,9 +39,11 @@ class UserController extends Controller
      */
     public function getUserAction(Request $request)
     {                
-        return $this->get('doctrine.orm.entity_manager')
+        return $this->response->ok(
+            $this->get('doctrine.orm.entity_manager')
                     ->getRepository(User::class)
-                    ->findByUuid($request->get('id'));
+                    ->findByUuid($request->get('id'))
+            );
     }
 
     /**
@@ -47,9 +54,11 @@ class UserController extends Controller
      */
     public function getUsersAction(Request $request,ParamFetcher $paramFetcher)
     {
-        return $this->get('doctrine.orm.entity_manager')
+        return $this->response->ok(
+            $this->get('doctrine.orm.entity_manager')
                     ->getRepository(User::class)
-                    ->findAll();
+                    ->findAll()
+            );
     }
 
     /**
@@ -67,7 +76,7 @@ class UserController extends Controller
 
         if ($form->isValid() ==  false)
         {
-            return $form;
+            return $this->response->formError($form);
         }
 
         $this->get('password_generator')->setUpPassword($user);
@@ -75,6 +84,8 @@ class UserController extends Controller
         $em = $this->get('doctrine.orm.entity_manager');
         $em->persist($user);
         $em->flush();
+
+        $this->response->created($user);
     }
 
 
