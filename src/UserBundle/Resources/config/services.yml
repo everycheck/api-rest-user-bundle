@@ -22,15 +22,14 @@ services:
 
     auth_token_authenticator:
         class:     UserBundle\Security\AuthTokenAuthenticator
-        arguments: ["@security.http_utils","@jms_serializer"]
+        arguments: ["@security.http_utils","@response","%secret%"]
         public:    false
         
     password_generator:
         class:     UserBundle\Service\UserPasswordGenerator
         arguments: ["@security.password_encoder","%generate_password%"]
         public: true
-
-
+        
     response:
         class: EveryCheck\ApiRest\Utils\ResponseBuilder
         arguments: ["@jms_serializer"]

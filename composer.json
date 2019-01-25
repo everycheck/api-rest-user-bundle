@@ -16,12 +16,13 @@
             "Tests\\": "tests/"
         }
     },
-    "require": {           
+    "require": {
         "php": ">=5.5.9",
         "ext-pdo_mysql": "*",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "everycheck/api-rest-utils": "^1.0.1",
+        "firebase/php-jwt": "^5.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "ircmaxell/random-lib": "^1.2",
         "jms/serializer-bundle": "^1.0|^2.0",

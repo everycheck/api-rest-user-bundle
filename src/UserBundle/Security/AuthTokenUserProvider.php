@@ -32,6 +32,12 @@ class AuthTokenUserProvider implements UserProviderInterface
         return $this->userRepository->findByUsername($username);
     }
 
+
+    public function loadUserByUuid($username)
+    {
+        return $this->userRepository->findOneByUuid($username);
+    }
+
     public function refreshUser(UserInterface $user)
     {
         throw new UnsupportedUserException();

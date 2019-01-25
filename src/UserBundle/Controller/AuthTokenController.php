@@ -16,12 +16,13 @@ use UserBundle\Form\CredentialsType;
 class AuthTokenController extends Controller
 {
     /**
-     * @Route("/auth-tokens",
+     * @Route("/tokens/{kind}",
      *     name="post_auth_tokens",
+     *     requirements={"kind" = "basic|jwt"},
      *     methods={"POST"}
      * )
      */
-    public function postAuthTokensAction(Request $request)
+    public function postAuthTokensAction(Request $request,$kind)
     {
         $this->em = $this->get('doctrine.orm.entity_manager');
 
@@ -47,19 +48,32 @@ class AuthTokenController extends Controller
             return $this->get('response')->unauthorized();
         }
 
-        $authToken = new AuthToken();
-        $authToken->setValue(base64_encode(random_bytes(50)));
-        $authToken->setCreatedAt(new \DateTime('now'));
-        $authToken->setUser($user);
+        $authToken = null;
+        switch($kind)
+        {
+            case 'basic' : {
+                $authToken = new AuthToken();
+                $authToken->setValue(base64_encode(random_bytes(50)));
+                $authToken->setCreatedAt(new \DateTime('now'));
+                $authToken->setUser($user);
 
-        $this->em->persist($authToken);
-        $this->em->flush();
-
+                $this->em->persist($authToken);
+                $this->em->flush();
+                break;
+            }
+            case 'jwt' : {
+                $token = array(
+                    "uuid" => $user->getUuidAsString(),
+                    "exp" => date_create('+1 day')->format('U')
+                );
+                $authToken = ['jwt'=>\Firebase\JWT\JWT::encode($token, $this->getParameter('secret'))];
+            }
+        }
         return $this->get('response')->created($authToken);
     }
 
     /**
-     * @Route("/auth-tokens/{id}",
+     * @Route("/tokens/basic/{id}",
      *     requirements={"id" = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"},
      *     name="delete_auth_tokens",
      *     methods={"DELETE"}

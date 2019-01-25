@@ -19,32 +19,18 @@ class AuthTokenAuthenticator implements SimplePreAuthenticatorInterface, Authent
     const TOKEN_VALIDITY_DURATION = 24 * 3600;
     const AUTH_TOKEN_NAME = 'X-Auth-Token';
 
-    public function __construct(HttpUtils $httpUtils,$serializer)
+    public function __construct(HttpUtils $httpUtils,ResponseBuilder $response,$secret)
     {
         $this->httpUtils = $httpUtils;
-        $this->response = new ResponseBuilder($serializer);
+        $this->response = $response;
+        $this->secret = $secret;
     }
 
     public function createToken(Request $request, $providerKey)
     {
-
-        $urlAllowWithoutToken = [
-            'POST'=>[
-                '/auth-tokens',
-            ],
-        ];            
-        foreach ($urlAllowWithoutToken as $method => $AllowedUrls)
+        if(AuthTokenWhiteListUrl::isWhiteListed($request))
         {
-            if ($request->getMethod() === $method)
-            {
-                foreach ($AllowedUrls as $url)
-                {
-                    if(substr($request->getPathInfo(), 0, strlen($url)) === $url)
-                    {
-                        return;
-                    }
-                }
-            }    
+            return;
         }
 
         $authTokenHeader = $request->headers->get($this::AUTH_TOKEN_NAME);
@@ -73,14 +59,21 @@ class AuthTokenAuthenticator implements SimplePreAuthenticatorInterface, Authent
         }
 
         $authTokenHeader = $token->getCredentials();
-        $authToken = $userProvider->getAuthToken($authTokenHeader);
-
-        if (!$authToken || !$authToken->getUser()->isActive()) 
-        {
-            throw new BadCredentialsException('Invalid authentication token');
+        $user=null;
+        try
+        {   
+            $jwtToken = \Firebase\JWT\JWT::decode($authTokenHeader,$this->secret,array('HS256'));
+            $user = $userProvider->loadUserByUuid($jwtToken->uuid);  
         }
-
-        $user = $authToken->getUser();
+        catch (\Exception $e)
+        {
+            $authToken = $userProvider->getAuthToken($authTokenHeader);  
+            if (!$authToken || !$authToken->getUser()->isActive()) 
+            {
+                throw new BadCredentialsException('Invalid authentication token');
+            }
+            $user = $authToken->getUser();
+        }
 
         $pre = new PreAuthenticatedToken(
             $user,

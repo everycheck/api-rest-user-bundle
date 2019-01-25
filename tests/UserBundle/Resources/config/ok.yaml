@@ -5,9 +5,10 @@ unit_tests:
     - { url: "/users/00100000-0000-4000-a000-000000000000"        , status: 200, headers: 'X-Auth-Token : token_someone', out: "ok/users_get"}
        
   POST:        
-    - { url: "/users"                                             , status: 201, headers: 'X-Auth-Token : token_someone', out: "ok/users_post", in: "ok/users_post"}
-    - { url: "/auth-tokens"                                       , status: 201,                                          out: "ok/token_post", in: "ok/token_post"}
+    - { url: "/users"                                             , status: 201, headers: 'X-Auth-Token : token_someone', out: "ok/users_post"       , in: "ok/users_post"}
+    - { url: "/tokens/basic"                                      , status: 201,                                          out: "ok/token_basic_post" , in: "ok/token_post"}
+    - { url: "/tokens/jwt"                                        , status: 201,                                          out: "ok/token_jwt_post"   , in: "ok/token_post"}
        
   DELETE:       
     - { url: "/users/00100000-0000-4000-a000-000000000000"        , status: 204, headers: 'X-Auth-Token : token_someone' }
-    - { url: "/auth-tokens/00100000-0000-4000-a000-000000000000" , status: 204, headers: 'X-Auth-Token : token_someone' }
+    - { url: "/tokens/basic/00100000-0000-4000-a000-000000000000" , status: 204, headers: 'X-Auth-Token : token_someone' }
