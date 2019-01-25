@@ -23,7 +23,6 @@ class AuthTokenController extends Controller
      */
     public function postAuthTokensAction(Request $request)
     {
-        $this->response = new ResponseBuilder($this->get('jms_serializer'));
         $this->em = $this->get('doctrine.orm.entity_manager');
 
         $credentials = new Credentials();
@@ -32,20 +31,20 @@ class AuthTokenController extends Controller
         $form->submit(json_decode($request->getContent(), true),true);
         if ($form->isValid() == false)
         {
-            return $this->response->formError($form);
+            return $this->get('response')->formError($form);
         }
 
         $user = $this->em->getRepository(User::class)->findOneByUsername($credentials->getLogin());
 
         if (!$user || !$user->isActive()) 
         {
-            return $this->response->unauthorized();
+            return $this->get('response')->unauthorized();
         }
 
         $encoder = $this->get('security.password_encoder');
         if ( $encoder->isPasswordValid($user, $credentials->getPassword()) == false) 
         {
-            return $this->response->unauthorized();
+            return $this->get('response')->unauthorized();
         }
 
         $authToken = new AuthToken();
@@ -56,7 +55,7 @@ class AuthTokenController extends Controller
         $this->em->persist($authToken);
         $this->em->flush();
 
-        return $this->response->created($authToken);
+        return $this->get('response')->created($authToken);
     }
 
     /**
@@ -67,8 +66,7 @@ class AuthTokenController extends Controller
      * )
      */
     public function deleteAuthTokenAction(Request $request)
-    {        
-        $this->response = new ResponseBuilder($this->get('jms_serializer'));        
+    {               
         $entity = $this->get('doctrine.orm.entity_manager')
                     ->getRepository(AuthToken::class)
                     ->findOneByUuid($request->get('id'));
@@ -76,7 +74,7 @@ class AuthTokenController extends Controller
         $this->get('doctrine.orm.entity_manager')->remove($entity);
         $this->get('doctrine.orm.entity_manager')->flush();
 
-        return $this->response->deleted();
+        return $this->get('response')->deleted();
 
     }
 }

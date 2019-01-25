@@ -12,11 +12,13 @@ services:
         class:   Doctrine\ORM\EntityManager
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: ["UserBundle:AuthToken"]
+        public: true
 
     user_repository:
         class:   Doctrine\ORM\EntityManager
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: ["UserBundle:User"]
+        public: true
 
     auth_token_authenticator:
         class:     UserBundle\Security\AuthTokenAuthenticator
@@ -26,3 +28,10 @@ services:
     password_generator:
         class:     UserBundle\Service\UserPasswordGenerator
         arguments: ["@security.password_encoder","%generate_password%"]
+        public: true
+
+
+    response:
+        class: EveryCheck\ApiRest\Utils\ResponseBuilder
+        arguments: ["@jms_serializer"]
+        public: true
