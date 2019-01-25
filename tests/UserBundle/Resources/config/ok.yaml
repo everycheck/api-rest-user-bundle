@@ -12,3 +12,11 @@ unit_tests:
   DELETE:       
     - { url: "/users/00100000-0000-4000-a000-000000000000"        , status: 204, headers: 'X-Auth-Token : token_someone' }
     - { url: "/tokens/basic/00100000-0000-4000-a000-000000000000" , status: 204, headers: 'X-Auth-Token : token_someone' }
+
+scenario:
+  can_use_post_token_basic:
+    - { action: 'POST', url: "/tokens/basic"  , status: 201 ,                                    out: "ok/token_basic_post_scenario" , in: "ok/token_post"}
+    - { action: 'GET' , url: "/users"         , status: 200 , headers: 'X-Auth-Token : #token#', out: "ok/users_getList"}
+  can_use_post_token_jwt:
+    - { action: 'POST', url: "/tokens/jwt"    , status: 201 ,                                    out: "ok/token_jwt_post_scenario" , in: "ok/token_post"}
+    - { action: 'GET' , url: "/users"         , status: 200 , headers: 'X-Auth-Token : #token#', out: "ok/users_getList"}
