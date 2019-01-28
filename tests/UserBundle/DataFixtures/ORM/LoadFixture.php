@@ -7,10 +7,12 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Tests\UserBundle\DataFixtures\BuilderTrait\UserTrait;
+use Tests\UserBundle\DataFixtures\BuilderTrait\RoleTrait;
 use Tests\UserBundle\DataFixtures\BuilderTrait\TokenTrait;
 use Tests\UserBundle\DataFixtures\BuilderTrait\UuidTrait;
 
 use UserBundle\Entity\User;
+use UserBundle\Entity\UserRole;
 use UserBundle\Entity\AuthToken;
 
 class LoadFixture implements FixtureInterface, ContainerAwareInterface
@@ -18,6 +20,7 @@ class LoadFixture implements FixtureInterface, ContainerAwareInterface
     use UserTrait;
     use TokenTrait;
     use UuidTrait;
+    use RoleTrait;
 
     public function setContainer(ContainerInterface $container = null)
     {
@@ -28,9 +31,10 @@ class LoadFixture implements FixtureInterface, ContainerAwareInterface
     {
         $this->manager = $manager;
 
-        $this->createUsersWithToken(['someone']);
+        $users = $this->createUsersWithToken(['someone']);
+        $this->addRole($users['someone'],['somerole']);
 
         $this->manager->flush();
-        $this->rewriteUuid([User::class,AuthToken::class]);      
+        $this->rewriteUuid([User::class,AuthToken::class,UserRole::class]);      
     }
 }

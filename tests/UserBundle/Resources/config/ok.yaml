@@ -6,12 +6,14 @@ unit_tests:
        
   POST:        
     - { url: "/users"                                             , status: 201, headers: 'X-Auth-Token : token_someone', out: "ok/users_post"       , in: "ok/users_post"}
+    - { url: "/users/00100000-0000-4000-a000-000000000000/role"   , status: 201, headers: 'X-Auth-Token : token_someone', out: "ok/roles_post"       , in: "ok/roles_post"}
     - { url: "/tokens/basic"                                      , status: 201,                                          out: "ok/token_basic_post" , in: "ok/token_post"}
     - { url: "/tokens/jwt"                                        , status: 201,                                          out: "ok/token_jwt_post"   , in: "ok/token_post"}
        
   DELETE:       
     - { url: "/users/00100000-0000-4000-a000-000000000000"        , status: 204, headers: 'X-Auth-Token : token_someone' }
     - { url: "/tokens/basic/00100000-0000-4000-a000-000000000000" , status: 204, headers: 'X-Auth-Token : token_someone' }
+    - { url: "/users/roles/00100000-0000-4000-a000-000000000000"  , status: 204, headers: 'X-Auth-Token : token_someone' }
 
 scenario:
   can_use_post_token_basic:

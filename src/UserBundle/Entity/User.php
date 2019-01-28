@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -65,6 +66,16 @@ class User implements UserInterface
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" : 1})
      */
     private $active = true;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserRole", mappedBy="user")
+     */
+    private $roles;
+
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
 
 
     public function getId()
@@ -152,7 +163,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return [];
+        return $this->roles->getValues();
     }
 
     public function getUsername()

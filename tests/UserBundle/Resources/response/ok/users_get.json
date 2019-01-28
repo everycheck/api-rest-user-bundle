@@ -2,5 +2,12 @@
 	"uuid":"00100000-0000-4000-a000-000000000000",
 	"username":"someone",
 	"email":"someone@everycheck.fr",
-	"active":true
+	"active":true,
+	"roles":
+	[
+		{
+			"uuid":"00100000-0000-4000-a000-000000000000",
+			"name":"somerole"
+		}
+	]
 }
