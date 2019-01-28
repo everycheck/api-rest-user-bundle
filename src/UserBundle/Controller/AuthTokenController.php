@@ -79,14 +79,12 @@ class AuthTokenController extends Controller
      *     methods={"DELETE"}
      * )
      */
-    public function deleteAuthTokenAction(Request $request)
+    public function deleteAuthTokenAction($id)
     {               
-        $entity = $this->get('doctrine.orm.entity_manager')
-                    ->getRepository(AuthToken::class)
-                    ->findOneByUuid($request->get('id'));
-
-        $this->get('doctrine.orm.entity_manager')->remove($entity);
-        $this->get('doctrine.orm.entity_manager')->flush();
+        $em = $this->get('doctrine.orm.entity_manager');
+        $entity = $em->getRepository(AuthToken::class)->findOneByUuid($id);
+        $em->remove($entity);
+        $em->flush();
 
         return $this->get('response')->deleted();
 

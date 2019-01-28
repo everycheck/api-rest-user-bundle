@@ -20,7 +20,7 @@ class UserController extends Controller
      *     methods={"GET"}
      * )
      */
-    public function getCurrentUserAction(Request $request)
+    public function getCurrentUserAction()
     {        
         return $this->get('response')->ok($this->get('security.token_storage')->getToken()->getUser());
     }
@@ -32,12 +32,12 @@ class UserController extends Controller
      *     methods={"GET"}
      * )
      */
-    public function getUserAction(Request $request)
+    public function getUserAction($id)
     {             
         return $this->get('response')->ok(
             $this->get('doctrine.orm.entity_manager')
                     ->getRepository(User::class)
-                    ->findOneByUuid($request->get('id'))
+                    ->findOneByUuid($id)
             );
     }
 
@@ -47,7 +47,7 @@ class UserController extends Controller
      *     methods={"GET"}
      * )
      */
-    public function getUsersAction(Request $request)
+    public function getUsersAction()
     {
         return $this->get('response')->ok(
             $this->get('doctrine.orm.entity_manager')
@@ -90,17 +90,14 @@ class UserController extends Controller
      *     methods={"DELETE"}
      * )
      */
-    public function deleteUserAction(Request $request)
-    {             
-        $entity = $this->get('doctrine.orm.entity_manager')
-                    ->getRepository(User::class)
-                    ->findOneByUuid($request->get('id'));
-
-        $this->get('doctrine.orm.entity_manager')->remove($entity);
-        $this->get('doctrine.orm.entity_manager')->flush();
+    public function deleteUserAction($id)
+    {          
+        $em =    $this->get('doctrine.orm.entity_manager');
+        $entity = $em->getRepository(User::class)->findOneByUuid($id);
+        $em->remove($entity);
+        $em->flush();
 
         return $this->get('response')->deleted();
-
     }
 
 
