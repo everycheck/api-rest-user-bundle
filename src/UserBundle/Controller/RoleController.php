@@ -51,7 +51,7 @@ class RoleController extends Controller
      *     methods={"DELETE"}
      * )
      */
-    public function deleteAuthTokenAction($id)
+    public function deleteRoleAction($id)
     {               
         $em = $this->get('doctrine.orm.entity_manager');
         $entity = $em->getRepository(UserRole::class)->findOneByUuid($id);
