@@ -28,7 +28,7 @@ class RoleController extends Controller
         $user = $this->em->getRepository(User::class)->findOneByUuid($id);
         if(empty($user))
         {
-            $this->response->notFound();
+            return $this->get('response')->notFound();
         }
         $role->setUser($user);
 

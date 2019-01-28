@@ -74,13 +74,13 @@ trait ControllerTestTrait
         return $encoder;
     }
 
-    protected function buildRequest($data)
+    protected function buildRequest($data, $callCount = 1)
     {       
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
                         ->disableOriginalConstructor()
                         ->setMethods(['getContent'])
                         ->getMock();  
-        $request->expects($this->exactly(1))->method('getContent')->willReturn($data);
+        $request->expects($this->exactly($callCount))->method('getContent')->willReturn($data);
         return $request;
     }
 

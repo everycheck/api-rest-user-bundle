@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use UserBundle\Controller\UserController;
 use UserBundle\Entity\User;
 
-class UserTest extends TestCase
+class UserControllerTest extends TestCase
 {
     use ControllerTestTrait;
 
