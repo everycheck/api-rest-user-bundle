@@ -107,5 +107,13 @@ trait ControllerTestTrait
         return $generator;
     }
 
+    protected function buildAclManager()
+    {
+        $manager = $this->getMockBuilder('stdClass')
+                        ->setMethods(['updateAclOf'])
+                        ->getMock();  
+        return $manager;
+    }
+
 
 }

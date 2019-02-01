@@ -34,3 +34,22 @@ services:
         class: EveryCheck\ApiRest\Utils\ResponseBuilder
         arguments: ["@jms_serializer"]
         public: true
+        
+    acl_manager:
+        class: EveryCheck\Acl\Service\AclManager
+        arguments: ["@doctrine.orm.entity_manager","@event_dispatcher","@annotation_reader"]
+        public: true
+
+    acl_doctrine_subscriber:
+        class: EveryCheck\Acl\EventListener\CreateSchemaListener
+        arguments: ["@acl_manager",'UserBundle\Entity\User']
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    acl_user_population_listener:
+        class: DemoBundle\EventListener\UserPopulationListener
+        arguments: ["@security.token_storage"]
+        tags:
+            - { name: kernel.event_listener, event: acl_event.request_population , method: onPostedResquest }
+
+

@@ -108,7 +108,8 @@ class UserControllerTest extends TestCase
             ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager()                              ],
             ['form.factory'                , $e , $this->buildForm($formValid)                             ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse) ],
-            ['password_generator'          , $e , $this->buildPasswordGenerator()                                 ]
+            ['password_generator'          , $e , $this->buildPasswordGenerator()                          ],
+            ['acl_manager'                 , $e , $this->buildAclManager()                                 ]
         ];
         $container = $this->buildContainer($services);
 
