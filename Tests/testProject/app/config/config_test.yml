@@ -11,3 +11,8 @@ framework:
 web_profiler:
     toolbar: false
     intercept_redirects: false
+    
+test_api_rest:
+    directory:
+        payloads: Resources/payload
+        responses: Resources/response

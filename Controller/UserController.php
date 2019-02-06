@@ -80,7 +80,7 @@ class UserController extends Controller
         $em->persist($user);
         $em->flush();
 
-        $this->get('acl_manager')->updateAclOf($user);
+        $this->get('simple_acl')->updateAclOf($user);
 
         return $this->get('response')->created($user);
     }

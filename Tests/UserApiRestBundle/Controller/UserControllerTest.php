@@ -109,7 +109,7 @@ class UserControllerTest extends TestCase
             ['form.factory'                , $e , $this->buildForm($formValid)                             ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse) ],
             ['password_generator'          , $e , $this->buildPasswordGenerator()                          ],
-            ['acl_manager'                 , $e , $this->buildAclManager()                                 ]
+            ['simple_acl'                 , $e , $this->buildAclManager()                                 ]
         ];
         $container = $this->buildContainer($services);
 

@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new EveryCheck\TestApiRestBundle\TestApiRestBundle(),
             new EveryCheck\SimpleAclBundle\SimpleAclBundle(),
             new EveryCheck\UserApiRestBundle\UserApiRestBundle()
-
         ];
     }
 
