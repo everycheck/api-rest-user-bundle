@@ -1,5 +1,5 @@
 <?php
-namespace EveryCheck\ApiRestUserBundle\Entity;
+namespace EveryCheck\UserApiRestBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;

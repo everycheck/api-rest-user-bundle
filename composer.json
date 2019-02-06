@@ -1,5 +1,5 @@
 {
-    "name": "everycheck/api-rest-user-bundle",
+    "name": "everycheck/user-api-rest-bundle",
     "license": "MIT",
     "type": "symfony-bundle",
     "require": {
@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "EveryCheck\\ApiRestUserBundle\\": ""
+            "EveryCheck\\UserApiRestBundle\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -34,7 +34,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "EveryCheck\\ApiRestUserBundle\\Tests\\": "Tests"
+            "EveryCheck\\UserApiRestBundle\\Tests\\": "Tests"
         }
     }
 }

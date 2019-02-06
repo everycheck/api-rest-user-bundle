@@ -1,5 +1,5 @@
 <?php 
-namespace EveryCheck\ApiRestUserBundle\Tests\UserBundle\DataFixtures\BuilderTrait;
+namespace EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\DataFixtures\BuilderTrait;
 
 trait UuidTrait
 {

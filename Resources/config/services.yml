@@ -4,7 +4,7 @@
 
 services:
     auth_token_user_provider:
-        class: EveryCheck\ApiRestUserBundle\Security\AuthTokenUserProvider
+        class: EveryCheck\UserApiRestBundle\Security\AuthTokenUserProvider
         arguments: ["@auth_token_repository", "@user_repository"]
         public:    false
 
@@ -21,12 +21,12 @@ services:
         public: true
 
     auth_token_authenticator:
-        class:     EveryCheck\ApiRestUserBundle\Security\AuthTokenAuthenticator
+        class:     EveryCheck\UserApiRestBundle\Security\AuthTokenAuthenticator
         arguments: ["@security.http_utils","@response","%secret%"]
         public:    false
         
     password_generator:
-        class:     EveryCheck\ApiRestUserBundle\Service\UserPasswordGenerator
+        class:     EveryCheck\UserApiRestBundle\Service\UserPasswordGenerator
         arguments: ["@security.password_encoder","%generate_password%"]
         public: true
         

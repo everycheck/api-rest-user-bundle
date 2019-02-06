@@ -1,6 +1,6 @@
 <?php
 
-namespace EveryCheck\ApiRestUserBundle\Controller;
+namespace EveryCheck\UserApiRestBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use EveryCheck\ApiRest\Utils\ResponseBuilder;
 
-use EveryCheck\ApiRestUserBundle\Entity\User;
-use EveryCheck\ApiRestUserBundle\Form\UserType;
+use EveryCheck\UserApiRestBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Form\UserType;
 
 class UserController extends Controller
 {

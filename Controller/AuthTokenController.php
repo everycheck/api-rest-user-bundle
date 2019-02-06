@@ -1,5 +1,5 @@
 <?php
-namespace EveryCheck\ApiRestEveryCheck\ApiRestUserBundle\Controller;
+namespace EveryCheck\ApiRestEveryCheck\UserApiRestBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use EveryCheck\ApiRest\Utils\ResponseBuilder;
 
 
-use EveryCheck\ApiRestUserBundle\Entity\Credentials;
-use EveryCheck\ApiRestUserBundle\Entity\User;
-use EveryCheck\ApiRestUserBundle\Entity\AuthToken;
-use EveryCheck\ApiRestUserBundle\Form\CredentialsType;
+use EveryCheck\UserApiRestBundle\Entity\Credentials;
+use EveryCheck\UserApiRestBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\AuthToken;
+use EveryCheck\UserApiRestBundle\Form\CredentialsType;
 
 class AuthTokenController extends Controller
 {

@@ -1,7 +1,7 @@
 <?php 
-namespace EveryCheck\ApiRestUserBundle\Tests\UserBundle\DataFixtures\BuilderTrait;
+namespace EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\DataFixtures\BuilderTrait;
 
-use EveryCheck\ApiRestUserBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\User;
 
 trait UserTrait
 {

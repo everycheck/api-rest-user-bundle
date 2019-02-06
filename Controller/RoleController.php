@@ -1,13 +1,13 @@
 <?php
-namespace EveryCheck\ApiRestUserBundle\Controller;
+namespace EveryCheck\UserApiRestBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-use EveryCheck\ApiRestUserBundle\Entity\User;
-use EveryCheck\ApiRestUserBundle\Entity\UserRole;
-use EveryCheck\ApiRestUserBundle\Form\RoleType;
+use EveryCheck\UserApiRestBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\UserRole;
+use EveryCheck\UserApiRestBundle\Form\RoleType;
 
 class RoleController extends Controller
 {

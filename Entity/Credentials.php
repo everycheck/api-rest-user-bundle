@@ -1,5 +1,5 @@
 <?php
-namespace EveryCheck\ApiRestUserBundle\Entity;
+namespace EveryCheck\UserApiRestBundle\Entity;
 
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;

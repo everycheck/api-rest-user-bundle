@@ -1,19 +1,19 @@
 <?php 
-namespace EveryCheck\ApiRestUserBundle\Tests\UserBundle\DataFixtures\ORM;
+namespace EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\DataFixtures\ORM;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-use EveryCheck\ApiRestUserBundle\Tests\UserBundle\DataFixtures\BuilderTrait\UserTrait;
-use EveryCheck\ApiRestUserBundle\Tests\UserBundle\DataFixtures\BuilderTrait\RoleTrait;
-use EveryCheck\ApiRestUserBundle\Tests\UserBundle\DataFixtures\BuilderTrait\TokenTrait;
-use EveryCheck\ApiRestUserBundle\Tests\UserBundle\DataFixtures\BuilderTrait\UuidTrait;
+use EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\DataFixtures\BuilderTrait\UserTrait;
+use EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\DataFixtures\BuilderTrait\RoleTrait;
+use EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\DataFixtures\BuilderTrait\TokenTrait;
+use EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\DataFixtures\BuilderTrait\UuidTrait;
 
-use EveryCheck\ApiRestUserBundle\Entity\User;
-use EveryCheck\ApiRestUserBundle\Entity\UserRole;
-use EveryCheck\ApiRestUserBundle\Entity\AuthToken;
+use EveryCheck\UserApiRestBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\UserRole;
+use EveryCheck\UserApiRestBundle\Entity\AuthToken;
 
 class LoadFixture implements FixtureInterface, ContainerAwareInterface
 {

@@ -1,9 +1,10 @@
 <?php
 
-namespace DemoBundle\EventListener;
+namespace EveryCheck\UserApiRestBundle\Tests\testProject\src\TestBundle\EventListener;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use EveryCheck\Acl\Event\RequestPopulationEvent;
+use EveryCheck\SimpleAclBundle\Event\RequestPopulationEvent;
+use EveryCheck\UserApiRestBundle\Entity\User;
 
 class UserPopulationListener
 {
@@ -16,7 +17,7 @@ class UserPopulationListener
 
     public function onPostedResquest(RequestPopulationEvent $event)
     {
-        if($event->getEntity() instanceof UserBundle\Entity\User)
+        if($event->getEntity() instanceof User)
         {
             $event->addUser($this->tokenStorage->getToken()->getUser());
             $event->addUser($event->getEntity());

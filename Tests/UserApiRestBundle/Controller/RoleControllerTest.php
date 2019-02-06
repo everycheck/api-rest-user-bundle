@@ -1,11 +1,11 @@
 <?php
-namespace EveryCheck\ApiRestUserBundleTests\UserBundle\Controller;
+namespace EveryCheck\UserApiRestBundleTests\UserApiRestBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use PHPUnit\Framework\TestCase;
-use EveryCheck\ApiRestUserBundle\Controller\RoleController;
-use EveryCheck\ApiRestUserBundle\Entity\User;
-use EveryCheck\ApiRestUserBundle\Entity\UserRole;
+use EveryCheck\UserApiRestBundle\Controller\RoleController;
+use EveryCheck\UserApiRestBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\UserRole;
 
 class RoleControllerTest extends TestCase
 {

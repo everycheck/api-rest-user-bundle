@@ -1,6 +1,6 @@
 <?php
 
-namespace EveryCheck\ApiRestUserBundle\Entity;
+namespace EveryCheck\UserApiRestBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;

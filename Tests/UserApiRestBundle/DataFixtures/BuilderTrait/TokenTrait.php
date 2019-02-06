@@ -1,8 +1,8 @@
 <?php 
-namespace Tests\UserBundle\DataFixtures\BuilderTrait;
+namespace EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\DataFixtures\BuilderTrait;
 
-use UserBundle\Entity\User;
-use UserBundle\Entity\AuthToken;
+use EveryCheck\UserApiRestBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\AuthToken;
 
 trait TokenTrait
 {

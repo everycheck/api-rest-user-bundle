@@ -1,5 +1,5 @@
 <?php 
-namespace EveryCheck\ApiRestUserBundle\Tests\UserBundle\Controller;
+namespace EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\Controller;
 
 
 trait ControllerTestTrait

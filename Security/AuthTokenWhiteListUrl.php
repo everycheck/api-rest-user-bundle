@@ -1,5 +1,5 @@
 <?php
-namespace EveryCheck\ApiRestUserBundle\Security;
+namespace EveryCheck\UserApiRestBundle\Security;
 
 use Symfony\Component\HttpFoundation\Request;
 

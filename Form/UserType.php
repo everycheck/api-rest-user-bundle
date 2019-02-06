@@ -1,5 +1,5 @@
 <?php
-namespace EveryCheck\ApiRestUserBundle\Form;
+namespace EveryCheck\UserApiRestBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -7,7 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-use EveryCheck\ApiRestUserBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\User;
 
 class UserType extends AbstractType
 {

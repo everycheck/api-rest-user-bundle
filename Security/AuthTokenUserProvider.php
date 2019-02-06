@@ -1,7 +1,7 @@
 <?php
-# src/EveryCheck\ApiRestUserBundle/Security/AuthTokenUserProvider.php
+# src/EveryCheck\UserApiRestBundle/Security/AuthTokenUserProvider.php
 
-namespace EveryCheck\ApiRestUserBundle\Security;
+namespace EveryCheck\UserApiRestBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
 
 
-use EveryCheck\ApiRestUserBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\User;
 
 class AuthTokenUserProvider implements UserProviderInterface
 {

@@ -1,10 +1,10 @@
 <?php
-namespace EveryCheck\ApiRestUserBundle\Tests\UserBundle\Controller;
+namespace EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use PHPUnit\Framework\TestCase;
-use EveryCheck\ApiRestUserBundle\Controller\UserController;
-use EveryCheck\ApiRestUserBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Controller\UserController;
+use EveryCheck\UserApiRestBundle\Entity\User;
 
 class UserControllerTest extends TestCase
 {

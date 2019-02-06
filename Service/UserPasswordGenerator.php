@@ -1,7 +1,7 @@
 <?php
-namespace EveryCheck\ApiRestUserBundle\Service;
+namespace EveryCheck\UserApiRestBundle\Service;
 
-use EveryCheck\ApiRestUserBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\User;
 
 class UserPasswordGenerator
 {
