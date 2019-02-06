@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: security.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -55,20 +56,9 @@ doctrine:
             UserApiRestBundle:
                 type: annotation
                 is_bundle: true
-
-security:
-    providers:                                         
-        in_memory:                                     
-            memory: ~                                  
-    firewalls:                                         
-        dev:                                           
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false                            
-                                                       
-        main:                                          
-            anonymous: ~            
+        
 simple_acl:
-    user_class:  EveryCheck\UserApiRestBundle\Tests\testProject\src\TestBundle\Entity\User
+    user_class:  EveryCheck\UserApiRestBundle\Entity\User
 
 user_api_rest:
     generate_password: false

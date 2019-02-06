@@ -1,8 +1,8 @@
 <?php 
-namespace EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\DataFixtures\BuilderTrait;
+namespace EveryCheck\UserApiRestBundle\Tests\testProject\tests\TestBundle\DataFixtures\BuilderTrait;
 
-use EveryCheck\UserApiRestBundle\UserBundle\Entity\User;
-use EveryCheck\UserApiRestBundle\UserBundle\Entity\UserRole;
+use EveryCheck\UserApiRestBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\UserRole;
 
 trait RoleTrait
 {
