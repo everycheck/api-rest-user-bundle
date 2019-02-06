@@ -1,5 +1,5 @@
 <?php
-namespace EveryCheck\ApiRestEveryCheck\UserApiRestBundle\Controller;
+namespace EveryCheck\UserApiRestBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;

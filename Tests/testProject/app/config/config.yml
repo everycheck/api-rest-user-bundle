@@ -30,6 +30,10 @@ framework:
     php_errors:
         log: true
 
+sensio_framework_extra:
+    router:
+        annotations: false
+
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
@@ -47,4 +51,24 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-        
+        mappings:
+            UserApiRestBundle:
+                type: annotation
+                is_bundle: true
+
+security:
+    providers:                                         
+        in_memory:                                     
+            memory: ~                                  
+    firewalls:                                         
+        dev:                                           
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false                            
+                                                       
+        main:                                          
+            anonymous: ~            
+simple_acl:
+    user_class:  EveryCheck\UserApiRestBundle\Tests\testProject\src\TestBundle\Entity\User
+
+user_api_rest:
+    generate_password: false

@@ -11,13 +11,13 @@ services:
     auth_token_repository:
         class:   Doctrine\ORM\EntityManager
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: ["UserBundle:AuthToken"]
+        arguments: ["UserApiRestBundle:AuthToken"]
         public: true
 
     user_repository:
         class:   Doctrine\ORM\EntityManager
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: ["UserBundle:User"]
+        arguments: ["UserApiRestBundle:User"]
         public: true
 
     auth_token_authenticator:
@@ -27,29 +27,10 @@ services:
         
     password_generator:
         class:     EveryCheck\UserApiRestBundle\Service\UserPasswordGenerator
-        arguments: ["@security.password_encoder","%generate_password%"]
+        arguments: ["@security.password_encoder","%user_api_rest.generate_password%"]
         public: true
         
     response:
         class: EveryCheck\ApiRest\Utils\ResponseBuilder
         arguments: ["@jms_serializer"]
         public: true
-        
-    acl_manager:
-        class: EveryCheck\SimpleAclBundle\Service\AclManager
-        arguments: ["@doctrine.orm.entity_manager","@event_dispatcher","@annotation_reader"]
-        public: true
-
-    acl_doctrine_subscriber:
-        class: EveryCheck\SimpleAclBundle\EventListener\CreateSchemaListener
-        arguments: ["@acl_manager",'UserBundle\Entity\User']
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-
-    acl_user_population_listener:
-        class: DemoBundle\EventListener\UserPopulationListener
-        arguments: ["@security.token_storage"]
-        tags:
-            - { name: kernel.event_listener, event: acl_event.request_population , method: onPostedResquest }
-
-

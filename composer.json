@@ -35,6 +35,7 @@
     "autoload-dev": {
         "psr-4": {
             "EveryCheck\\UserApiRestBundle\\Tests\\": "Tests"
-        }
+        },
+        "files" : ["Tests/testProject/app/AppKernel.php"]
     }
 }

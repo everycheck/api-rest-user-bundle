@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use EveryCheck\UserApiRestBundle\Controller\RoleController;
 use EveryCheck\UserApiRestBundle\Entity\User;
 use EveryCheck\UserApiRestBundle\Entity\UserRole;
-
+use EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\Controller\ControllerTestTrait;
 class RoleControllerTest extends TestCase
 {
     use ControllerTestTrait;

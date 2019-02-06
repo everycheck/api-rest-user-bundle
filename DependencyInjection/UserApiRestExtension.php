@@ -10,6 +10,11 @@ class UserApiRestExtension extends Extension
 {
 	public function load(array $config, ContainerBuilder $container)
 	{
+
+		$configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $config);
+        $container->setParameter('user_api_rest.generate_password', $config['generate_password']);
+
 		$loader = new YamlFileLoader($container, new FileLocator(
 			[
 				__DIR__ . '/../Resources/config/'
