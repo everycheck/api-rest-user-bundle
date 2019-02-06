@@ -22,7 +22,7 @@
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "everycheck/api-rest-utils": "^1.0.1",
-        "everycheck/php-simple-acl": "@dev",
+        "everycheck/php-simple-acl": "^1.0",
         "firebase/php-jwt": "^5.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "ircmaxell/random-lib": "^1.2",
