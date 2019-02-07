@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
-         backupGlobals="false"
-         colors="true"
-         bootstrap="vendor/autoload.php"
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
          stopOnFailure="true"
+         colors="true"
+         bootstrap="Tests/bootstrap.php"
 >
     <php>
-        <ini name="error_reporting" value="-1" />
-        <server name="KERNEL_CLASS" value="AppKernel" /> 
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
-        <ini name="display_errors" value="On" />
-        <ini name="display_startup_errors" value="On" />
+        <server name="KERNEL_CLASS" value="AppKernel"/>
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="UserApiRestBundle test suite">
+            <directory>./Tests</directory>
         </testsuite>
     </testsuites>
+    
 
     <filter>
         <whitelist>
-            <directory>src</directory>
+            <directory>./</directory>
             <exclude>
-                <directory>src/*Bundle/Resources</directory>
-                <directory>src/*/*Bundle/Resources</directory>
-                <directory>src/*/Bundle/*Bundle/Resources</directory>
+                <directory>./Resources</directory>
+                <directory>./Tests</directory>
+                <directory>./vendor</directory>
+
             </exclude>
         </whitelist>
     </filter>

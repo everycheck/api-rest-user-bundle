@@ -1,0 +1,36 @@
+
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+
+services:
+    auth_token_user_provider:
+        class: EveryCheck\UserApiRestBundle\Security\AuthTokenUserProvider
+        arguments: ["@auth_token_repository", "@user_repository"]
+        public:    false
+
+    auth_token_repository:
+        class:   Doctrine\ORM\EntityManager
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: ["UserApiRestBundle:AuthToken"]
+        public: true
+
+    user_repository:
+        class:   Doctrine\ORM\EntityManager
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: ["UserApiRestBundle:User"]
+        public: true
+
+    auth_token_authenticator:
+        class:     EveryCheck\UserApiRestBundle\Security\AuthTokenAuthenticator
+        arguments: ["@security.http_utils","@response","%secret%"]
+        public:    false
+        
+    password_generator:
+        class:     EveryCheck\UserApiRestBundle\Service\UserPasswordGenerator
+        arguments: ["@security.password_encoder","%user_api_rest.generate_password%"]
+        public: true
+        
+    response:
+        class: EveryCheck\ApiRest\Utils\ResponseBuilder
+        arguments: ["@jms_serializer"]
+        public: true
