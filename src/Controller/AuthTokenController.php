@@ -39,13 +39,13 @@ class AuthTokenController extends Controller
 
         if (!$user || !$user->isActive()) 
         {
-            return $this->get('response')->unauthorized();
+            return $this->get('response')->badRequest('Login or password invalid');
         }
 
         $encoder = $this->get('security.password_encoder');
         if ( $encoder->isPasswordValid($user, $credentials->getPassword()) == false) 
         {
-            return $this->get('response')->unauthorized();
+            return $this->get('response')->badRequest('Login or password invalid');
         }
 
         $authToken = null;

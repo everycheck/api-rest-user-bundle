@@ -43,9 +43,9 @@ class AuthTokenControllerTest extends TestCase
             ['formError'   , false , null     , true  ],
             ['formError'   , false , new User , true  ],
             ['formError'   , false , new User , false ],
-            ['unauthorized', true  , null     , false ],
-            ['unauthorized', true  , null     , true  ],
-            ['unauthorized', true  , new User , false ],
+            ['badRequest'  , true  , null     , false ],
+            ['badRequest'  , true  , null     , true  ],
+            ['badRequest'  , true  , new User , false ],
             ['created'     , true  , new User , true  ]
         ];
     }
