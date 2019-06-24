@@ -4,7 +4,6 @@ namespace EveryCheck\UserApiRestBundle\Entity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
-use EveryCheck\SimpleAclBundle\Annotation as ACL;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,7 +16,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @UniqueEntity("email")
  * @UniqueEntity("username")
  * @ORM\HasLifecycleCallbacks()
- * @ACL\Restricted()
  */
 class User implements UserInterface
 {

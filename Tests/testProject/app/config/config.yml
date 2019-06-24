@@ -55,9 +55,6 @@ doctrine:
             UserApiRestBundle:
                 type: annotation
                 is_bundle: true
-        
-simple_acl:
-    user_class:  EveryCheck\UserApiRestBundle\Entity\User
 
 user_api_rest:
     generate_password: false

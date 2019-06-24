@@ -21,8 +21,7 @@
         "sensio/framework-extra-bundle": "^5.0",
         "symfony/monolog-bundle": "^3.1",
         "symfony/polyfill-apcu": "^1.0",
-        "symfony/symfony": "3.4.*",
-        "everycheck/php-simple-acl": "^1.1"
+        "symfony/symfony": "3.4.*"
     },
     "autoload": {
         "psr-4": {
