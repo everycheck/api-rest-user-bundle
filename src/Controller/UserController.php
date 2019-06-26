@@ -10,6 +10,7 @@ use EveryCheck\ApiRest\Utils\ResponseBuilder;
 
 use EveryCheck\UserApiRestBundle\Entity\User;
 use EveryCheck\UserApiRestBundle\Form\UserType;
+use EveryCheck\UserApiRestBundle\Event\UserEvent;
 
 class UserController extends Controller
 {
@@ -80,6 +81,8 @@ class UserController extends Controller
         $em->persist($user);
         $em->flush();
 
+        $this->get('event_dispatcher')->dispatch(UserEvent::POST_NAME,new UserEvent($user));
+
         return $this->get('response')->created($user);
     }
 
@@ -93,9 +96,11 @@ class UserController extends Controller
     public function deleteUserAction($id)
     {          
         $em =    $this->get('doctrine.orm.entity_manager');
-        $entity = $em->getRepository(User::class)->findOneByUuid($id);
-        $em->remove($entity);
+        $user = $em->getRepository(User::class)->findOneByUuid($id);
+        $em->remove($user);
         $em->flush();
+
+        $this->get('event_dispatcher')->dispatch(UserEvent::DELETE_NAME,new UserEvent($user));
 
         return $this->get('response')->deleted();
     }

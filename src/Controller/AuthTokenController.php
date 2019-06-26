@@ -5,9 +5,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-use EveryCheck\ApiRest\Utils\ResponseBuilder;
-
-
 use EveryCheck\UserApiRestBundle\Entity\Credentials;
 use EveryCheck\UserApiRestBundle\Entity\User;
 use EveryCheck\UserApiRestBundle\Entity\AuthToken;
