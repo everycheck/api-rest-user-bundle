@@ -1,65 +1,48 @@
 <?php
-namespace EveryCheck\UserApiRestBundle\Command;
-
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+namespace EveryCheck\UserApiRestBundle\Service;
 
 use EveryCheck\UserApiRestBundle\Entity\User;
 
-class AddUserCommand extends ContainerAwareCommand
+class UserPasswordGenerator
 {
-
-    protected function configure()
+    public function __construct($passwordEncoder , $generatePassword = false)
     {
-        $this
-            ->setName('rest:user:add')
-            ->setDescription('List all fixture available for testing')
-            ->addArgument(
-                'email',
-                InputArgument::REQUIRED,
-                'Email of the new user'
-            )
-            ->addOption(
-                'username',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'If not set email will be used'
-            )
-            ->addOption(
-                'password',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'If not set email will be used'
-            );
+        $this->generatePassword = $generatePassword;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    { 
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $email =  $input->getArgument('email');   
-        $username  = $input->getOption('username');  
-        if(empty($username))
+    public function setUpPassword(User $user, $password = null)
+    {
+        if( $password !== null )
         {
-            $username = $email;
+            $user->setPlainPassword($password);
         }
-        $password  = $input->getOption('password');  
-        if(empty($password))
+        else if($this->generatePassword)
         {
-            $username = $email;
+            $user->setPlainPassword($this->generateString(16));
+         }
+         else
+         {
+            $user->setPlainPassword($user->getEmail());
+         }
+        $encoded = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
+        $user->setPassword($encoded);
+    }
+
+    protected function generateString($length)
+    {
+        $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $str = '';
+        $max = mb_strlen($keyspace, '8bit') - 1;
+        if ($max < 1)
+        {
+            throw new Exception('$keyspace must be at least two characters long');
         }
-
-        $user = new User();
-        $user->setUsername($username);
-        $user->setEmail($email);
-        $this->getContainer()->get('password_generator')->setUpPassword($user,$password);
-
-        $em->persist($user);
-        $em->flush();
-
-        $output->writeLn('<info>User "'.$username.'" has been created.</info>');
+        for ($i = 0; $i < $length; ++$i)
+        {
+            $str .= $keyspace[random_int(0, $max)];
+        }
+        return $str;
     }
 
 }

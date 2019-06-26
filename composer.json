@@ -9,7 +9,6 @@
         "everycheck/api-rest-utils": "^1.0.1",
         "firebase/php-jwt": "^5.0",
         "incenteev/composer-parameter-handler": "^2.0",
-        "ircmaxell/random-lib": "^1.2",
         "jms/serializer-bundle": "^1.0|^2.0",
         "ramsey/uuid-doctrine": "^1.5"
     },
