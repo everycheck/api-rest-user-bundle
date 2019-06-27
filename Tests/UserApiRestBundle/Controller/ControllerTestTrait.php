@@ -1,6 +1,7 @@
 <?php 
 namespace EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\Controller;
 
+use EveryCheck\UserApiRestBundle\Entity\User;
 
 trait ControllerTestTrait
 {
@@ -107,12 +108,19 @@ trait ControllerTestTrait
         return $generator;
     }
 
-    protected function buildAclManager()
+    protected function buildEventDispatcher()
     {
-        $manager = $this->getMockBuilder('stdClass')
-                        ->setMethods(['updateAclOf'])
-                        ->getMock();  
-        return $manager;
+        $eventDispatcher = $this->getMockBuilder('stdClass')
+                     ->setMethods(['dispatch'])
+                     ->getMock();
+        return $eventDispatcher;
+    }
+
+    protected function getUser(): User
+    {
+        $user = new User();
+        $user->setLastPasswordUpdate(new \DateTime());
+        return $user;
     }
 
 

@@ -12,6 +12,7 @@ use EveryCheck\UserApiRestBundle\Form\CredentialsType;
 
 class AuthTokenController extends Controller
 {
+    const MAX_PASSWORD_VALIDITY_DAYS = 90;
     /**
      * @Route("/tokens/{kind}",
      *     name="post_auth_tokens",
@@ -27,22 +28,38 @@ class AuthTokenController extends Controller
         $form = $this->createForm(CredentialsType::class, $credentials);
 
         $form->submit(json_decode($request->getContent(), true),true);
-        if ($form->isValid() == false)
+        if($form->isValid() == false)
         {
             return $this->get('response')->formError($form);
         }
 
         $user = $this->em->getRepository(User::class)->findOneByUsername($credentials->getLogin());
-
-        if (!$user || !$user->isActive()) 
+        if(!$user || !$user->isActive()) 
         {
             return $this->get('response')->badRequest('Login or password invalid');
         }
 
         $encoder = $this->get('security.password_encoder');
-        if ( $encoder->isPasswordValid($user, $credentials->getPassword()) == false) 
+        if($encoder->isPasswordValid($user, $credentials->getPassword()) == false) 
         {
             return $this->get('response')->badRequest('Login or password invalid');
+        }
+        
+        if($this->isPasswordExpired($user)) 
+        {
+            $renewPassword = new RenewPassword();
+            $form = $this->createForm(RenewPasswordType::class, $renewPassword);
+
+            $form->submit(json_decode($request->getContent(), true));
+            if($form->isValid() == false)
+            {
+                return $this->get('response')->formError($form);
+            }
+
+            $encoder = $this->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($user, $renewPassword->getPassword());
+            $user->setPassword($encoded);
+            $em->flush();
         }
 
         $authToken = null;
@@ -85,5 +102,13 @@ class AuthTokenController extends Controller
 
         return $this->get('response')->deleted();
 
+    }
+
+    private function isPasswordExpired(User $user): bool
+    {
+        $interval = $user->getLastPasswordUpdate()->diff(new \DateTime());
+        $days = intval($interval->format('a'));
+
+        return abs($days) > self::MAX_PASSWORD_VALIDITY_DAYS;
     }
 }

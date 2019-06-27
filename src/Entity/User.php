@@ -64,6 +64,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Exclude
      */
     private $lastPasswordUpdate;
 

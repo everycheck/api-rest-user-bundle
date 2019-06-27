@@ -41,12 +41,12 @@ class AuthTokenControllerTest extends TestCase
         return [
             ['formError'   , false , null     , false ],
             ['formError'   , false , null     , true  ],
-            ['formError'   , false , new User , true  ],
-            ['formError'   , false , new User , false ],
+            ['formError'   , false , $this->getUser() , true  ],
+            ['formError'   , false , $this->getUser() , false ],
             ['badRequest'  , true  , null     , false ],
             ['badRequest'  , true  , null     , true  ],
-            ['badRequest'  , true  , new User , false ],
-            ['created'     , true  , new User , true  ]
+            ['badRequest'  , true  , $this->getUser() , false ],
+            ['created'     , true  , $this->getUser() , true  ]
         ];
     }
 
@@ -63,7 +63,6 @@ class AuthTokenControllerTest extends TestCase
         ];
         $parameters = [];
         $container = $this->buildContainer($services,$parameters);
-
 
         $authTokenController = new AuthTokenController();
         $authTokenController->setContainer($container);

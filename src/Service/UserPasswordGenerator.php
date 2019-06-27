@@ -27,6 +27,7 @@ class UserPasswordGenerator
          }
         $encoded = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
         $user->setPassword($encoded);
+        $user->setLastPasswordUpdate(new \DateTime());
     }
 
     protected function generateString($length)

@@ -34,7 +34,7 @@ class UserControllerTest extends TestCase
     public function data_getCurrentUserAction()
     {
         return [
-            ['ok'   , new User ]
+            ['ok'   , $this->getUser() ]
         ];
     }
 
@@ -63,7 +63,7 @@ class UserControllerTest extends TestCase
     public function data_getUserAction()
     {
         return [
-            ['ok'   , new User , 'someUselessId']
+            ['ok'   , $this->getUser() , 'someUselessId']
         ];
     }
 
@@ -92,7 +92,7 @@ class UserControllerTest extends TestCase
     public function data_getUsersAction()
     {
         return [
-            ['ok'   , [new User] , 'someUselessId']
+            ['ok'   , [$this->getUser()] , 'someUselessId']
         ];
     }
 
@@ -108,7 +108,9 @@ class UserControllerTest extends TestCase
             ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager()                              ],
             ['form.factory'                , $e , $this->buildForm($formValid)                             ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse) ],
-            ['password_generator'          , $e , $this->buildPasswordGenerator()                          ]
+            ['password_generator'          , $e , $this->buildPasswordGenerator()                          ],
+            ['event_dispatcher'            , $e , $this->buildEventDispatcher()                            ]
+
         ];
         $container = $this->buildContainer($services);
 
@@ -139,6 +141,8 @@ class UserControllerTest extends TestCase
         $services =[
             ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($user,'findOneByUuid')        ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse) ],
+            ['event_dispatcher'            , $e , $this->buildEventDispatcher()                            ]
+            
         ];
         $parameters = [];
         $container = $this->buildContainer($services,$parameters);
@@ -156,7 +160,7 @@ class UserControllerTest extends TestCase
     {
         return [
             ['deleted'   , null ],
-            ['deleted'   , new User ],
+            ['deleted'   , $this->getUser() ],
         ];
     }
 }

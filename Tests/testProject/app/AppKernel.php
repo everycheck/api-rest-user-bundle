@@ -21,7 +21,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\DistributionBundle\SensioDistributionBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new EveryCheck\TestApiRestBundle\TestApiRestBundle(),
-            new EveryCheck\SimpleAclBundle\SimpleAclBundle(),
             new EveryCheck\UserApiRestBundle\UserApiRestBundle()
         ];
     }
