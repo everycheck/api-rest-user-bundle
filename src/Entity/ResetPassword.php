@@ -2,6 +2,8 @@
 
 namespace EveryCheck\UserApiRestBundle\Entity;
 
+use Rollerworks\Component\PasswordStrength\Validator\Constraints as RollerworksPassword;
+
 /**
  * ResetPassword
  *
@@ -16,6 +18,8 @@ class ResetPassword
 
     /**
      * @var string
+     * @RollerworksPassword\Blacklist(provider='blacklist_provider')
+     * @RollerworksPassword\PasswordStrength(minLength=6, minStrength=3)
      */
     private $password;
 

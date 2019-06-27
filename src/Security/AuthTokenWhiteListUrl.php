@@ -10,8 +10,8 @@ class AuthTokenWhiteListUrl
         'POST'=>[
             '/tokens/basic',
             '/tokens/jwt',
-            '/reset-password/request-token',
-            '/reset-password/new-password'
+            '/users/password/reset/request',
+            '/users/password/reset'
         ],
     ];  
 

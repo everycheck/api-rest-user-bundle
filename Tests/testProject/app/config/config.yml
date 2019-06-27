@@ -58,3 +58,4 @@ doctrine:
 
 user_api_rest:
     generate_password: false
+    blacklist_provider: ~

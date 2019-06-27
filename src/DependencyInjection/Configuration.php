@@ -12,9 +12,15 @@ class Configuration implements ConfigurationInterface
 		$rootNode = $treeBuilder->root('user_api_rest');
 
 		$rootNode
+            ->addDefaultsIfNotSet()			
 			->children()
 					->booleanNode('generate_password')
 						->isRequired()
+						->defaultValue(true)
+					->end()
+					->scalarNode('blacklist_provider')
+						->isRequired()
+						->defaultValue('default_blacklist')
 					->end()
 				->end()
 			->end()
