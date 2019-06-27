@@ -99,7 +99,7 @@ class UserControllerTest extends TestCase
     /**
      * @dataProvider data_postUsersAction
      */
-    public function test_postUsersAction(string $response,bool $formValid)
+    public function test_postUsersAction(string $response,array $formValid)
     {    
         $request = $this->buildRequest('{"test":"test"}');
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
@@ -125,8 +125,8 @@ class UserControllerTest extends TestCase
     public function data_postUsersAction()
     {
         return [
-            ['formError'   , false   ],
-            ['created'     , true    ],
+            ['formError'   , [false]   ],
+            ['created'     , [true]    ],
         ];
     }
 

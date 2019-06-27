@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use EveryCheck\UserApiRestBundle\Entity\Credentials;
 use EveryCheck\UserApiRestBundle\Entity\User;
 use EveryCheck\UserApiRestBundle\Entity\AuthToken;
+use EveryCheck\UserApiRestBundle\Entity\RenewPassword;
+use EveryCheck\UserApiRestBundle\Form\RenewPasswordType;
 use EveryCheck\UserApiRestBundle\Form\CredentialsType;
 
 class AuthTokenController extends Controller
@@ -107,8 +109,7 @@ class AuthTokenController extends Controller
     private function isPasswordExpired(User $user): bool
     {
         $interval = $user->getLastPasswordUpdate()->diff(new \DateTime());
-        $days = intval($interval->format('a'));
-
+        $days = intval($interval->format('%a'));
         return abs($days) > self::MAX_PASSWORD_VALIDITY_DAYS;
     }
 }
