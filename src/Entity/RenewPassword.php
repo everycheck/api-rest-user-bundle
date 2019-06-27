@@ -3,11 +3,17 @@ namespace EveryCheck\UserApiRestBundle\Entity;
 
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints as RollerworksPassword;
 
 class RenewPassword
 {
     protected $login;
     protected $password;
+    
+    /**
+     * @RollerworksPassword\Blacklist()
+     * @RollerworksPassword\PasswordStrength(minLength=6, minStrength=3)
+     */
     protected $newPassword;
 
 

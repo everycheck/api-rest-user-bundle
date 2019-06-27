@@ -10,6 +10,7 @@ use EveryCheck\ApiRest\Utils\ResponseBuilder;
 
 use EveryCheck\UserApiRestBundle\Entity\ResetPasswordRequest;
 use EveryCheck\UserApiRestBundle\Entity\ResetPassword;
+use EveryCheck\UserApiRestBundle\Entity\User;
 use EveryCheck\UserApiRestBundle\Form\ResetPasswordRequestType;
 use EveryCheck\UserApiRestBundle\Form\ResetPasswordType;
 use EveryCheck\UserApiRestBundle\Event\PasswordEvent;
