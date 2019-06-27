@@ -11,7 +11,7 @@ class RenewPassword
     protected $password;
     
     /**
-     * @RollerworksPassword\Blacklist(provider='blacklist_provider')
+     * @RollerworksPassword\Blacklist()
      * @RollerworksPassword\PasswordStrength(minLength=6, minStrength=3)
      */
     protected $newPassword;

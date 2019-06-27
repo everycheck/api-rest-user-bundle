@@ -18,10 +18,6 @@ class Configuration implements ConfigurationInterface
 						->isRequired()
 						->defaultValue(true)
 					->end()
-					->scalarNode('blacklist_provider')
-						->isRequired()
-						->defaultValue('default_blacklist')
-					->end()
 				->end()
 			->end()
 		;
