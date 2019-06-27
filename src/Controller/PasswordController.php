@@ -43,14 +43,13 @@ class PasswordController extends Controller
 
         $token = [
            "uuid" => $user->getUuidAsString(),
-           "email" => $resetPasswordRequest->getEmail(),
            "exp" => date_create('+5 minutes')->format('U')
         ];
 
         $JWTtoken = \Firebase\JWT\JWT::encode($token, $this->getParameter('secret'));
 
         $this->get('event_dispatcher')
-             ->dispatch(PasswordEvent::PASSWORD_RESET_REQUEST_NAME, new PasswordEvent($JWTtoken));
+             ->dispatch(PasswordEvent::PASSWORD_RESET_REQUEST_NAME, new PasswordEvent(["user"=>$user, "token" => $JWTtoken]));
 
         return $this->get('response')->created([]);
     }
