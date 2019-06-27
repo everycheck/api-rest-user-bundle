@@ -29,7 +29,7 @@ class PasswordController extends Controller
 
         if(!$form->isValid()) 
         {
-            return $this->get('response')->formError($form);
+            return $this->get('response')->created([]);
         }
 
         $em = $this->get('doctrine.orm.entity_manager');
@@ -38,7 +38,7 @@ class PasswordController extends Controller
 
         if(!$user || !$user->isActive()) 
         { 
-            return $this->get('response')->created($resetPasswordRequest);
+            return $this->get('response')->created([]);
         }
 
         $token = [
@@ -52,7 +52,7 @@ class PasswordController extends Controller
         $this->get('event_dispatcher')
              ->dispatch(PasswordEvent::PASSWORD_RESET_REQUEST_NAME, new PasswordEvent($JWTtoken));
 
-        return $this->get('response')->created(["jwt"=>$JWTtoken]);
+        return $this->get('response')->created([]);
     }
 
     /**
@@ -82,7 +82,7 @@ class PasswordController extends Controller
                 return $this->get('response')->badRequest([
                     "children" => [
                         "token" => [
-                            "errors" => "The token is invalid (no user)"
+                            "errors" => "The token is invalid"
                         ],
                         "password" => []
                     ]
@@ -94,7 +94,7 @@ class PasswordController extends Controller
                 return $this->get('response')->badRequest([
                     "children" => [
                         "token" => [
-                            "errors" => "The token is invalid (password already reset)"
+                            "errors" => "The token is invalid"
                         ],
                         "password" => []
                     ]
@@ -106,7 +106,7 @@ class PasswordController extends Controller
             return $this->get('response')->badRequest([
                 "children" => [
                     "token" => [
-                        "errors" => "The token is invalid (invalid token)"
+                        "errors" => "The token is invalid"
                     ],
                     "password" => []
                 ]
