@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace EveryCheck\UserApiRestBundle\Tests\testProject\src\TestBundle\EventListener;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

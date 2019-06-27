@@ -1,6 +1,7 @@
 <?php 
 namespace EveryCheck\UserApiRestBundle\Tests\UserApiRestBundle\Controller;
 
+use EveryCheck\UserApiRestBundle\Entity\User;
 
 trait ControllerTestTrait
 {
@@ -32,18 +33,29 @@ trait ControllerTestTrait
         return $em;
     }
 
-    protected function buildForm(bool $isValid)
-    {
-        $form = $this->getMockBuilder('Symfony\Component\Form\Form')
+    protected function buildForm(array $responses)
+    {   
+        $forms = [];
+
+        foreach($responses as $response)
+        {
+            $form = $this->getMockBuilder('Symfony\Component\Form\Form')
                      ->disableOriginalConstructor()
                      ->setMethods(['submit','isValid'])
                      ->getMock();
-        $form->method('isValid')->willReturn($isValid);
-
+            $form->expects($this->once())->method('isValid')->willReturn($response);
+            $forms[] = $form;
+        }
+        
         $formFactory = $this->getMockBuilder('stdClass')
                             ->setMethods(['create'])
                             ->getMock();
-        $formFactory->method('create')->willReturn($form);
+
+       if(!empty($forms))
+       {
+          $formFactory->expects($this->exactly(count($responses)))->method('create')->willReturnOnConsecutiveCalls(...$forms);      
+       }
+        
         return $formFactory;      
     }
 
@@ -107,12 +119,19 @@ trait ControllerTestTrait
         return $generator;
     }
 
-    protected function buildAclManager()
+    protected function buildEventDispatcher()
     {
-        $manager = $this->getMockBuilder('stdClass')
-                        ->setMethods(['updateAclOf'])
-                        ->getMock();  
-        return $manager;
+        $eventDispatcher = $this->getMockBuilder('stdClass')
+                     ->setMethods(['dispatch'])
+                     ->getMock();
+        return $eventDispatcher;
+    }
+
+    protected function getUser($format = 'now'): User
+    {
+        $user = new User();
+        $user->setLastPasswordUpdate(new \DateTime($format));
+        return $user;
     }
 
 

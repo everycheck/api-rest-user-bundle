@@ -6,9 +6,9 @@ use EveryCheck\UserApiRestBundle\Entity\User;
 
 class UserEvent extends Event
 {
-	const DELETE_NAME = 'user_api_rest.user_event.delete';
-    const POST_NAME   = 'user_api_rest.user_event.post';
-    const PATCH_NAME  = 'user_api_rest.user_event.patch';
+	const DELETE_NAME                 = 'user_api_rest.user_event.delete';
+    const POST_NAME                   = 'user_api_rest.user_event.post';
+    const PATCH_NAME                  = 'user_api_rest.user_event.patch';
 
     private $user = null;
 

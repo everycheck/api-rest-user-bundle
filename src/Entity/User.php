@@ -63,6 +63,12 @@ class User implements UserInterface
     private $oldPassword;
 
     /**
+     * @ORM\Column(type="datetime")
+     * @JMS\Exclude
+     */
+    private $lastPasswordUpdate;
+
+    /**
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" : 1})
      */
     private $active = true;
@@ -154,6 +160,17 @@ class User implements UserInterface
     public function getOldPassword()
     {
         return $this->oldPassword;
+    }
+
+    public function setLastPasswordUpdate(\DateTime $lastPasswordUpdate): self
+    {
+        $this->lastPasswordUpdate = $lastPasswordUpdate;
+        return $this;
+    }
+
+    public function getLastPasswordUpdate(): ?\DateTime
+    {
+        return $this->lastPasswordUpdate;
     }
 
     public function getSalt()

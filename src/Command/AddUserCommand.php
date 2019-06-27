@@ -53,7 +53,8 @@ class AddUserCommand extends ContainerAwareCommand
 
         $user = new User();
         $user->setUsername($username);
-        $user->setEmail($email);
+        $user->setEmail($email."@example.com");
+        $user->setLastPasswordUpdate(new \DateTime("now"));
         $this->getContainer()->get('password_generator')->setUpPassword($user,$password);
 
         $em->persist($user);

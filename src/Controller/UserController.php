@@ -9,8 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 use EveryCheck\ApiRest\Utils\ResponseBuilder;
 
 use EveryCheck\UserApiRestBundle\Entity\User;
+use EveryCheck\UserApiRestBundle\Entity\ResetPasswordRequest;
+use EveryCheck\UserApiRestBundle\Entity\ResetPassword;
 use EveryCheck\UserApiRestBundle\Form\UserType;
+use EveryCheck\UserApiRestBundle\Form\ResetPasswordRequestType;
+use EveryCheck\UserApiRestBundle\Form\ResetPasswordType;
 use EveryCheck\UserApiRestBundle\Event\UserEvent;
+use EveryCheck\UserApiRestBundle\Event\PasswordEvent;
+
 
 class UserController extends Controller
 {
@@ -97,6 +103,12 @@ class UserController extends Controller
     {          
         $em =    $this->get('doctrine.orm.entity_manager');
         $user = $em->getRepository(User::class)->findOneByUuid($id);
+        
+        if(empty($user))
+        {
+            return $this->get('response')->deleted();
+        }
+
         $em->remove($user);
         $em->flush();
 
@@ -104,6 +116,4 @@ class UserController extends Controller
 
         return $this->get('response')->deleted();
     }
-
-
 }

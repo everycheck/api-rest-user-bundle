@@ -14,7 +14,7 @@ class RoleControllerTest extends TestCase
     /**
      * @dataProvider data_postRoleAction
      */
-    public function test_postRoleAction(bool $formValid,string $response, $user,$requestGetContentCallCount)
+    public function test_postRoleAction(array $formValid,string $response, $user,$requestGetContentCallCount)
     {    
         $request = $this->buildRequest('{"test":"test"}',$requestGetContentCallCount);
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
@@ -37,10 +37,10 @@ class RoleControllerTest extends TestCase
     public function data_postRoleAction()
     {
         return [
-            [false  ,'notFound'  , null     , 0 ],
-            [true   ,'notFound'  , null     , 0 ],
-            [false  ,'formError' , new User , 1 ],
-            [true   ,'created'   , new User , 1 ]
+            [[]  ,'notFound'  , null     , 0 ],
+            [[]   ,'notFound'  , null     , 0 ],
+            [[false]  ,'formError' , new User , 1 ],
+            [[true]   ,'created'   , new User , 1 ]
         ];
     }
 

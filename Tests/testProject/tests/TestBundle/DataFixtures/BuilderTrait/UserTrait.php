@@ -5,14 +5,15 @@ use EveryCheck\UserApiRestBundle\Entity\User;
 
 trait UserTrait
 {
-    public function createUser(string $username = "someone") : User
+    public function createUser(string $username = "someone"): User
     {
         $user = new User();
         $user->setUsername($username);
         $user->setEmail($username.'@everycheck.fr');
         $user->setPlainPassword($username);
+        $user->setLastPasswordUpdate(new \DateTime('now'));
 
-        if(  empty($user->getPlainPassword()) === false  )
+        if(empty($user->getPlainPassword()) === false)
         {
             $encoder = $this->container->get('security.password_encoder');
             $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
@@ -28,7 +29,7 @@ trait UserTrait
         return $user;
     }
 
-    public function createUsersWithToken(array $names) : array
+    public function createUsersWithToken(array $names): array
     {
         $users = [];
         foreach ($names as $name)

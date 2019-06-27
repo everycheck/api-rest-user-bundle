@@ -14,9 +14,9 @@ class AuthTokenControllerTest extends TestCase
     /**
      * @dataProvider data_postAuthTokensAction
      */
-    public function test_postAuthTokensAction(string $response,bool $formValid, $user,bool $validPassword)
+    public function test_postAuthTokensAction(string $response,array $formValid, $user,bool $validPassword)
     {    
-        $request = $this->buildRequest('{"test":"test"}');
+        $request = $this->buildRequest('{"test":"test"}', count($formValid));
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[
@@ -39,14 +39,17 @@ class AuthTokenControllerTest extends TestCase
     public function data_postAuthTokensAction()
     {
         return [
-            ['formError'   , false , null     , false ],
-            ['formError'   , false , null     , true  ],
-            ['formError'   , false , new User , true  ],
-            ['formError'   , false , new User , false ],
-            ['badRequest'  , true  , null     , false ],
-            ['badRequest'  , true  , null     , true  ],
-            ['badRequest'  , true  , new User , false ],
-            ['created'     , true  , new User , true  ]
+           #['response'    , firstFormValid, user, validPassword ],
+            ['formError'   , [false] , null     , false ],
+            ['formError'   , [false] , null     , true  ],
+            ['formError'   , [false] , $this->getUser() , true  ],
+            ['formError'   , [false] , $this->getUser() , false ],
+            ['badRequest'  , [true]  , null     , false ],
+            ['badRequest'  , [true]  , null     , true  ],
+            ['badRequest'  , [true]  , $this->getUser() , false ],
+            ['formError'   , [true, false]  , $this->getUser("-92 days"), true ],
+            ['created'     , [true]  , $this->getUser() , true  ]
+
         ];
     }
 
@@ -63,7 +66,6 @@ class AuthTokenControllerTest extends TestCase
         ];
         $parameters = [];
         $container = $this->buildContainer($services,$parameters);
-
 
         $authTokenController = new AuthTokenController();
         $authTokenController->setContainer($container);
