@@ -75,6 +75,11 @@ class AuthTokenAuthenticator implements SimplePreAuthenticatorInterface, Authent
             $user = $authToken->getUser();
         }
 
+        if(empty($user))
+        {        
+            throw new BadCredentialsException('Invalid authentication token');
+        }
+
         $pre = new PreAuthenticatedToken(
             $user,
             $authTokenHeader,
