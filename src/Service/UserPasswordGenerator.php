@@ -27,7 +27,7 @@ class UserPasswordGenerator
          }
         $encoded = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
         $user->setPassword($encoded);
-        $user->setLastPasswordUpdate(new \DateTime());
+        $user->setLastPasswordUpdate(new \DateTime(empty($password)?'-91 days':'now'));
     }
 
     protected function generateString($length)

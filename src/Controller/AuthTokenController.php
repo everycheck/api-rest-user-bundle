@@ -58,9 +58,7 @@ class AuthTokenController extends Controller
                 return $this->get('response')->formError($form);
             }
 
-            $encoder = $this->get('security.password_encoder');
-            $encoded = $encoder->encodePassword($user, $renewPassword->getPassword());
-            $user->setPassword($encoded);
+            $this->get('password_generator')->setUpPassword($user,$renewPassword->getPassword());
             $em->flush();
         }
 
