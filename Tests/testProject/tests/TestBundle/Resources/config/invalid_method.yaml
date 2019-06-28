@@ -1,0 +1,44 @@
+unit_tests:
+  PUT:
+    - { url: "/users", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/users/current", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/users/00100000-0000-4000-a000-000000000000", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/users/password/reset/request", status: 405}
+    - { url: "/users/password/reset", status: 405}
+    - { url: "/users/00100000-0000-4000-a000-000000000000/role", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/tokens/basic", status: 405}
+    - { url: "/tokens/basic/00100000-0000-4000-a000-000000000000", headers: 'X-Auth-Token : token_someone'  , status: 405}
+    - { url: "/users/roles/00100000-0000-4000-a000-000000000000" , headers: 'X-Auth-Token : token_someone'  , status: 405}
+
+  PATCH:
+    - { url: "/users", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/users/current", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/users/00100000-0000-4000-a000-000000000000", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/users/password/reset/request", status: 405}
+    - { url: "/users/password/reset", status: 405}
+    - { url: "/users/00100000-0000-4000-a000-000000000000/role", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/tokens/basic", status: 405}
+    - { url: "/tokens/basic/00100000-0000-4000-a000-000000000000", headers: 'X-Auth-Token : token_someone'  , status: 405}
+    - { url: "/users/roles/00100000-0000-4000-a000-000000000000" , headers: 'X-Auth-Token : token_someone'  , status: 405}
+
+  GET: 
+    - { url: "/users/password/reset/request", status: 405}
+    - { url: "/users/password/reset", status: 405}
+    - { url: "/users/00100000-0000-4000-a000-000000000000/role", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/tokens/basic", status: 405}
+    - { url: "/tokens/basic/00100000-0000-4000-a000-000000000000", headers: 'X-Auth-Token : token_someone'  , status: 405}
+    - { url: "/users/roles/00100000-0000-4000-a000-000000000000" , headers: 'X-Auth-Token : token_someone'  , status: 405}
+     
+  POST:        
+    - { url: "/users/current", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/users/00100000-0000-4000-a000-000000000000", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/tokens/basic/00100000-0000-4000-a000-000000000000", headers: 'X-Auth-Token : token_someone'  , status: 405}
+    - { url: "/users/roles/00100000-0000-4000-a000-000000000000" , headers: 'X-Auth-Token : token_someone'  , status: 405}
+       
+  DELETE:       
+    - { url: "/users/current", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/users", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/users/password/reset/request", status: 405}
+    - { url: "/users/password/reset", status: 405}
+    - { url: "/users/00100000-0000-4000-a000-000000000000/role", status: 405, headers: 'X-Auth-Token : token_someone'}
+    - { url: "/tokens/basic", status: 405}

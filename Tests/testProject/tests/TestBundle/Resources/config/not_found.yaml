@@ -1,0 +1,12 @@
+unit_tests:
+  GET:
+    - { url: "/users/1"        , status: 404, headers: 'X-Auth-Token : token_someone'}
+
+  POST:
+    - { url: "/tokens/undefined", status: 404}
+    - { url: "/users/1/role"    , status: 404, headers: 'X-Auth-Token : token_someone'}
+
+  DELETE:
+    - { url: "/users/1"        , status: 404, headers: 'X-Auth-Token : token_someone' }
+    - { url: "/tokens/basic/1" , status: 404, headers: 'X-Auth-Token : token_someone' }
+    - { url: "/users/roles/1"  , status: 404, headers: 'X-Auth-Token : token_someone' }

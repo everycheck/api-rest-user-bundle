@@ -1,0 +1,14 @@
+unit_tests:
+  GET: 
+    - { url: "/users"                                             , status: 401}
+    - { url: "/users/current"                                     , status: 401}
+    - { url: "/users/00100000-0000-4000-a000-000000000000"        , status: 401}
+       
+  POST:        
+    - { url: "/users"                                             , status: 401}
+    - { url: "/users/00100000-0000-4000-a000-000000000000/role"   , status: 401}
+        
+  DELETE:       
+    - { url: "/users/00100000-0000-4000-a000-000000000000"        , status: 401}
+    - { url: "/tokens/basic/00100000-0000-4000-a000-000000000000" , status: 401}
+    - { url: "/users/roles/00100000-0000-4000-a000-000000000000"  , status: 401}

@@ -1,0 +1,7 @@
+unit_tests:
+  POST:
+    - { url: "/users/password/reset", status: 400, out: "bad_request/password_reset_extra_field_post"  , in: "bad_request/password_reset_extra_field_post"}
+    - { url: "/users/password/reset", status: 400, out: "bad_request/password_reset_missing_field_post", in: "bad_request/password_reset_missing_field_post"}
+    - { url: "/users/password/reset", status: 400, out: "bad_request/password_reset_invalid_token_post", in: "bad_request/password_reset_invalid_token_post"}
+    - { url: "/users/password/reset", status: 400, out: "bad_request/password_reset_invalid_user_post" , in: "bad_request/password_reset_invalid_user_post"}
+    - { url: "/users/password/reset", status: 400, out: "bad_request/password_reset_expired_token_post", in: "bad_request/password_reset_expired_token_post"}
