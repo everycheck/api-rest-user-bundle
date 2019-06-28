@@ -18,15 +18,15 @@ class AddUserCommand extends ContainerAwareCommand
             ->setName('rest:user:add')
             ->setDescription('List all fixture available for testing')
             ->addArgument(
-                'email',
+                'username',
                 InputArgument::REQUIRED,
-                'Email of the new user'
+                'Login of the new user'
             )
             ->addOption(
-                'username',
+                'email',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'If not set email will be used'
+                'If not set `username`@exaple.org will be used'
             )
             ->addOption(
                 'password',
@@ -39,21 +39,21 @@ class AddUserCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     { 
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $email =  $input->getArgument('email');   
-        $username  = $input->getOption('username');  
-        if(empty($username))
+        $username =  $input->getArgument('username');   
+        $email  = $input->getOption('email');  
+        if(empty($email))
         {
-            $username = $email;
+            $email = $username.'@example.org';
         }
         $password  = $input->getOption('password');  
         if(empty($password))
         {
-            $username = $email;
+            $password = $username;
         }
 
         $user = new User();
         $user->setUsername($username);
-        $user->setEmail($email."@example.com");
+        $user->setEmail($email);
         $user->setLastPasswordUpdate(new \DateTime("now"));
         $this->getContainer()->get('password_generator')->setUpPassword($user,$password);
 
