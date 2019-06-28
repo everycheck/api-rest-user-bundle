@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use EveryCheck\UserApiRestBundle\Entity\RenewPassword;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RenewPasswordType extends AbstractType
 {
