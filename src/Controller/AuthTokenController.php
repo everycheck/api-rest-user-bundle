@@ -59,7 +59,7 @@ class AuthTokenController extends Controller
             }
 
             $this->get('password_generator')->setUpPassword($user,$renewPassword->getPassword());
-            $em->flush();
+            $this->em->flush();
         }
 
         $authToken = null;
