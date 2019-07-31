@@ -11,7 +11,8 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "^1.0|^2.0",
         "ramsey/uuid-doctrine": "^1.5",
-        "rollerworks/password-strength-bundle": "^2.1"
+        "rollerworks/password-strength-bundle": "^2.1",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
@@ -21,7 +22,8 @@
         "sensio/framework-extra-bundle": "^5.0",
         "symfony/monolog-bundle": "^3.1",
         "symfony/polyfill-apcu": "^1.0",
-        "symfony/symfony": "3.4.*"
+        "symfony/symfony": "3.4.*",
+        "symfony/web-server-bundle": "^3.4"
     },
     "autoload": {
         "psr-4": {
@@ -36,5 +38,13 @@
             "EveryCheck\\UserApiRestBundle\\Tests\\": "Tests"
         },
         "files" : ["Tests/testProject/app/AppKernel.php"]
+    },
+    "scripts": {
+        "fixtures-test": [
+            "./Tests/testProject/app/console d:d:d --force",
+            "./Tests/testProject/app/console d:d:c",
+            "./Tests/testProject/app/console d:s:c",
+            "./Tests/testProject/app/console r:u:a admin --password password",
+            "php ./Tests/testProject/tests/TestBundle/DataFixtures/Fixtures.php 127.0.0.1:8000 admin password"        ]
     }
 }

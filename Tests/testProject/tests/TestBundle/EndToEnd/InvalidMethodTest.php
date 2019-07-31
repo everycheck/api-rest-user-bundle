@@ -10,7 +10,8 @@ class InvalidMethodTest extends JsonApiAsArrayTestCase
     * @dataProvider ApiCallProvider
     */
     public function testAPICall($data_test)
-    {
+    {        
+        $this->env = json_decode(file_get_contents(__DIR__."/../DataFixtures/env.json"), true);
         $this->genericTestAPICall($data_test);
     }
 

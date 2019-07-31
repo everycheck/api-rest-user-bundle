@@ -58,7 +58,7 @@ class AuthTokenController extends Controller
                 return $this->get('response')->formError($form);
             }
 
-            $this->get('password_generator')->setUpPassword($user,$renewPassword->getPassword());
+            $this->get('password_generator')->setUpPassword($user,$renewPassword->getNewPassword());
             $this->em->flush();
         }
 
@@ -97,6 +97,8 @@ class AuthTokenController extends Controller
     {               
         $em = $this->get('doctrine.orm.entity_manager');
         $entity = $em->getRepository(AuthToken::class)->findOneByUuid($id);
+        if(empty($entity)) return $this->get('response')->deleted();
+
         $em->remove($entity);
         $em->flush();
 

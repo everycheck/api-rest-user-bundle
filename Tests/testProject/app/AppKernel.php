@@ -22,7 +22,8 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new EveryCheck\TestApiRestBundle\TestApiRestBundle(),
             new EveryCheck\UserApiRestBundle\UserApiRestBundle(),
-            new Rollerworks\Bundle\PasswordStrengthBundle\RollerworksPasswordStrengthBundle()
+            new Rollerworks\Bundle\PasswordStrengthBundle\RollerworksPasswordStrengthBundle(),
+            new Symfony\Bundle\WebServerBundle\WebServerBundle(),
         ];
     }
 

@@ -1,23 +1,23 @@
 unit_tests:
   GET: 
-    - { url: "/users"                                             , status: 200, headers: 'X-Auth-Token : token_someone', out: "ok/users_getList"}
-    - { url: "/users/current"                                     , status: 200, headers: 'X-Auth-Token : token_someone', out: "ok/users_getCurrent"}
-    - { url: "/users/00100000-0000-4000-a000-000000000000"        , status: 200, headers: 'X-Auth-Token : token_someone', out: "ok/users_get"}
+    - { url: "/users"                         , status: 200, headers: 'X-Auth-Token : #token_1#', out: "ok/users_getList"}
+    - { url: "/users/current"                 , status: 200, headers: 'X-Auth-Token : #token_1#', out: "ok/users_getCurrent"}
+    - { url: "/users/#user_2#"                , status: 200, headers: 'X-Auth-Token : #token_1#', out: "ok/users_get"}
        
   POST:        
-    - { url: "/users"                                             , status: 201, headers: 'X-Auth-Token : token_someone', out: "ok/users_post"       , in: "ok/users_post"}
-    - { url: "/users/00100000-0000-4000-a000-000000000000/role"   , status: 201, headers: 'X-Auth-Token : token_someone', out: "ok/roles_post"       , in: "ok/roles_post"}
-    - { url: "/tokens/basic"                                      , status: 201,                                          out: "ok/token_basic_post" , in: "ok/token_post"}
-    - { url: "/tokens/jwt"                                        , status: 201,                                          out: "ok/token_jwt_post"   , in: "ok/token_post"}
-    - { url: "/users/password/reset/request"                      , status: 201,                                          out: "ok/password_reset_request_post"              , in: "ok/password_reset_request_post"}
-    - { url: "/users/password/reset/request"                      , status: 201,                                          out: "ok/password_reset_request_invalid_email_post", in: "ok/password_reset_request_invalid_email_post"}
-    - { url: "/users/password/reset/request"                      , status: 201,                                          out: "ok/password_reset_request_extra_field_post"  , in: "ok/password_reset_request_missing_field_post"}
-    - { url: "/users/password/reset/request"                      , status: 201,                                          out: "ok/password_reset_request_missing_field_post", in: "ok/password_reset_request_extra_field_post"}
+    - { url: "/user"                          , status: 201, headers: 'X-Auth-Token : #token_1#', out: "ok/users_post"       , in: "ok/users_post"}
+    - { url: "/users/#user_2#/role"           , status: 201, headers: 'X-Auth-Token : #token_1#', out: "ok/roles_post"       , in: "ok/roles_post"}
+    - { url: "/tokens/basic"                  , status: 201,                                      out: "ok/token_basic_post" , in: "ok/token_post"}
+    - { url: "/tokens/jwt"                    , status: 201,                                      out: "ok/token_jwt_post"   , in: "ok/token_post"}
+    - { url: "/users/password/reset/request"  , status: 201,                                      out: "ok/password_reset_request_post"              , in: "ok/password_reset_request_post"}
+    - { url: "/users/password/reset/request"  , status: 201,                                      out: "ok/password_reset_request_invalid_email_post", in: "ok/password_reset_request_invalid_email_post"}
+    - { url: "/users/password/reset/request"  , status: 201,                                      out: "ok/password_reset_request_extra_field_post"  , in: "ok/password_reset_request_missing_field_post"}
+    - { url: "/users/password/reset/request"  , status: 201,                                      out: "ok/password_reset_request_missing_field_post", in: "ok/password_reset_request_extra_field_post"}
        
   DELETE:       
-    - { url: "/users/00100000-0000-4000-a000-000000000000"        , status: 204, headers: 'X-Auth-Token : token_someone' }
-    - { url: "/tokens/basic/00100000-0000-4000-a000-000000000000" , status: 204, headers: 'X-Auth-Token : token_someone' }
-    - { url: "/users/roles/00100000-0000-4000-a000-000000000000"  , status: 204, headers: 'X-Auth-Token : token_someone' }
+    - { url: "/users/#user_2#"                , status: 204, headers: 'X-Auth-Token : #token_1#' }
+    - { url: "/tokens/basic/#user_2#"         , status: 204, headers: 'X-Auth-Token : #token_1#' }
+    - { url: "/users/roles/#role_3#"          , status: 204, headers: 'X-Auth-Token : #token_1#' }
 
 scenario:
   can_use_post_token_basic:
