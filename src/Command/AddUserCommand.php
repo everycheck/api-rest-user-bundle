@@ -16,7 +16,7 @@ class AddUserCommand extends ContainerAwareCommand
     {
         $this
             ->setName('rest:user:add')
-            ->setDescription('List all fixture available for testing')
+            ->setDescription('Create a new user')
             ->addArgument(
                 'username',
                 InputArgument::REQUIRED,

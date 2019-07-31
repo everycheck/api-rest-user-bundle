@@ -64,7 +64,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/users",
+     * @Route("/user",
      *     name="post_new_user",
      *     methods={"POST"}
      * )
