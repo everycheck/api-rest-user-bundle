@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\DebugBundle\DebugBundle(),
             new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
             new Sensio\Bundle\DistributionBundle\SensioDistributionBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new EveryCheck\TestApiRestBundle\TestApiRestBundle(),
             new EveryCheck\UserApiRestBundle\UserApiRestBundle(),
             new Rollerworks\Bundle\PasswordStrengthBundle\RollerworksPasswordStrengthBundle(),
