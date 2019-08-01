@@ -42,7 +42,20 @@ class Fixtures
         $this->store($client->uuid, "user_");
 
         $role = $this->api->postRole($client->uuid,[            
-            "name" => "somerole",
+            "name" => "user",
+            "creator" => "1",
+            "reader" => "1",
+            "updator" => "1",
+            "deletor" => "1",
+        ]);
+        $this->store($role->uuid, "role_");
+
+        $role = $this->api->postRole($client->uuid,[            
+            "name" => "role",
+            "creator" => "1",
+            "reader" => "1",
+            "updator" => "1",
+            "deletor" => "1",
         ]);
         $this->store($role->uuid, "role_");
 

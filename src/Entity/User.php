@@ -75,6 +75,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="UserRole", mappedBy="user")
+     * @ORM\OrderBy({"name" = "DESC"})
      */
     private $roles;
 

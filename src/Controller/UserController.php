@@ -5,6 +5,7 @@ namespace EveryCheck\UserApiRestBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use EveryCheck\ApiRest\Utils\ResponseBuilder;
 
@@ -38,6 +39,7 @@ class UserController extends Controller
      *     requirements={"id" = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"},
      *     methods={"GET"}
      * )
+     * @IsGranted("ROLE_USER_READ")
      */
     public function getUserAction($id)
     {             
@@ -53,6 +55,7 @@ class UserController extends Controller
      *     name="get_users_list",
      *     methods={"GET"}
      * )
+     * @IsGranted("ROLE_USER_READ")
      */
     public function getUsersAction()
     {
@@ -68,6 +71,7 @@ class UserController extends Controller
      *     name="post_new_user",
      *     methods={"POST"}
      * )
+     * @IsGranted("ROLE_USER_CREATE")
      */
     public function postUsersAction(Request $request)
     {
@@ -98,6 +102,7 @@ class UserController extends Controller
      *     requirements={"id" = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"},
      *     methods={"DELETE"}
      * )
+     * @IsGranted("ROLE_USER_DELETE")
      */
     public function deleteUserAction($id)
     {          

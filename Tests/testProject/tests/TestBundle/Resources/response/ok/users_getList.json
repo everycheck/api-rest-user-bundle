@@ -1,22 +1,50 @@
 [
-	{
-		"uuid":"@uuid@",
-		"username":"admin",
-		"email":"admin@example.org",
-		"active":true,
-		"roles":[]
-	},
-	{
-		"uuid":"@uuid@",
-		"username":"someone",
-		"email":"someone@everycheck.com",
-		"active":true,
-		"roles":
-		[
-			{
-				"uuid":"@uuid@",
-				"name":"somerole"
-			}
-		]
-	}
+  {
+    "uuid": "@uuid@",
+    "username": "admin",
+    "email": "admin@example.org",
+    "active": true,
+    "roles": [
+      {
+        "uuid": "@uuid@",
+        "name": "user",
+        "creator": true,
+        "reader": true,
+        "updator": true,
+        "deletor": true
+      },
+      {
+        "uuid": "@uuid@",
+        "name": "role",
+        "creator": true,
+        "reader": true,
+        "updator": true,
+        "deletor": true
+      }
+    ]
+  },
+  {
+    "uuid": "@uuid@",
+    "username": "someone",
+    "email": "someone@everycheck.com",
+    "active": true,
+    "roles": [
+      {
+        "uuid": "@uuid@",
+        "name": "user",
+        "creator": true,
+        "reader": true,
+        "updator": true,
+        "deletor": true
+      },
+      {
+        "uuid": "@uuid@",
+        "name": "role",
+        "creator": true,
+        "reader": true,
+        "updator": true,
+        "deletor": true
+      }
+    ]
+  }
 ]

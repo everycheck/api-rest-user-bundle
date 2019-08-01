@@ -26,15 +26,21 @@ class AddRoleCommand extends ContainerAwareCommand
             ->addArgument(
                 'role',
                 InputArgument::REQUIRED,
-                'If not set `username`@exaple.org will be used'
+                'role name'
+            )
+            ->addArgument(
+                'credential',
+                InputArgument::REQUIRED,
+                'credential associated to this role as int = C (1) + R (2) + U(4) + D(8)'
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     { 
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $username =  $input->getArgument('username');   
-        $roleName  = $input->getArgument('role');  
+        $em          = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $username    =  $input->getArgument('username');   
+        $roleName    = $input->getArgument('role');  
+        $credential  = intval($input->getArgument('credential'));  
 
         $user = $em->getRepository(User::class)->findOneByUsername($username);
         if(empty($user)) 
@@ -43,14 +49,23 @@ class AddRoleCommand extends ContainerAwareCommand
             exit();
         }
 
-        $role = new UserRole();
-        $role->setName($roleName);
-        $role->setUser($user);
+        $role = $em->getRepository(UserRole::class)->findOneBy(['user'=>$user,'name'=>$roleName]);
+        if(empty($role))
+        {
+            $role = new UserRole();
+            $role->setName($roleName);
+            $role->setUser($user);            
+        }
+
+        $role->setCreator(($credential & 1) == 1);
+        $role->setReader (($credential & 2) == 2);
+        $role->setUpdator(($credential & 4) == 4);
+        $role->setDeletor(($credential & 8) == 8);
 
         $em->persist($role);
         $em->flush();
 
-        $output->writeLn('<info>Role "'.$roleName.'" has been added to "'.$username.'".</info>');
+        $output->writeLn('<info>Role "'.$roleName.'" has been added to "'.$username.' with credential $credential".</info>');
     }
 
 }

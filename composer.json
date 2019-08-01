@@ -45,6 +45,8 @@
             "./Tests/testProject/app/console d:d:c",
             "./Tests/testProject/app/console d:s:c",
             "./Tests/testProject/app/console r:u:a admin --password password",
+            "./Tests/testProject/app/console r:r:a admin role 15",
+            "./Tests/testProject/app/console r:r:a admin user 15",
             "php ./Tests/testProject/tests/TestBundle/DataFixtures/Fixtures.php 127.0.0.1:8000 admin password"        ]
     }
 }

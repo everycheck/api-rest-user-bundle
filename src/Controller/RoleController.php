@@ -4,10 +4,11 @@ namespace EveryCheck\UserApiRestBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use EveryCheck\UserApiRestBundle\Entity\User;
 use EveryCheck\UserApiRestBundle\Entity\UserRole;
-use EveryCheck\UserApiRestBundle\Form\RoleType;
+use EveryCheck\UserApiRestBundle\Form\PostRoleType;
 
 class RoleController extends Controller
 {
@@ -17,13 +18,14 @@ class RoleController extends Controller
      *     requirements={"id" = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"},
      *     methods={"POST"}
      * )
+     * @IsGranted("ROLE_ROLE_CREATE")
      */
     public function postRoleAction(Request $request,$id)
     {
         $this->em = $this->get('doctrine.orm.entity_manager');
 
         $role = new UserRole();
-        $form = $this->createForm(RoleType::class, $role);
+        $form = $this->createForm(PostRoleType::class, $role);
 
         $user = $this->em->getRepository(User::class)->findOneByUuid($id);
         if(empty($user))
@@ -49,7 +51,8 @@ class RoleController extends Controller
      *     requirements={"id" = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"},
      *     name="delete_user_role",
      *     methods={"DELETE"}
-     * )
+     * )     
+     * @IsGranted("ROLE_ROLE_DELETE")
      */
     public function deleteRoleAction($id)
     {               

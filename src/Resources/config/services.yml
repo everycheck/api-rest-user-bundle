@@ -34,3 +34,9 @@ services:
         class: EveryCheck\ApiRest\Utils\ResponseBuilder
         arguments: ["@jms_serializer"]
         public: true
+
+    role_voter:
+        class:  EveryCheck\UserApiRestBundle\Security\RoleVoter
+        tags:
+            - { name: security.voter }
+        public: false
