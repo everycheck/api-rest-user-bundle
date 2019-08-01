@@ -11,6 +11,8 @@ class RoleVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
+        if(!is_string($attribute)) return false;
+        if(!is_null($subject)) return false;
         return true;
     }
 

@@ -100,15 +100,18 @@ class UserControllerTest extends TestCase
     /**
      * @dataProvider data_patchUsersAction
      */
-    public function test_patchUsersAction(string $response,array $formValid, $user)
+    public function test_patchUsersAction(string $response,array $formValid, $user, $isEditingCurrentUser)
     {    
-        $request = $this->buildRequest('{"test":"test"}',empty($user)?0:1);
+        $request = $this->buildRequest('{"test":"test"}',empty($formValid)?0:1);
+        $expectedCallTokenStorage = empty($user)?0:1;
+        $tokenStorageUser = $isEditingCurrentUser ? $user :  null;
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($user,'findOneByUuid')                              ],
-            ['form.factory'                , $e , $this->buildForm($formValid)                             ],
-            ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse) ],
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($user,'findOneByUuid')                      ],
+            ['form.factory'                , $e , $this->buildForm($formValid)                                          ],
+            ['security.token_storage'      , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
+            ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse)              ],
         ];
         $container = $this->buildContainer($services);
 
@@ -123,9 +126,10 @@ class UserControllerTest extends TestCase
     public function data_patchUsersAction()
     {
         return [
-            ['notFound'   , []      , null       ],
-            ['formError'  , [false] , new User   ],
-            ['ok'         , [true]  , new User   ],
+            ['notFound'   , []      , null      , false  ],
+            ['forbidden'  , []      , new User  , true   ],
+            ['formError'  , [false] , new User  , false  ],
+            ['ok'         , [true]  , new User  , false  ],
         ];
     }
 

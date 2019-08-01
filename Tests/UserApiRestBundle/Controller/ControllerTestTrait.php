@@ -96,17 +96,17 @@ trait ControllerTestTrait
         return $request;
     }
 
-    protected function buildTokenStorage($user)
+    protected function buildTokenStorage($user,$countCall=1)
     {
         $token = $this->getMockBuilder('stdClass')
                       ->setMethods(['getUser'])
                       ->getMock();  
-        $token->expects($this->exactly(1))->method('getUser')->willReturn($user);
+        $token->expects($this->exactly($countCall))->method('getUser')->willReturn($user);
 
         $tokenStorage = $this->getMockBuilder('stdClass')
                              ->setMethods(['getToken'])
                              ->getMock();  
-        $tokenStorage->expects($this->exactly(1))->method('getToken')->willReturn($token);
+        $tokenStorage->expects($this->exactly($countCall))->method('getToken')->willReturn($token);
 
         return $tokenStorage;
     }

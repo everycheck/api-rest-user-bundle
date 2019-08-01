@@ -76,12 +76,19 @@ class UserController extends Controller
      */
     public function patchUserAction(Request $request,$id)
     {          
+
         $em = $this->get('doctrine.orm.entity_manager');
         $user = $em->getRepository(User::class)->findOneByUuid($id);
         if(empty($user))
         {
             return $this->get('response')->notFound();
         }
+
+        if($this->get('security.token_storage')->getToken()->getUser() == $user)
+        {
+            return $this->get("response")->forbidden('cannot edit itself');
+        }
+
         $requestData = json_decode($request->getContent(), $responseAsArray=true);
 
         $form = $this->createForm(PatchUserType::class, $user);
