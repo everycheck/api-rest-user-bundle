@@ -1,7 +1,17 @@
 unit_tests:
   POST:
-    - { url: "/users/password/reset", status: 400, out: "bad_request/password_reset_extra_field_post"  , in: "bad_request/password_reset_extra_field_post"}
-    - { url: "/users/password/reset", status: 400, out: "bad_request/password_reset_missing_field_post", in: "bad_request/password_reset_missing_field_post"}
-    - { url: "/users/password/reset", status: 400, out: "bad_request/password_reset_invalid_token_post", in: "bad_request/password_reset_invalid_token_post"}
-    - { url: "/users/password/reset", status: 400, out: "bad_request/password_reset_invalid_user_post" , in: "bad_request/password_reset_invalid_user_post"}
-    - { url: "/users/password/reset", status: 400, out: "bad_request/password_reset_expired_token_post", in: "bad_request/password_reset_expired_token_post"}
+    - { url: "/users/password/reset"              , status: 400, out: "bad_request/password_reset_extra_field_post"  , in: "bad_request/password_reset_extra_field_post"}
+    - { url: "/users/password/reset"              , status: 400, out: "bad_request/password_reset_missing_field_post", in: "bad_request/password_reset_missing_field_post"}
+    - { url: "/users/password/reset"              , status: 400, out: "bad_request/password_reset_invalid_token_post", in: "bad_request/password_reset_invalid_token_post"}
+    - { url: "/users/password/reset"              , status: 400, out: "bad_request/password_reset_invalid_user_post" , in: "bad_request/password_reset_invalid_user_post"}
+    - { url: "/users/password/reset"              , status: 400, out: "bad_request/password_reset_expired_token_post", in: "bad_request/password_reset_expired_token_post"}
+               
+    - { url: "/user"                              , status: 400, out: "bad_request/user_username_duplicated"         , in: "bad_request/user_username_duplicated"   , headers: 'X-Auth-Token : #token_user_creator_5#'  }
+    - { url: "/user"                              , status: 400, out: "bad_request/user_email_duplicated"            , in: "bad_request/user_email_duplicated"      , headers: 'X-Auth-Token : #token_user_creator_5#'  }
+
+    - { url: "/users/#user_role_deletor_24#/role" , status: 400, out: "bad_request/role_duplicated"                  , in: "bad_request/role_duplicated"            , headers: 'X-Auth-Token : #token_role_creator_17#' }
+    - { url: "/users/#user_role_deletor_24#/role" , status: 400, out: "bad_request/role_invalid_creator"             , in: "bad_request/role_invalid_creator"       , headers: 'X-Auth-Token : #token_role_creator_17#' }
+    - { url: "/users/#user_role_deletor_24#/role" , status: 400, out: "bad_request/role_invalid_reader"              , in: "bad_request/role_invalid_reader"        , headers: 'X-Auth-Token : #token_role_creator_17#' }
+    - { url: "/users/#user_role_deletor_24#/role" , status: 400, out: "bad_request/role_invalid_updator"             , in: "bad_request/role_invalid_updator"       , headers: 'X-Auth-Token : #token_role_creator_17#' }
+    - { url: "/users/#user_role_deletor_24#/role" , status: 400, out: "bad_request/role_invalid_deletor"             , in: "bad_request/role_invalid_deletor"       , headers: 'X-Auth-Token : #token_role_creator_17#' }
+    - { url: "/users/#user_role_deletor_24#/role" , status: 400, out: "bad_request/role_invalid_administrator"       , in: "bad_request/role_invalid_administrator" , headers: 'X-Auth-Token : #token_role_creator_17#' }

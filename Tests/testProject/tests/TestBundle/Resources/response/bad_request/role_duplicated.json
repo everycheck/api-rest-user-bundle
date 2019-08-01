@@ -1,0 +1,14 @@
+{
+  "children": {
+    "name": {
+      "errors": [
+        "This value is already used."
+      ]
+    },
+    "creator": [],
+    "reader": [],
+    "updator": [],
+    "deletor": [],
+    "administrator": []
+  }
+}

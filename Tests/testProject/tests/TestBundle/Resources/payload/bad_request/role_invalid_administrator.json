@@ -1,0 +1,8 @@
+{
+	"name":"user",
+	"creator": "1",
+	"reader": "1",
+	"updator": "1",
+	"deletor": "1",
+	"administrator":"lol"
+}

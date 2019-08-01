@@ -1,0 +1,11 @@
+{
+  "children": {
+    "username": {
+      "errors": [
+        "This value is already used."
+      ]
+    },
+    "email": [],
+    "password": []
+  }
+}
