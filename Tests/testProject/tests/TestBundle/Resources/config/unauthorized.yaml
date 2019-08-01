@@ -4,6 +4,9 @@ unit_tests:
     - { url: "/users/current"              , status: 401}
     - { url: "/users/#user_admin_1#"       , status: 401}
        
+  PATCH:        
+    - { url: "/users/roles/#user_admin_1#" , status: 401}
+
   POST:        
     - { url: "/user"                        , status: 401}
     - { url: "/users/#user_admin_1#/role"   , status: 401}

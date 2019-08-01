@@ -4,6 +4,9 @@ unit_tests:
     - { url: "/users/current"                 , status: 200, headers: 'X-Auth-Token : #token_user_reader_8#', out: "ok/users_getCurrent"}
     - { url: "/users/#user_admin_1#"          , status: 200, headers: 'X-Auth-Token : #token_user_reader_8#', out: "ok/users_get"}
        
+  PATCH:
+    - { url: "/users/roles/#role_25#"         , status: 200, headers: 'X-Auth-Token : #token_role_updator_23#', out: "ok/patch_role"   , in: "ok/patch_role"  }
+
   POST:        
     - { url: "/user"                          , status: 201, headers: 'X-Auth-Token : #token_user_creator_5#' , out: "ok/users_post"       , in: "ok/users_post"}
     - { url: "/users/#user_admin_1#/role"     , status: 201, headers: 'X-Auth-Token : #token_role_creator_17#', out: "ok/roles_post"       , in: "ok/roles_post"}

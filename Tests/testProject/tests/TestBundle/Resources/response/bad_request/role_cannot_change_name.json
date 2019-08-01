@@ -1,0 +1,12 @@
+{
+  "children": {
+    "creator": [],
+    "reader": [],
+    "updator": [],
+    "deletor": [],
+    "administrator": []
+  },
+  "errors": [
+    "This form should not contain extra fields."
+  ]
+}

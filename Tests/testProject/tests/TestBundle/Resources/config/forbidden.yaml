@@ -15,7 +15,16 @@ unit_tests:
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_role_reader_20#'   }
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_role_updator_23#'  }
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_role_deletor_26#'  }
-       
+
+  PATCH:
+    - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_user_creator_5#'  }
+    - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_user_reader_8#'   }
+    - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_user_updator_11#' }
+    - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_user_deletor_14#' }
+    - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_role_creator_17#' }
+    - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_role_reader_20#'  }
+    - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_role_deletor_26#' }
+
   POST:        
     - { url: "/user"                          , status: 403, headers: 'X-Auth-Token : #token_user_reader_8#'   }
     - { url: "/user"                          , status: 403, headers: 'X-Auth-Token : #token_user_updator_11#' }

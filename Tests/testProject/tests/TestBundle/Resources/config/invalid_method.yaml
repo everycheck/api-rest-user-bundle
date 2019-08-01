@@ -19,7 +19,6 @@ unit_tests:
     - { url: "/users/#user_admin_1#/role"    , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/tokens/basic"                 , status: 405 }
     - { url: "/tokens/basic/#user_admin_1#"  , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
-    - { url: "/users/roles/#user_admin_1#"   , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
 
   GET: 
     - { url: "/users/password/reset/request" , status: 405 }

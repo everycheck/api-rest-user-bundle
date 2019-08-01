@@ -37,10 +37,41 @@ class RoleControllerTest extends TestCase
     public function data_postRoleAction()
     {
         return [
-            [[]  ,'notFound'  , null     , 0 ],
-            [[]   ,'notFound'  , null     , 0 ],
-            [[false]  ,'formError' , new User , 1 ],
-            [[true]   ,'created'   , new User , 1 ]
+            [[]      ,'notFound'  , null     , 0 ],
+            [[false] ,'formError' , new User , 1 ],
+            [[true]  ,'created'   , new User , 1 ]
+        ];
+    }
+
+    /**
+     * @dataProvider data_patchRoleAction
+     */
+    public function test_patchRoleAction(array $formValid,string $response, $role,$requestGetContentCallCount)
+    {    
+        $request = $this->buildRequest('{"test":"test"}',$requestGetContentCallCount);
+        $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
+        $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
+        $services =[            
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($role,'findOneByUuid')               ],
+            ['form.factory'                , $e , $this->buildForm($formValid)                                   ],
+            ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],
+        ];
+        $container = $this->buildContainer($services);
+
+        $roleController = new RoleController();
+        $roleController->setContainer($container);
+
+        $response = $roleController->patchRoleAction($request,$id = 'not really used due to mocking');
+
+        $this->assertEquals($response,$expectedResponse);
+    }    
+
+    public function data_patchRoleAction()
+    {
+        return [
+            [[]       ,'notFound'  , null         , 0 ],
+            [[false]  ,'formError' , new UserRole , 1 ],
+            [[true]   ,'ok'        , new UserRole , 1 ]
         ];
     }
 

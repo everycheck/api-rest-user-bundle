@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use EveryCheck\UserApiRestBundle\Entity\User;
 use EveryCheck\UserApiRestBundle\Entity\UserRole;
 use EveryCheck\UserApiRestBundle\Form\PostRoleType;
+use EveryCheck\UserApiRestBundle\Form\PatchRoleType;
 
 class RoleController extends Controller
 {
@@ -44,6 +45,38 @@ class RoleController extends Controller
         $this->em->flush();
         
         return $this->get('response')->created($role);
+    }
+
+    /**
+     * @Route("/users/roles/{id}",
+     *     requirements={"id" = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"},
+     *     name="patch_user_role",
+     *     methods={"PATCH"}
+     * )     
+     * @IsGranted("ROLE_ROLE_UPDATE")
+     */
+    public function patchRoleAction(Request $request,$id)
+    {
+        $this->em = $this->get('doctrine.orm.entity_manager');
+
+        $role = $this->em->getRepository(UserRole::class)->findOneByUuid($id);
+
+        if(empty($role))
+        {
+            return $this->get('response')->notFound();
+        }
+
+        $form = $this->createForm(PatchRoleType::class, $role);
+        $form->submit(json_decode($request->getContent(), true),true);
+        if ($form->isValid() == false)
+        {
+            return $this->get('response')->formError($form);
+        }
+
+        $this->em->persist($role);
+        $this->em->flush();
+        
+        return $this->get('response')->ok($role);
     }
 
     /**
