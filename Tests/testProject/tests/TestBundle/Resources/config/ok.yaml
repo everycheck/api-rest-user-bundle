@@ -6,6 +6,7 @@ unit_tests:
        
   PATCH:
     - { url: "/users/roles/#role_25#"         , status: 200, headers: 'X-Auth-Token : #token_role_updator_23#', out: "ok/patch_role"   , in: "ok/patch_role"  }
+    - { url: "/users/#user_admin_1#"          , status: 200, headers: 'X-Auth-Token : #token_user_updator_11#', out: "ok/patch_user"   , in: "ok/patch_user"  }
 
   POST:        
     - { url: "/user"                          , status: 201, headers: 'X-Auth-Token : #token_user_creator_5#' , out: "ok/users_post"       , in: "ok/users_post"}

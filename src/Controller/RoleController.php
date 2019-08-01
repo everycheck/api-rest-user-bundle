@@ -66,8 +66,10 @@ class RoleController extends Controller
             return $this->get('response')->notFound();
         }
 
+        $requestData = json_decode($request->getContent(), $responseAsArray=true);
+
         $form = $this->createForm(PatchRoleType::class, $role);
-        $form->submit(json_decode($request->getContent(), true),true);
+        $form->submit($requestData,$clearMissing=false);
         if ($form->isValid() == false)
         {
             return $this->get('response')->formError($form);

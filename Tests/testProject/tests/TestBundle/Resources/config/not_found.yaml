@@ -6,6 +6,8 @@ unit_tests:
   PATCH:
     - { url: "/users/roles/1"               , status: 404, headers: 'X-Auth-Token : #token_admin_2#' }
     - { url: "/users/roles/#user_admin_1#"  , status: 404, headers: 'X-Auth-Token : #token_admin_2#' }
+    - { url: "/users/1"                     , status: 404, headers: 'X-Auth-Token : #token_admin_2#' }
+    - { url: "/users/#role_4#"              , status: 404, headers: 'X-Auth-Token : #token_admin_2#' }
     
   POST:
     - { url: "/tokens/undefined"            , status: 404}

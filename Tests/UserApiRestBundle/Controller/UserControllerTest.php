@@ -98,6 +98,38 @@ class UserControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider data_patchUsersAction
+     */
+    public function test_patchUsersAction(string $response,array $formValid, $user)
+    {    
+        $request = $this->buildRequest('{"test":"test"}',empty($user)?0:1);
+        $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
+        $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
+        $services =[
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($user,'findOneByUuid')                              ],
+            ['form.factory'                , $e , $this->buildForm($formValid)                             ],
+            ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse) ],
+        ];
+        $container = $this->buildContainer($services);
+
+        $userController = new UserController();
+        $userController->setContainer($container);
+
+        $response = $userController->patchUserAction($request,'some_useless_id');
+
+        $this->assertEquals($response,$expectedResponse);
+    }    
+
+    public function data_patchUsersAction()
+    {
+        return [
+            ['notFound'   , []      , null       ],
+            ['formError'  , [false] , new User   ],
+            ['ok'         , [true]  , new User   ],
+        ];
+    }
+
+    /**
      * @dataProvider data_postUsersAction
      */
     public function test_postUsersAction(string $response,array $formValid)

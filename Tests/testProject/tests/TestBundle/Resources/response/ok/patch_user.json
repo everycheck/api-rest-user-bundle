@@ -1,0 +1,24 @@
+{
+  "uuid": "@uuid@",
+  "username": "admin",
+  "email": "admin@example.org",
+  "active": false,
+  "roles": [
+    {
+      "uuid": "@uuid@",
+      "name": "user",
+      "creator": true,
+      "reader": true,
+      "updator": true,
+      "deletor": true
+    },
+    {
+      "uuid": "@uuid@",
+      "name": "role",
+      "creator": true,
+      "reader": true,
+      "updator": true,
+      "deletor": true
+    }
+  ]
+}

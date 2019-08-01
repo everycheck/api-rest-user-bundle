@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use EveryCheck\UserApiRestBundle\Entity\User;
 
-class UserType extends AbstractType
+class PostUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -12,7 +12,8 @@ use EveryCheck\ApiRest\Utils\ResponseBuilder;
 use EveryCheck\UserApiRestBundle\Entity\User;
 use EveryCheck\UserApiRestBundle\Entity\ResetPasswordRequest;
 use EveryCheck\UserApiRestBundle\Entity\ResetPassword;
-use EveryCheck\UserApiRestBundle\Form\UserType;
+use EveryCheck\UserApiRestBundle\Form\PostUserType;
+use EveryCheck\UserApiRestBundle\Form\PatchUserType;
 use EveryCheck\UserApiRestBundle\Form\ResetPasswordRequestType;
 use EveryCheck\UserApiRestBundle\Form\ResetPasswordType;
 use EveryCheck\UserApiRestBundle\Event\UserEvent;
@@ -66,6 +67,37 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/users/{id}",
+     *     name="patch_users",
+     *     requirements={"id" = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"},
+     *     methods={"PATCH"}
+     * )
+     * @IsGranted("ROLE_USER_UPDATE")
+     */
+    public function patchUserAction(Request $request,$id)
+    {          
+        $em = $this->get('doctrine.orm.entity_manager');
+        $user = $em->getRepository(User::class)->findOneByUuid($id);
+        if(empty($user))
+        {
+            return $this->get('response')->notFound();
+        }
+        $requestData = json_decode($request->getContent(), $responseAsArray=true);
+
+        $form = $this->createForm(PatchUserType::class, $user);
+        $form->submit($requestData,$clearMissing=false);
+        if ($form->isValid() ==  false)
+        {
+            return $this->get('response')->formError($form);
+        }
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->get('response')->ok($user);
+    }
+
+    /**
      * @Route("/user",
      *     name="post_new_user",
      *     methods={"POST"}
@@ -75,7 +107,7 @@ class UserController extends Controller
     public function postUsersAction(Request $request)
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(PostUserType::class, $user);
 
         $form->submit(json_decode($request->getContent(), true),true);
 
@@ -113,10 +145,10 @@ class UserController extends Controller
             return $this->get('response')->deleted();
         }
 
+        $this->get('event_dispatcher')->dispatch(UserEvent::DELETE_NAME,new UserEvent($user));
+
         $em->remove($user);
         $em->flush();
-
-        $this->get('event_dispatcher')->dispatch(UserEvent::DELETE_NAME,new UserEvent($user));
 
         return $this->get('response')->deleted();
     }

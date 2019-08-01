@@ -21,37 +21,26 @@ class PostRoleType extends AbstractType
         ]);  
         $builder->add('creator', TextType::class ,[
             'constraints' => [
-                new Assert\NotBlank(),
-                new Assert\Choice([
-                    'choices'=>['0','1'],
-                    'strict' => true
-                ])
+                new Assert\Choice([ 'choices'=>['0','1'],'strict' => true]),
+                new Assert\NotNull(),
             ]
         ]);  
         $builder->add('reader', TextType::class ,[
             'constraints' => [
-                new Assert\NotBlank(),
-                new Assert\Choice([
-                    'choices'=>['0','1'],
-                    'strict' => true
-                ])
-            ]        ]);  
+                new Assert\Choice([ 'choices'=>['0','1'],'strict' => true]),
+                new Assert\NotNull(),
+            ]  
+        ]);  
         $builder->add('updator', TextType::class ,[
             'constraints' => [
-                new Assert\NotBlank(),
-                new Assert\Choice([
-                    'choices'=>['0','1'],
-                    'strict' => true
-                ])
+                new Assert\Choice([ 'choices'=>['0','1'],'strict' => true]),
+                new Assert\NotNull(),
             ]
         ]);  
         $builder->add('deletor', TextType::class ,[
             'constraints' => [
-                new Assert\NotBlank(),
-                new Assert\Choice([
-                    'choices'=>['0','1'],
-                    'strict' => true
-                ])
+                new Assert\Choice([ 'choices'=>['0','1'],'strict' => true]),
+                new Assert\NotNull(),
             ]
         ]);
         $builder->add('administrator' , DateTimeType::class, [
