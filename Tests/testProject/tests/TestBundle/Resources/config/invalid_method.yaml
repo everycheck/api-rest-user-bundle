@@ -1,44 +1,44 @@
 unit_tests:
   PUT:
-    - { url: "/users"                        , status: 405, headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/users/current"                , status: 405, headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/users/#user_2#"               , status: 405, headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/users"                        , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/current"                , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/#user_admin_1#"         , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/password/reset/request" , status: 405 }
     - { url: "/users/password/reset"         , status: 405 }
-    - { url: "/users/#user_2#/role"          , status: 405, headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/users/#user_admin_1#/role"    , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/tokens/basic"                 , status: 405 }
-    - { url: "/tokens/basic/#user_2#"        , status: 405 , headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/users/roles/#user_2#"         , status: 405 , headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/tokens/basic/#user_admin_1#"  , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/roles/#user_admin_1#"   , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
 
   PATCH:
-    - { url: "/users"                        , status: 405, headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/users/current"                , status: 405, headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/users/#user_2#"               , status: 405, headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/users"                        , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/current"                , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/#user_admin_1#"         , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/password/reset/request" , status: 405 }
     - { url: "/users/password/reset"         , status: 405 }
-    - { url: "/users/#user_2#/role"          , status: 405, headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/users/#user_admin_1#/role"    , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/tokens/basic"                 , status: 405 }
-    - { url: "/tokens/basic/#user_2#"        , status: 405 , headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/users/roles/#user_2#"         , status: 405 , headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/tokens/basic/#user_admin_1#"  , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/roles/#user_admin_1#"   , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
 
   GET: 
     - { url: "/users/password/reset/request" , status: 405 }
     - { url: "/users/password/reset"         , status: 405 }
-    - { url: "/users/#user_2#/role"          , status: 405, headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/users/#user_admin_1#/role"    , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/tokens/basic"                 , status: 405 }
-    - { url: "/tokens/basic/#user_2#"        , status: 405 , headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/users/roles/#user_2#"         , status: 405 , headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/tokens/basic/#user_admin_1#"  , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/roles/#user_admin_1#"   , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
      
   POST:        
-    - { url: "/users/current"                , status: 405 , headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/users/#user_2#"               , status: 405 , headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/tokens/basic/#user_2#"        , status: 405 , headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/users/roles/#user_2#"         , status: 405 , headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/users/current"                , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/#user_admin_1#"         , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/tokens/basic/#user_admin_1#"  , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/roles/#user_admin_1#"   , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
        
   DELETE:       
-    - { url: "/users/current"                , status: 405, headers: 'X-Auth-Token : #token_1#'}
-    - { url: "/users"                        , status: 405, headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/users/current"                , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users"                        , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/password/reset/request" , status: 405 }
     - { url: "/users/password/reset"         , status: 405 }
-    - { url: "/users/#user_2#/role"          , status: 405, headers: 'X-Auth-Token : #token_1#'}
+    - { url: "/users/#user_admin_1#/role"    , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/tokens/basic"                 , status: 405 }

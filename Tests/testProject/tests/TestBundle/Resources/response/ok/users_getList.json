@@ -5,7 +5,7 @@
     "email": "admin@example.org",
     "active": true,
     "roles": [
-      {
+      {   
         "uuid": "@uuid@",
         "name": "user",
         "creator": true,
@@ -25,24 +25,128 @@
   },
   {
     "uuid": "@uuid@",
-    "username": "someone",
-    "email": "someone@everycheck.com",
+    "username": "user_user_creator",
+    "email": "user_user_creator@everycheck.com",
     "active": true,
     "roles": [
       {
         "uuid": "@uuid@",
         "name": "user",
         "creator": true,
+        "reader": false,
+        "updator": false,
+        "deletor": false
+      }
+    ]
+  },
+  {
+    "uuid": "@uuid@",
+    "username": "user_user_reader",
+    "email": "user_user_reader@everycheck.com",
+    "active": true,
+    "roles": [
+      {
+        "uuid": "@uuid@",
+        "name": "user",
+        "creator": false,
         "reader": true,
+        "updator": false,
+        "deletor": false
+      }
+    ]
+  },
+  {
+    "uuid": "@uuid@",
+    "username": "user_user_updator",
+    "email": "user_user_updator@everycheck.com",
+    "active": true,
+    "roles": [
+      {
+        "uuid": "@uuid@",
+        "name": "user",
+        "creator": false,
+        "reader": false,
         "updator": true,
+        "deletor": false
+      }
+    ]
+  },
+  {
+    "uuid": "@uuid@",
+    "username": "user_user_deletor",
+    "email": "user_user_deletor@everycheck.com",
+    "active": true,
+    "roles": [
+      {
+        "uuid": "@uuid@",
+        "name": "user",
+        "creator": false,
+        "reader": false,
+        "updator": false,
         "deletor": true
-      },
+      }
+    ]
+  },
+  {
+    "uuid": "@uuid@",
+    "username": "user_role_creator",
+    "email": "user_role_creator@everycheck.com",
+    "active": true,
+    "roles": [
       {
         "uuid": "@uuid@",
         "name": "role",
         "creator": true,
+        "reader": false,
+        "updator": false,
+        "deletor": false
+      }
+    ]
+  },
+  {
+    "uuid": "@uuid@",
+    "username": "user_role_reader",
+    "email": "user_role_reader@everycheck.com",
+    "active": true,
+    "roles": [
+      {
+        "uuid": "@uuid@",
+        "name": "role",
+        "creator": false,
         "reader": true,
+        "updator": false,
+        "deletor": false
+      }
+    ]
+  },
+  {
+    "uuid": "@uuid@",
+    "username": "user_role_updator",
+    "email": "user_role_updator@everycheck.com",
+    "active": true,
+    "roles": [
+      {
+        "uuid": "@uuid@",
+        "name": "role",
+        "creator": false,
+        "reader": false,
         "updator": true,
+        "deletor": false
+      }
+    ]
+  },
+  {
+    "uuid": "@uuid@",
+    "username": "user_role_deletor",
+    "email": "user_role_deletor@everycheck.com",
+    "active": true,
+    "roles": [
+      {
+        "uuid": "@uuid@",
+        "name": "role",
+        "creator": false,
+        "reader": false,
+        "updator": false,
         "deletor": true
       }
     ]

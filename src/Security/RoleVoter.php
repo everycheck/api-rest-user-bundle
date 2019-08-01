@@ -11,9 +11,6 @@ class RoleVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        // file_put_contents("attribute.json", json_encode($attribute,JSON_PRETTY_PRINT));
-        // file_put_contents("subject.json", json_encode($subject,JSON_PRETTY_PRINT));
-        // die;
         return true;
     }
 

@@ -56,6 +56,18 @@ class Api{
 		return $response;
 	}
 
+	public function getCurrentUser(): \stdClass
+	{
+		$response = $this->guzzleClient->request("GET","/users/current", $this->getOption());
+		
+		if($response->getStatusCode() !== 200)
+		{
+			$this->handleError($response);
+		}
+
+		return json_decode($response->getBody());
+	}
+
 	public function postUser(array $client): \stdClass
 	{
 		$response = $this->guzzleClient->request("POST","/user", $this->getOption($client));
@@ -90,7 +102,7 @@ class Api{
 		throw new \Exception("Error happened : " . $response->getStatusCode() . "\n Enable debug to see more.");
 	}
 
-	private function getOption($body, $json = true,$filename = "")
+	private function getOption($body = '', $json = true,$filename = "")
 	{
 		return [
 			"body" => $json?json_encode($body):$body,

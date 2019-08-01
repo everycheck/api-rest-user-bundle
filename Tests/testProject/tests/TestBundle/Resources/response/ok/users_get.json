@@ -1,7 +1,7 @@
 {
   "uuid": "@uuid@",
-  "username": "someone",
-  "email": "someone@everycheck.com",
+  "username": "admin",
+  "email": "admin@example.org",
   "active": true,
   "roles": [
     {

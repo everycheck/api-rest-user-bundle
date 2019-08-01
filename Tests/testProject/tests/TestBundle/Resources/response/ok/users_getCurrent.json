@@ -1,24 +1,16 @@
 {
   "uuid": "@uuid@",
-  "username": "admin",
-  "email": "admin@example.org",
+  "username": "user_user_reader",
+  "email": "user_user_reader@everycheck.com",
   "active": true,
   "roles": [
     {
       "uuid": "@uuid@",
       "name": "user",
-      "creator": true,
+      "creator": false,
       "reader": true,
-      "updator": true,
-      "deletor": true
-    },
-    {
-      "uuid": "@uuid@",
-      "name": "role",
-      "creator": true,
-      "reader": true,
-      "updator": true,
-      "deletor": true
+      "updator": false,
+      "deletor": false
     }
   ]
 }
