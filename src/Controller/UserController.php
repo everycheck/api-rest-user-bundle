@@ -42,12 +42,11 @@ class UserController extends Controller
      * @IsGranted("ROLE_USER_READ")
      */
     public function getUserAction($id)
-    {             
-        return $this->get('response')->ok(
-            $this->get('doctrine.orm.entity_manager')
-                    ->getRepository(User::class)
-                    ->findOneByUuid($id)
-            );
+    {            
+        $user = $this->get('doctrine.orm.entity_manager')->getRepository(User::class)->findOneByUuid($id);
+        if(empty($user)) return $this->get('response')->notFound();
+
+        return $this->get('response')->ok($user);
     }
 
     /**

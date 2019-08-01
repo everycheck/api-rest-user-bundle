@@ -1,10 +1,12 @@
 unit_tests:
   GET:
     - { url: "/users/1"        , status: 404, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/#role_4#" , status: 404, headers: 'X-Auth-Token : #token_admin_2#'}
 
   POST:
-    - { url: "/tokens/undefined", status: 404}
-    - { url: "/users/1/role"    , status: 404, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/tokens/undefined"    , status: 404}
+    - { url: "/users/1/role"        , status: 404, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/#role_4#/role" , status: 404, headers: 'X-Auth-Token : #token_admin_2#'}
 
   DELETE:
     - { url: "/users/1"        , status: 404, headers: 'X-Auth-Token : #token_admin_2#' }

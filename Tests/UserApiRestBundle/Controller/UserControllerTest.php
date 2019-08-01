@@ -63,7 +63,8 @@ class UserControllerTest extends TestCase
     public function data_getUserAction()
     {
         return [
-            ['ok'   , $this->getUser() , 'someUselessId']
+            ['notFound'   , null             , 'someUselessId'],
+            ['ok'         , $this->getUser() , 'someUselessId']
         ];
     }
 
