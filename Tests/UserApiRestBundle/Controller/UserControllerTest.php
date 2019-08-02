@@ -171,13 +171,16 @@ class UserControllerTest extends TestCase
     /**
      * @dataProvider data_deleteUserAction
      */
-    public function test_deleteUserAction(string $response, $user)
+    public function test_deleteUserAction(string $response, $user,$isDeletingCurrentUser)
     {    
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
+        $expectedCallTokenStorage = empty($user)?0:1;
+        $tokenStorageUser = $isDeletingCurrentUser ? $user :  null;
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[
             ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($user,'findOneByUuid')        ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse) ],
+            ['security.token_storage'      , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
             ['event_dispatcher'            , $e , $this->buildEventDispatcher()                            ]
             
         ];
@@ -196,8 +199,9 @@ class UserControllerTest extends TestCase
     public function data_deleteUserAction()
     {
         return [
-            ['deleted'   , null ],
-            ['deleted'   , $this->getUser() ],
+            ['deleted'   , null             , false ],
+            ['forbidden' , $this->getUser() , true  ],
+            ['deleted'   , $this->getUser() , false ],
         ];
     }
 }
