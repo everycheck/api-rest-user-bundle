@@ -11,6 +11,7 @@ trait ControllerTestTrait
             ->setMethods(['get','set','has','initialized','getParameter','hasParameter','setParameter'])
             ->getMock();
 
+        $contrainer->method('has')->willReturn(true);
         $contrainer->method('get')->will($this->returnValueMap($services));
         $contrainer->method('getParameter')->will($this->returnValueMap($parameters));
 
@@ -125,6 +126,16 @@ trait ControllerTestTrait
                      ->setMethods(['dispatch'])
                      ->getMock();
         return $eventDispatcher;
+    }
+
+    protected function buildAuthorizationChecker($countCall = 0)
+    {
+        $authorizationChecker = $this->getMockBuilder('stdClass')
+                     ->setMethods(['isGranted'])
+                     ->getMock();   
+        $authorizationChecker->expects($this->exactly($countCall))->method('isGranted')->willReturn(true);
+
+        return $authorizationChecker;
     }
 
     protected function getUser($format = 'now'): User

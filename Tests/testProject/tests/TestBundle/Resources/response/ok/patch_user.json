@@ -19,6 +19,14 @@
       "reader": true,
       "updator": true,
       "deletor": true
+    },
+    {
+      "uuid": "@uuid@",
+      "name": "none",
+      "creator": true,
+      "reader": true,
+      "updator": true,
+      "deletor": true
     }
   ]
 }

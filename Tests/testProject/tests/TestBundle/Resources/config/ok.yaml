@@ -10,7 +10,7 @@ unit_tests:
 
   POST:        
     - { url: "/user"                          , status: 201, headers: 'X-Auth-Token : #token_user_creator_5#' , out: "ok/users_post"       , in: "ok/users_post"}
-    - { url: "/users/#user_admin_1#/role"     , status: 201, headers: 'X-Auth-Token : #token_role_creator_17#', out: "ok/roles_post"       , in: "ok/roles_post"}
+    - { url: "/users/#user_none_none_27#/role", status: 201, headers: 'X-Auth-Token : #token_role_creator_17#', out: "ok/roles_post"       , in: "ok/roles_post"}
     - { url: "/tokens/basic"                  , status: 201,                                                    out: "ok/token_basic_post" , in: "ok/token_post"}
     - { url: "/tokens/jwt"                    , status: 201,                                                    out: "ok/token_jwt_post"   , in: "ok/token_post"}
     - { url: "/users/password/reset/request"  , status: 201,                                                    out: "ok/password_reset_request_post"              , in: "ok/password_reset_request_post"}
@@ -21,7 +21,7 @@ unit_tests:
   DELETE:       
     - { url: "/users/#user_admin_1#"          , status: 204, headers: 'X-Auth-Token : #token_user_deletor_14#' }
     - { url: "/tokens/basic/#user_admin_1#"   , status: 204, headers: 'X-Auth-Token : #token_admin_2#' }
-    - { url: "/users/roles/#role_4#"          , status: 204, headers: 'X-Auth-Token : #token_role_deletor_26#' }
+    - { url: "/users/roles/#role_31#"         , status: 204, headers: 'X-Auth-Token : #token_role_deletor_26#' }
 
 scenario:
   can_use_post_token_basic:

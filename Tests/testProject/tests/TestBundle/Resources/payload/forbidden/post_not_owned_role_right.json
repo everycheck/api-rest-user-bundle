@@ -1,7 +1,7 @@
 {
 	"name":"role",
 	"creator": "1",
-	"reader": "0",
+	"reader": "1",
 	"updator": "0",
 	"deletor": "0"
 }

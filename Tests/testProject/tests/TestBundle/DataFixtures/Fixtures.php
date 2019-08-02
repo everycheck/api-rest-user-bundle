@@ -15,7 +15,7 @@ class Fixtures
     {
         $this->logCount = 1;
 
-        $this->api = new Api($param['url'],$param['login'],$param['password'],false);
+        $this->api = new Api($param['url'],$param['login'],$param['password']);
         $token = $this->api->getUserToken($isBasic = true);
         $this->api->setUpToken($token->value);
 
@@ -34,6 +34,10 @@ class Fixtures
         $this->createUser("role","updator");
         $this->createUser("role","deletor");
 
+        $this->createUser("none","none");
+
+        $this->createUser("role","deletor",'2_');
+
         copy(__DIR__."/../../../var/data/db_test/user_testing.sqlite", __DIR__."/../../../var/data/db_test/LoadFixture.sqlite");
         file_put_contents(__DIR__."/env.json", json_encode($this->env,JSON_PRETTY_PRINT));
     }
@@ -44,9 +48,9 @@ class Fixtures
         $this->logCount++;
     }
 
-    public function createUser($table, $action)
+    public function createUser($table, $action,$suffix = "")
     {
-        $username = 'user_'.$table.'_'.$action;
+        $username = 'user_'.$table.'_'.$action.$suffix;
 
         $client = $this->api->postUser([            
             "username" => $username,

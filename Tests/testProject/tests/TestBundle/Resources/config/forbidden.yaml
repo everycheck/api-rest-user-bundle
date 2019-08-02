@@ -28,6 +28,9 @@ unit_tests:
     - { url: "/users/#user_user_updator_9#"   , status: 403, headers: 'X-Auth-Token : #token_user_updator_11#'  }
     - { url: "/users/roles/#role_22#"         , status: 403, headers: 'X-Auth-Token : #token_role_updator_23#' }
 
+    - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_role_updator_23#' , in: 'forbidden/patch_not_owned_role_name'  }
+    - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_role_updator_23#' , in: 'forbidden/patch_not_owned_role_right' }
+
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_user_creator_5#'   }
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_user_reader_8#'    }
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_user_deletor_14#'  }
@@ -44,6 +47,9 @@ unit_tests:
     - { url: "/user"                          , status: 403, headers: 'X-Auth-Token : #token_role_reader_20#'  }
     - { url: "/user"                          , status: 403, headers: 'X-Auth-Token : #token_role_updator_23#' }
     - { url: "/user"                          , status: 403, headers: 'X-Auth-Token : #token_role_deletor_26#' }
+
+    - { url: "/users/#user_none_none_27#/role" , status: 403, headers: 'X-Auth-Token : #token_role_creator_17#' , in: 'forbidden/post_not_owned_role_name'  }
+    - { url: "/users/#user_none_none_27#/role" , status: 403, headers: 'X-Auth-Token : #token_role_creator_17#' , in: 'forbidden/post_not_owned_role_right' }
 
     - { url: "/users/#user_admin_1#/role"     , status: 403, headers: 'X-Auth-Token : #token_user_creator_5#'  }
     - { url: "/users/#user_admin_1#/role"     , status: 403, headers: 'X-Auth-Token : #token_user_reader_8#'   }
@@ -64,6 +70,9 @@ unit_tests:
 
     - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_role_deletor_26#'  }
     - { url: "/users/#user_user_deletor_12#"  , status: 403, headers: 'X-Auth-Token : #token_user_deletor_14#'  }
+
+    - { url: "/users/roles/#role_22#"         , status: 403, headers: 'X-Auth-Token : #token_role_deletor_26#' }
+    - { url: "/users/roles/#role_22#"         , status: 403, headers: 'X-Auth-Token : #token_role_deletor_26#' }
 
     - { url: "/users/roles/#role_4#"          , status: 403, headers: 'X-Auth-Token : #token_user_creator_5#'  }
     - { url: "/users/roles/#role_4#"          , status: 403, headers: 'X-Auth-Token : #token_user_reader_8#'   }

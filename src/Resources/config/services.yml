@@ -41,4 +41,10 @@ services:
             - { name: security.voter }
         public: false
 
+    escalade_forbidden_voter:
+        class:  EveryCheck\UserApiRestBundle\Security\RightEscaladeForbiddenVoter
+        tags:
+            - { name: security.voter }
+        public: false
+
         

@@ -5,8 +5,8 @@
     "email": "admin@example.org",
     "active": true,
     "roles": [
-      {   
-        "uuid": "@uuid@",
+      {
+        "uuid": "47c7a89d-99b9-4ec1-a9af-b89b2fad38eb",
         "name": "user",
         "creator": true,
         "reader": true,
@@ -14,8 +14,16 @@
         "deletor": true
       },
       {
-        "uuid": "@uuid@",
+        "uuid": "40c753ee-1d86-4bf9-a60b-57658713f7c3",
         "name": "role",
+        "creator": true,
+        "reader": true,
+        "updator": true,
+        "deletor": true
+      },
+      {
+        "uuid": "b47002c6-2415-4109-a177-692de652ccc5",
+        "name": "none",
         "creator": true,
         "reader": true,
         "updator": true,
@@ -30,7 +38,7 @@
     "active": true,
     "roles": [
       {
-        "uuid": "@uuid@",
+        "uuid": "3cb7987b-2447-4971-b9d6-8da6167099e8",
         "name": "user",
         "creator": true,
         "reader": false,
@@ -46,7 +54,7 @@
     "active": true,
     "roles": [
       {
-        "uuid": "@uuid@",
+        "uuid": "b5c81ed6-7220-4d2d-9516-108fe4f0adcc",
         "name": "user",
         "creator": false,
         "reader": true,
@@ -62,7 +70,7 @@
     "active": true,
     "roles": [
       {
-        "uuid": "@uuid@",
+        "uuid": "f8c7aecc-8c88-4cc8-a649-4d1c1034a5bd",
         "name": "user",
         "creator": false,
         "reader": false,
@@ -78,7 +86,7 @@
     "active": true,
     "roles": [
       {
-        "uuid": "@uuid@",
+        "uuid": "a1e0b732-cb4f-4637-935f-3a6aa49f91eb",
         "name": "user",
         "creator": false,
         "reader": false,
@@ -94,7 +102,7 @@
     "active": true,
     "roles": [
       {
-        "uuid": "@uuid@",
+        "uuid": "331b207e-0970-4258-822e-56d29df988f4",
         "name": "role",
         "creator": true,
         "reader": false,
@@ -110,7 +118,7 @@
     "active": true,
     "roles": [
       {
-        "uuid": "@uuid@",
+        "uuid": "ad7060b9-f903-4721-b94b-5df4616dba91",
         "name": "role",
         "creator": false,
         "reader": true,
@@ -126,7 +134,7 @@
     "active": true,
     "roles": [
       {
-        "uuid": "@uuid@",
+        "uuid": "d4847a4d-8368-49c0-b4ea-b21128a4b5e0",
         "name": "role",
         "creator": false,
         "reader": false,
@@ -142,7 +150,39 @@
     "active": true,
     "roles": [
       {
-        "uuid": "@uuid@",
+        "uuid": "a1a119b6-3a7d-40d0-87a3-ed701a92a9c9",
+        "name": "role",
+        "creator": false,
+        "reader": false,
+        "updator": false,
+        "deletor": true
+      }
+    ]
+  },
+  {
+    "uuid": "@uuid@",
+    "username": "user_none_none",
+    "email": "user_none_none@everycheck.com",
+    "active": true,
+    "roles": [
+      {
+        "uuid": "e65baeac-323d-4a32-9c05-7fd3f06e5bf0",
+        "name": "none",
+        "creator": false,
+        "reader": false,
+        "updator": false,
+        "deletor": false
+      }
+    ]
+  },
+  {
+    "uuid": "@uuid@",
+    "username": "user_role_deletor2_",
+    "email": "user_role_deletor2_@everycheck.com",
+    "active": true,
+    "roles": [
+      {
+        "uuid": "097b6e3b-c228-414f-b6e7-7a1ff84bf78a",
         "name": "role",
         "creator": false,
         "reader": false,

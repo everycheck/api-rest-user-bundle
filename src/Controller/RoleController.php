@@ -35,11 +35,21 @@ class RoleController extends Controller
         }
         $role->setUser($user);
 
-        $form->submit(json_decode($request->getContent(), true),true);
+        $requestData = json_decode($request->getContent(), $responseAsArray=true);
+
+        $form->submit($requestData);
         if ($form->isValid() == false)
         {
             return $this->get('response')->formError($form);
         }
+
+        $postedRight = [];
+        $postedRight['name'] = $requestData['name'];
+        if(array_key_exists('creator', $requestData) && $requestData['creator'] == '1') $postedRight['creator'] = true;
+        if(array_key_exists('reader' , $requestData) && $requestData['reader' ] == '1') $postedRight['reader' ] = true;
+        if(array_key_exists('updator', $requestData) && $requestData['updator'] == '1') $postedRight['updator'] = true;
+        if(array_key_exists('deletor', $requestData) && $requestData['deletor'] == '1') $postedRight['deletor'] = true;
+        $this->denyAccessUnlessGranted('role', $postedRight);
 
         $this->em->persist($role);
         $this->em->flush();
@@ -80,6 +90,9 @@ class RoleController extends Controller
             return $this->get('response')->formError($form);
         }
 
+        $requestData['name'] = $role->getName();
+        $this->denyAccessUnlessGranted('role', $requestData);
+        
         $this->em->persist($role);
         $this->em->flush();
         
@@ -95,7 +108,7 @@ class RoleController extends Controller
      * @IsGranted("ROLE_ROLE_DELETE")
      */
     public function deleteRoleAction($id)
-    {               
+    {             
         $em = $this->get('doctrine.orm.entity_manager');
         $role = $em->getRepository(UserRole::class)->findOneByUuid($id);
 
@@ -107,7 +120,15 @@ class RoleController extends Controller
         if($this->get('security.token_storage')->getToken()->getUser() == $role->getUser())
         {
             return $this->get("response")->forbidden('cannot delete itself');
-        }
+        } 
+        
+        $deletedRight['name'] = $role->getName();
+        if($role->getCreator()) $deletedRight['creator'] = true;
+        if($role->getReader ()) $deletedRight['reader' ] = true;
+        if($role->getUpdator()) $deletedRight['updator'] = true;
+        if($role->getDeletor()) $deletedRight['deletor'] = true;
+
+        $this->denyAccessUnlessGranted('role', $deletedRight);
 
         $em->remove($role);
         $em->flush();

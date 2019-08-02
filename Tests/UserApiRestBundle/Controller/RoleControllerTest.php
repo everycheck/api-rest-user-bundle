@@ -14,15 +14,16 @@ class RoleControllerTest extends TestCase
     /**
      * @dataProvider data_postRoleAction
      */
-    public function test_postRoleAction(array $formValid,string $response, $user,$requestGetContentCallCount)
+    public function test_postRoleAction(array $formValid,string $response, $user,$requestGetContentCallCount,$securityCountCall)
     {    
-        $request = $this->buildRequest('{"test":"test"}',$requestGetContentCallCount);
+        $request = $this->buildRequest('{"name":"test"}',$requestGetContentCallCount);
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[            
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($user,'findOneByUuid')               ],
-            ['form.factory'                , $e , $this->buildForm($formValid)                                   ],
-            ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],
+            ['doctrine.orm.entity_manager'    , $e , $this->buildEntityManager($user,'findOneByUuid')               ],
+            ['form.factory'                   , $e , $this->buildForm($formValid)                                   ],
+            ['security.authorization_checker' , $e , $this->buildAuthorizationChecker($securityCountCall)        ],
+            ['response'                       , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],
         ];
         $container = $this->buildContainer($services);
 
@@ -37,27 +38,28 @@ class RoleControllerTest extends TestCase
     public function data_postRoleAction()
     {
         return [
-            [[]      ,'notFound'  , null     , 0 ],
-            [[false] ,'formError' , new User , 1 ],
-            [[true]  ,'created'   , new User , 1 ]
+            [[]      ,'notFound'  , null     , 0 , 0],
+            [[false] ,'formError' , new User , 1 , 0],
+            [[true]  ,'created'   , new User , 1 , 1]
         ];
     }
 
     /**
      * @dataProvider data_patchRoleAction
      */
-    public function test_patchRoleAction(array $formValid,string $response, $role,$requestGetContentCallCount,$isEditingCurrentUser)
+    public function test_patchRoleAction(array $formValid,string $response, $role,$requestGetContentCallCount,$isEditingCurrentUser, $securityCountCall)
     {    
-        $request = $this->buildRequest('{"test":"test"}',$requestGetContentCallCount);
+        $request = $this->buildRequest('{"name":"test"}',$requestGetContentCallCount);
         $expectedCallTokenStorage = empty($role)?0:1;
         $tokenStorageUser = $isEditingCurrentUser ? null :  $role;
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[            
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($role,'findOneByUuid')               ],
-            ['form.factory'                , $e , $this->buildForm($formValid)                                   ],
-            ['security.token_storage'      , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
-            ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],
+            ['doctrine.orm.entity_manager'    , $e , $this->buildEntityManager($role,'findOneByUuid')               ],
+            ['form.factory'                   , $e , $this->buildForm($formValid)                                   ],
+            ['security.token_storage'         , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
+            ['security.authorization_checker' , $e , $this->buildAuthorizationChecker($securityCountCall)           ],
+            ['response'                       , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],
         ];
         $container = $this->buildContainer($services);
 
@@ -72,10 +74,10 @@ class RoleControllerTest extends TestCase
     public function data_patchRoleAction()
     {
         return [
-            [[]       ,'notFound'  , null         , 0 , false],
-            [[]       ,'forbidden' , new UserRole , 0 , true ],
-            [[false]  ,'formError' , new UserRole , 1 , false],
-            [[true]   ,'ok'        , new UserRole , 1 , false]
+            [[]       ,'notFound'  , null         , 0 , false , 0],
+            [[]       ,'forbidden' , new UserRole , 0 , true  , 0],
+            [[false]  ,'formError' , new UserRole , 1 , false , 0],
+            [[true]   ,'ok'        , new UserRole , 1 , false , 1]
         ];
     }
 
@@ -83,16 +85,17 @@ class RoleControllerTest extends TestCase
     /**
      * @dataProvider data_deleteRoleAction
      */
-    public function test_deleteRoleAction(string $response, $role,$isDeletingCurrentUser)
+    public function test_deleteRoleAction(string $response, $role,$isDeletingCurrentUser,$securityCountCall)
     {    
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $expectedCallTokenStorage = empty($role)?0:1;
         $tokenStorageUser = $isDeletingCurrentUser ? null :  $role;
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[            
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($role,'findOneByUuid')               ],
-            ['security.token_storage'      , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
-            ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],
+            ['doctrine.orm.entity_manager'    , $e , $this->buildEntityManager($role,'findOneByUuid')               ],
+            ['security.token_storage'         , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
+            ['security.authorization_checker' , $e , $this->buildAuthorizationChecker($securityCountCall)           ],
+            ['response'                       , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],
         ];
         $container = $this->buildContainer($services);
 
@@ -107,9 +110,9 @@ class RoleControllerTest extends TestCase
     public function data_deleteRoleAction()
     {
         return [
-            ['deleted'   , null         , false ],
-            ['forbidden' , new UserRole , true  ],
-            ['deleted'   , new UserRole , false ],
+            ['deleted'   , null         , false, 0],
+            ['forbidden' , new UserRole , true , 0],
+            ['deleted'   , new UserRole , false, 1],
         ];
     }
 

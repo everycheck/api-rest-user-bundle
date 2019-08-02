@@ -1,8 +1,8 @@
 {
 	"uuid":"@uuid@",
-	"name":"someotherrole",
+	"name":"role",
 	"creator": true,
-	"reader": true,
-	"updator": true,
-	"deletor": true
+	"reader": false,
+	"updator": false,
+	"deletor": false
 }
