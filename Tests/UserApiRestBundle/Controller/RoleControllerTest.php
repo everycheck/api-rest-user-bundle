@@ -83,12 +83,15 @@ class RoleControllerTest extends TestCase
     /**
      * @dataProvider data_deleteRoleAction
      */
-    public function test_deleteRoleAction(string $response, $role)
+    public function test_deleteRoleAction(string $response, $role,$isDeletingCurrentUser)
     {    
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
+        $expectedCallTokenStorage = empty($role)?0:1;
+        $tokenStorageUser = $isDeletingCurrentUser ? null :  $role;
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[            
             ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($role,'findOneByUuid')               ],
+            ['security.token_storage'      , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],
         ];
         $container = $this->buildContainer($services);
@@ -104,8 +107,9 @@ class RoleControllerTest extends TestCase
     public function data_deleteRoleAction()
     {
         return [
-            ['deleted' , null         ],
-            ['deleted' , new UserRole ],
+            ['deleted'   , null         , false ],
+            ['forbidden' , new UserRole , true  ],
+            ['deleted'   , new UserRole , false ],
         ];
     }
 

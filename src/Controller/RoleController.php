@@ -97,8 +97,19 @@ class RoleController extends Controller
     public function deleteRoleAction($id)
     {               
         $em = $this->get('doctrine.orm.entity_manager');
-        $entity = $em->getRepository(UserRole::class)->findOneByUuid($id);
-        $em->remove($entity);
+        $role = $em->getRepository(UserRole::class)->findOneByUuid($id);
+
+        if(empty($role))
+        {
+            return $this->get('response')->deleted();
+        }
+
+        if($this->get('security.token_storage')->getToken()->getUser() == $role->getUser())
+        {
+            return $this->get("response")->forbidden('cannot delete itself');
+        }
+
+        $em->remove($role);
         $em->flush();
 
         return $this->get('response')->deleted();
