@@ -66,6 +66,11 @@ class RoleController extends Controller
             return $this->get('response')->notFound();
         }
 
+        if($this->get('security.token_storage')->getToken()->getUser() == $role->getUser())
+        {
+            return $this->get("response")->forbidden('cannot edit itself');
+        }
+
         $requestData = json_decode($request->getContent(), $responseAsArray=true);
 
         $form = $this->createForm(PatchRoleType::class, $role);

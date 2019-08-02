@@ -26,6 +26,7 @@ unit_tests:
     - { url: "/users/roles/#role_25#"         , status: 403, headers: 'X-Auth-Token : #token_role_deletor_26#' }
 
     - { url: "/users/#user_user_updator_9#"   , status: 403, headers: 'X-Auth-Token : #token_user_updator_11#'  }
+    - { url: "/users/roles/#role_22#"         , status: 403, headers: 'X-Auth-Token : #token_role_updator_23#' }
 
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_user_creator_5#'   }
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_user_reader_8#'    }

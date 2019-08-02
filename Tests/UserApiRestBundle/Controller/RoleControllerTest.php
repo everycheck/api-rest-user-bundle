@@ -46,14 +46,17 @@ class RoleControllerTest extends TestCase
     /**
      * @dataProvider data_patchRoleAction
      */
-    public function test_patchRoleAction(array $formValid,string $response, $role,$requestGetContentCallCount)
+    public function test_patchRoleAction(array $formValid,string $response, $role,$requestGetContentCallCount,$isEditingCurrentUser)
     {    
         $request = $this->buildRequest('{"test":"test"}',$requestGetContentCallCount);
+        $expectedCallTokenStorage = empty($role)?0:1;
+        $tokenStorageUser = $isEditingCurrentUser ? null :  $role;
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[            
             ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($role,'findOneByUuid')               ],
             ['form.factory'                , $e , $this->buildForm($formValid)                                   ],
+            ['security.token_storage'      , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],
         ];
         $container = $this->buildContainer($services);
@@ -69,9 +72,10 @@ class RoleControllerTest extends TestCase
     public function data_patchRoleAction()
     {
         return [
-            [[]       ,'notFound'  , null         , 0 ],
-            [[false]  ,'formError' , new UserRole , 1 ],
-            [[true]   ,'ok'        , new UserRole , 1 ]
+            [[]       ,'notFound'  , null         , 0 , false],
+            [[]       ,'forbidden' , new UserRole , 0 , true ],
+            [[false]  ,'formError' , new UserRole , 1 , false],
+            [[true]   ,'ok'        , new UserRole , 1 , false]
         ];
     }
 

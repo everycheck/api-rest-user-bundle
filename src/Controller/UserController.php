@@ -151,10 +151,10 @@ class UserController extends Controller
         {
             return $this->get('response')->deleted();
         }
-        
+
         if($this->get('security.token_storage')->getToken()->getUser() == $user)
         {
-            return $this->get("response")->forbidden('cannot edit itself');
+            return $this->get("response")->forbidden('cannot delete itself');
         }
 
         $this->get('event_dispatcher')->dispatch(UserEvent::DELETE_NAME,new UserEvent($user));
