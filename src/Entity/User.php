@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * User
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EveryCheck\UserApiRestBundle\Repository\UserRepository")
  * @ORM\Table(name="s_user")
  * @UniqueEntity("email")
  * @UniqueEntity("username")

@@ -70,9 +70,9 @@ class UserControllerTest extends TestCase
 
 
     /**
-     * @dataProvider data_getUsersAction
+     * @dataProvider data_getAllUsersAction
      */
-    public function test_getUsersAction(string $response, $users, $id)
+    public function test_getAllUsersAction(string $response, $users)
     {    
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
@@ -85,15 +85,44 @@ class UserControllerTest extends TestCase
         $userController = new UserController();
         $userController->setContainer($container);
 
-        $response = $userController->getUsersAction($id);
+        $response = $userController->getAllUsersAction();
 
         $this->assertEquals($response,$expectedResponse);
     }    
 
-    public function data_getUsersAction()
+    public function data_getAllUsersAction()
     {
         return [
-            ['ok'   , [$this->getUser()] , 'someUselessId']
+            ['ok'   , [$this->getUser()]]
+        ];
+    }
+
+    /**
+     * @dataProvider data_getUsersPaginatedAction
+     */
+    public function test_getUsersPaginatedAction(string $response, $users)
+    {            
+        $request = $this->buildRequest('',0);
+        $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
+        $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
+        $services =[
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($users,'findPaginatedFromRequest')                     ],
+            ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse,$users) ],
+        ];
+        $container = $this->buildContainer($services);
+
+        $userController = new UserController();
+        $userController->setContainer($container);
+
+        $response = $userController->getUsersAction($request);
+
+        $this->assertEquals($response,$expectedResponse);
+    }    
+
+    public function data_getUsersPaginatedAction()
+    {
+        return [
+            ['ok'   , [$this->getUser()] ]
         ];
     }
 

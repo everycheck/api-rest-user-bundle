@@ -1,7 +1,7 @@
 {
   "uuid": "@uuid@",
-  "username": "admin",
-  "email": "admin@example.org",
+  "username": "@string@",
+  "email": "@string@.isEmail()",
   "active": true,
   "roles": [
     {

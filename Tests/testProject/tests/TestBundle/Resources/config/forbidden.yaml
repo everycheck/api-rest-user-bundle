@@ -8,6 +8,14 @@ unit_tests:
     - { url: "/users"                         , status: 403, headers: 'X-Auth-Token : #token_role_updator_23#'  }
     - { url: "/users"                         , status: 403, headers: 'X-Auth-Token : #token_role_deletor_26#'  }
 
+    - { url: "/users/all"                     , status: 403, headers: 'X-Auth-Token : #token_user_creator_5#'   }
+    - { url: "/users/all"                     , status: 403, headers: 'X-Auth-Token : #token_user_updator_11#'  }
+    - { url: "/users/all"                     , status: 403, headers: 'X-Auth-Token : #token_user_deletor_14#'  }
+    - { url: "/users/all"                     , status: 403, headers: 'X-Auth-Token : #token_role_creator_17#'  }
+    - { url: "/users/all"                     , status: 403, headers: 'X-Auth-Token : #token_role_reader_20#'   }
+    - { url: "/users/all"                     , status: 403, headers: 'X-Auth-Token : #token_role_updator_23#'  }
+    - { url: "/users/all"                     , status: 403, headers: 'X-Auth-Token : #token_role_deletor_26#'  }
+
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_user_creator_5#'   }
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_user_updator_11#'  }
     - { url: "/users/#user_admin_1#"          , status: 403, headers: 'X-Auth-Token : #token_user_deletor_14#'  }

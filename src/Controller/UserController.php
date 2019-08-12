@@ -51,19 +51,32 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/users",
-     *     name="get_users_list",
+     * @Route("/users/all",
+     *     name="get_users_all",
      *     methods={"GET"}
      * )
      * @IsGranted("ROLE_USER_READ")
      */
-    public function getUsersAction()
+    public function getAllUsersAction()
     {
         return $this->get('response')->ok(
             $this->get('doctrine.orm.entity_manager')
                     ->getRepository(User::class)
                     ->findAll()
             );
+    }
+
+    /**
+     * @Route("/users",
+     *     name="get_users_list",
+     *     methods={"GET"}
+     * )
+     * @IsGranted("ROLE_USER_READ")
+     */
+    public function getUsersAction(Request $request)
+    {
+        $users = $this->get('doctrine.orm.entity_manager')->getRepository(User::class)->findPaginatedFromRequest($request);
+        return $this->get('response')->ok($users);
     }
 
     /**

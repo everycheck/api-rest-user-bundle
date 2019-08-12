@@ -1,0 +1,7 @@
+{
+  "uuid": "@uuid@",
+  "username": "@string@",
+  "email": "@string@.isEmail()",
+  "active": true,
+  "roles": "ok/partialRole"
+}

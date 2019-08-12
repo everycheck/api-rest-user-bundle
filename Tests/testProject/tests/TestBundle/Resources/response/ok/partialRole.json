@@ -1,0 +1,8 @@
+{
+  "uuid": "@uuid@",
+  "name": "@string@",
+  "creator": "@boolean@",
+  "reader": "@boolean@",
+  "updator": "@boolean@",
+  "deletor": "@boolean@"
+}

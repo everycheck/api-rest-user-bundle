@@ -1,6 +1,7 @@
 unit_tests:
   PUT:
     - { url: "/users"                        , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/all"                    , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/current"                , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/#user_admin_1#"         , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/password/reset/request" , status: 405 }
@@ -12,6 +13,7 @@ unit_tests:
 
   PATCH:
     - { url: "/users"                        , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/all"                    , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/current"                , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/password/reset/request" , status: 405 }
     - { url: "/users/password/reset"         , status: 405 }
@@ -28,6 +30,8 @@ unit_tests:
     - { url: "/users/roles/#user_admin_1#"   , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
      
   POST:        
+    - { url: "/users"                        , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/all"                    , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/current"                , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/#user_admin_1#"         , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/tokens/basic/#user_admin_1#"  , status: 405 , headers: 'X-Auth-Token : #token_admin_2#'}
@@ -36,6 +40,7 @@ unit_tests:
   DELETE:       
     - { url: "/users/current"                , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users"                        , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
+    - { url: "/users/all"                    , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}
     - { url: "/users/password/reset/request" , status: 405 }
     - { url: "/users/password/reset"         , status: 405 }
     - { url: "/users/#user_admin_1#/role"    , status: 405, headers: 'X-Auth-Token : #token_admin_2#'}

@@ -1,6 +1,7 @@
 unit_tests:
   GET: 
-    - { url: "/users"                            , status: 200, headers: 'X-Auth-Token : #token_user_reader_8#', out: "ok/users_getList"}
+    - { url: "/users"                            , status: 200, headers: 'X-Auth-Token : #token_user_reader_8#', out: "ok/users_getListPaginated"}
+    - { url: "/users/all"                        , status: 200, headers: 'X-Auth-Token : #token_user_reader_8#', out: "ok/users_getList"}
     - { url: "/users/current"                    , status: 200, headers: 'X-Auth-Token : #token_user_reader_8#', out: "ok/users_getCurrent"}
     - { url: "/users/#user_admin_1#"             , status: 200, headers: 'X-Auth-Token : #token_user_reader_8#', out: "ok/users_get"}
        
@@ -26,10 +27,10 @@ unit_tests:
 scenario:
   can_use_post_token_basic:
     - { action: 'POST', url: "/tokens/basic"     , status: 201 ,                                    out: "ok/token_basic_post_scenario" , in: "ok/token_post"}
-    - { action: 'GET' , url: "/users"            , status: 200 , headers: 'X-Auth-Token : #token#', out: "ok/users_getList"}
+    - { action: 'GET' , url: "/users"            , status: 200 , headers: 'X-Auth-Token : #token#', out: "ok/users_getListPaginated"}
   can_use_post_token_jwt:
     - { action: 'POST', url: "/tokens/jwt"       , status: 201 ,                                    out: "ok/token_jwt_post_scenario" , in: "ok/token_post"}
-    - { action: 'GET' , url: "/users"            , status: 200 , headers: 'X-Auth-Token : #token#', out: "ok/users_getList"}
+    - { action: 'GET' , url: "/users"            , status: 200 , headers: 'X-Auth-Token : #token#', out: "ok/users_getListPaginated"}
   #reset_password:
   #  - { action: 'POST', url: "/users/password/reset/request", status: 201 ,out: "ok/password_reset_request" , in: "ok/password_reset_request_post"}
   #  - { action: 'POST', url: "/users/password/reset"        , status: 201 ,out: "ok/password_reset_request" , in: "ok/password_reset_post"}
