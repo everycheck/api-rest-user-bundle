@@ -1,2 +1,4 @@
 /vendor/
 user_testing.sqlite
+Tests/testProject/tests/TestBundle/DataFixtures/env.json
+Tests/testProject/var/data/db_test/LoadFixture.sqlite

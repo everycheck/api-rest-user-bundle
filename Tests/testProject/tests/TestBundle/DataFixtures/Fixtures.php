@@ -15,7 +15,7 @@ class Fixtures
     {
         $this->logCount = 1;
 
-        $this->api = new Api($param['url'],$param['login'],$param['password']);
+        $this->api = new Api($param['url'],$param['login'],$param['password'],false);
         $token = $this->api->getUserToken($isBasic = true);
         $this->api->setUpToken($token->value);
 
@@ -34,7 +34,7 @@ class Fixtures
         $this->createUser("role","updator");
         $this->createUser("role","deletor");
 
-        $this->createUser("none","none");
+        $this->createUser("none","reader");
 
         $this->createUser("role","deletor",'2_');
 

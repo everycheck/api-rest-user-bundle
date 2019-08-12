@@ -43,10 +43,6 @@ class PostRoleType extends AbstractType
                 new Assert\NotNull(),
             ]
         ]);
-        $builder->add('administrator' , DateTimeType::class, [
-            'constraints' => [new Assert\DateTime()],
-            'widget' => 'single_text'
-        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

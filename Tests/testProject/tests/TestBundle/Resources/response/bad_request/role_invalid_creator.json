@@ -8,7 +8,6 @@
     },
     "reader": [],
     "updator": [],
-    "deletor": [],
-    "administrator": []
+    "deletor": []
   }
 }

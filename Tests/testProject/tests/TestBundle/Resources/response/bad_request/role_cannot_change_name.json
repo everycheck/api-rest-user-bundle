@@ -3,8 +3,7 @@
     "creator": [],
     "reader": [],
     "updator": [],
-    "deletor": [],
-    "administrator": []
+    "deletor": []
   },
   "errors": [
     "This form should not contain extra fields."

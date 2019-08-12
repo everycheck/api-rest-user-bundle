@@ -14,7 +14,6 @@ unit_tests:
     - { url: "/users/#user_role_deletor_24#/role" , status: 400, out: "bad_request/role_invalid_reader"              , in: "bad_request/role_invalid_reader"        , headers: 'X-Auth-Token : #token_role_creator_17#' }
     - { url: "/users/#user_role_deletor_24#/role" , status: 400, out: "bad_request/role_invalid_updator"             , in: "bad_request/role_invalid_updator"       , headers: 'X-Auth-Token : #token_role_creator_17#' }
     - { url: "/users/#user_role_deletor_24#/role" , status: 400, out: "bad_request/role_invalid_deletor"             , in: "bad_request/role_invalid_deletor"       , headers: 'X-Auth-Token : #token_role_creator_17#' }
-    - { url: "/users/#user_role_deletor_24#/role" , status: 400, out: "bad_request/role_invalid_administrator"       , in: "bad_request/role_invalid_administrator" , headers: 'X-Auth-Token : #token_role_creator_17#' }
 
   PATCH:
     - { url: "/users/roles/#role_25#"             , status: 400, out: "bad_request/role_cannot_change_name"           , in: "bad_request/role_cannot_change_name"          , headers: 'X-Auth-Token : #token_role_updator_23#' }
@@ -22,7 +21,6 @@ unit_tests:
     - { url: "/users/roles/#role_25#"             , status: 400, out: "bad_request/role_patch_invalid_reader"         , in: "bad_request/role_patch_invalid_reader"        , headers: 'X-Auth-Token : #token_role_updator_23#' }
     - { url: "/users/roles/#role_25#"             , status: 400, out: "bad_request/role_patch_invalid_updator"        , in: "bad_request/role_patch_invalid_updator"       , headers: 'X-Auth-Token : #token_role_updator_23#' }
     - { url: "/users/roles/#role_25#"             , status: 400, out: "bad_request/role_patch_invalid_deletor"        , in: "bad_request/role_patch_invalid_deletor"       , headers: 'X-Auth-Token : #token_role_updator_23#' }
-    - { url: "/users/roles/#role_25#"             , status: 400, out: "bad_request/role_patch_invalid_administrator"  , in: "bad_request/role_patch_invalid_administrator" , headers: 'X-Auth-Token : #token_role_updator_23#' }
 
     - { url: "/users/#user_role_deletor_24#"      , status: 400, out: "bad_request/user_invalid_active"               , in: "bad_request/user_invalid_active"              , headers: 'X-Auth-Token : #token_user_updator_11#' }
     - { url: "/users/#user_role_deletor_24#"      , status: 400, out: "bad_request/user_invalid_password_data"        , in: "bad_request/user_invalid_password_data"       , headers: 'X-Auth-Token : #token_user_updator_11#' }

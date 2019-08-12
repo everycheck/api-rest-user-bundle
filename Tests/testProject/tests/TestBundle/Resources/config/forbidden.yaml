@@ -48,8 +48,8 @@ unit_tests:
     - { url: "/user"                          , status: 403, headers: 'X-Auth-Token : #token_role_updator_23#' }
     - { url: "/user"                          , status: 403, headers: 'X-Auth-Token : #token_role_deletor_26#' }
 
-    - { url: "/users/#user_none_none_27#/role" , status: 403, headers: 'X-Auth-Token : #token_role_creator_17#' , in: 'forbidden/post_not_owned_role_name'  }
-    - { url: "/users/#user_none_none_27#/role" , status: 403, headers: 'X-Auth-Token : #token_role_creator_17#' , in: 'forbidden/post_not_owned_role_right' }
+    - { url: "/users/#user_none_reader_27#/role" , status: 403, headers: 'X-Auth-Token : #token_role_creator_17#' , in: 'forbidden/post_not_owned_role_name'  }
+    - { url: "/users/#user_none_reader_27#/role" , status: 403, headers: 'X-Auth-Token : #token_role_creator_17#' , in: 'forbidden/post_not_owned_role_right' }
 
     - { url: "/users/#user_admin_1#/role"     , status: 403, headers: 'X-Auth-Token : #token_user_creator_5#'  }
     - { url: "/users/#user_admin_1#/role"     , status: 403, headers: 'X-Auth-Token : #token_user_reader_8#'   }

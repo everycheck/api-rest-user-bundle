@@ -61,11 +61,6 @@ class UserRole implements RoleInterface
     private $deletor = false;
 
     /**
-     * @ORM\Column(name="administrator", type="datetime", nullable=true)
-     */
-    private $administrator;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User")
      * @JMS\Exclude
      */
@@ -125,7 +120,6 @@ class UserRole implements RoleInterface
         $allowed .= $this->getReader()        ? 'R' : '';
         $allowed .= $this->getUpdator()       ? 'U' : '';
         $allowed .= $this->getDeletor()       ? 'D' : '';
-        $allowed .= $this->canAdministrate()  ? 'A' : '';
 
         if(!empty($allow)) $role .= '_' .$allow;
 
@@ -141,7 +135,6 @@ class UserRole implements RoleInterface
         if($this->getReader())       $roles[] = $prefix.'_READ';
         if($this->getUpdator())      $roles[] = $prefix.'_UPDATE';
         if($this->getDeletor())      $roles[] = $prefix.'_DELETE';
-        if($this->canAdministrate()) $roles[] = $prefix.'_ADMINISTRATE';
 
         return $roles;
     }
@@ -194,25 +187,7 @@ class UserRole implements RoleInterface
     public function setDeletor(?bool $deletor)
     {
         $this->deletor = $deletor;
-    }   
-
-    public function canAdministrate()
-    {
-        if(empty($this->administrator)) return false;
-        if(!($this->administrator instanceof \DateTime)) return false;
-
-        return $this->administrator > new \DateTime();
-    }
-
-    public function getAdministrator()
-    {
-        return $this->administrator;
-    }
-
-    public function setAdministrator(?\DateTime $administrator)
-    {
-        $this->administrator = $administrator;
-    }   
+    }    
 
 }
 
