@@ -22,24 +22,24 @@ class User implements UserInterface
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")  
-     * @JMS\Exclude 
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Exclude
      */
     private $id;
 
     /**
      * @ORM\Column(type="uuid", unique=true)
-     * @JMS\Accessor(getter="getUuidAsString") 
+     * @JMS\Accessor(getter="getUuidAsString")
      */
     private $uuid;
 
     /**
-     * @ORM\Column(name="username", type="string", length=255, unique=true)  
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
     private $username;
 
     /**
-     * @ORM\Column(name="email", type="string", length=255, unique=true)  
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;
 
@@ -76,7 +76,9 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="UserRole", mappedBy="user")
      * @ORM\OrderBy({"name" = "DESC"})
+     * @JMS\Groups({"user_detailed"})
      */
+
     private $roles;
 
     public function __construct()
@@ -105,7 +107,7 @@ class User implements UserInterface
     {
         return $this->uuid->toString();
     }
-    
+
     /**
      * @ORM\PrePersist
      */
@@ -200,15 +202,16 @@ class User implements UserInterface
         $this->plainPassword = null;
     }
 
-     public function isActive()
-     {
-         return $this->active;
-     }
- 
-     public function setActive($active)
-     {
-         $this->active = $active;
-         return $this;
-     }
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    public function setActive($active)
+    {
+        $this->active = $active;
+        return $this;
+    }
 }
+
 

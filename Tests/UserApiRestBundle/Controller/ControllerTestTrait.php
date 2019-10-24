@@ -64,7 +64,7 @@ trait ControllerTestTrait
     {       
         $builder = $this->getMockBuilder('stdClass')
                         ->disableOriginalConstructor()
-                        ->setMethods([$method])
+                        ->setMethods([$method, 'setSerializationGroups'])
                         ->getMock();
         if(empty($argument))
         {

@@ -2,6 +2,7 @@
 
 namespace EveryCheck\UserApiRestBundle\Controller;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,8 +31,8 @@ class UserController extends Controller
      * )
      */
     public function getCurrentUserAction()
-    {        
-        return $this->get('response')->ok($this->get('security.token_storage')->getToken()->getUser());
+    {
+        return $this->getResponse()->ok($this->get('security.token_storage')->getToken()->getUser());
     }
 
     /**
@@ -43,11 +44,11 @@ class UserController extends Controller
      * @IsGranted("ROLE_USER_READ")
      */
     public function getUserAction($id)
-    {            
+    {
         $user = $this->get('doctrine.orm.entity_manager')->getRepository(User::class)->findOneByUuid($id);
-        if(empty($user)) return $this->get('response')->notFound();
+        if(empty($user)) return $this->getResponse()->notFound();
 
-        return $this->get('response')->ok($user);
+        return $this->getResponse()->ok($user);
     }
 
     /**
@@ -59,11 +60,11 @@ class UserController extends Controller
      */
     public function getAllUsersAction()
     {
-        return $this->get('response')->ok(
+        return $this->getResponse()->ok(
             $this->get('doctrine.orm.entity_manager')
-                    ->getRepository(User::class)
-                    ->findAll()
-            );
+                ->getRepository(User::class)
+                ->findAll()
+        );
     }
 
     /**
@@ -76,7 +77,7 @@ class UserController extends Controller
     public function getUsersAction(Request $request)
     {
         $users = $this->get('doctrine.orm.entity_manager')->getRepository(User::class)->findPaginatedFromRequest($request);
-        return $this->get('response')->ok($users);
+        return $this->getResponse()->ok($users);
     }
 
     /**
@@ -88,13 +89,13 @@ class UserController extends Controller
      * @IsGranted("ROLE_USER_UPDATE")
      */
     public function patchUserAction(Request $request,$id)
-    {          
+    {
 
         $em = $this->get('doctrine.orm.entity_manager');
         $user = $em->getRepository(User::class)->findOneByUuid($id);
         if(empty($user))
         {
-            return $this->get('response')->notFound();
+            return $this->getResponse()->notFound();
         }
 
         if($this->get('security.token_storage')->getToken()->getUser() == $user)
@@ -108,13 +109,13 @@ class UserController extends Controller
         $form->submit($requestData,$clearMissing=false);
         if ($form->isValid() ==  false)
         {
-            return $this->get('response')->formError($form);
+            return $this->getResponse()->formError($form);
         }
 
         $em->persist($user);
         $em->flush();
 
-        return $this->get('response')->ok($user);
+        return $this->getResponse()->ok($user);
     }
 
     /**
@@ -133,7 +134,7 @@ class UserController extends Controller
 
         if ($form->isValid() ==  false)
         {
-            return $this->get('response')->formError($form);
+            return $this->getResponse()->formError($form);
         }
 
         $this->get('password_generator')->setUpPassword($user);
@@ -144,7 +145,7 @@ class UserController extends Controller
 
         $this->get('event_dispatcher')->dispatch(UserEvent::POST_NAME,new UserEvent($user));
 
-        return $this->get('response')->created($user);
+        return $this->getResponse()->created($user);
     }
 
     /**
@@ -156,13 +157,13 @@ class UserController extends Controller
      * @IsGranted("ROLE_USER_DELETE")
      */
     public function deleteUserAction($id)
-    {          
+    {
         $em =    $this->get('doctrine.orm.entity_manager');
         $user = $em->getRepository(User::class)->findOneByUuid($id);
-        
+
         if(empty($user))
         {
-            return $this->get('response')->deleted();
+            return $this->getResponse()->deleted();
         }
 
         if($this->get('security.token_storage')->getToken()->getUser() == $user)
@@ -175,6 +176,15 @@ class UserController extends Controller
         $em->remove($user);
         $em->flush();
 
-        return $this->get('response')->deleted();
+        return $this->getResponse()->deleted();
+    }
+
+    private function getResponse()
+    {
+        $response = $this->get('response');
+        $context = SerializationContext::create()->setGroups(['Default', 'user_detailed']);
+        $response->setSerializationGroups($context);
+        return $response;
     }
 }
+
