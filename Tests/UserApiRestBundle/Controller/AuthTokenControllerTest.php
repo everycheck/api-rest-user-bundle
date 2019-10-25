@@ -14,16 +14,17 @@ class AuthTokenControllerTest extends TestCase
     /**
      * @dataProvider data_postAuthTokensAction
      */
-    public function test_postAuthTokensAction(string $response,array $formValid, $user,bool $validPassword)
+    public function test_postAuthTokensAction(string $response,array $formValid,bool $validPassword, array $repoMethods, int $flushCount)
     {    
         $request = $this->buildRequest('{"test":"test"}', count($formValid));
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($user,'findOneByUsername')     ],
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($repoMethods, $flushCount)     ],
             ['form.factory'                , $e , $this->buildForm($formValid)                             ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse) ],
-            ['security.password_encoder'   , $e , $this->buildEncoder($validPassword)                                 ]
+            ['security.password_encoder'   , $e , $this->buildEncoder($validPassword)                      ],
+			['password_generator'          , $e, $this->buildPasswordGenerator()                           ]
         ];
         $parameters = [];
         $container = $this->buildContainer($services,$parameters);
@@ -39,17 +40,17 @@ class AuthTokenControllerTest extends TestCase
     public function data_postAuthTokensAction()
     {
         return [
-           #['response'    , firstFormValid, user, validPassword ],
-            ['formError'   , [false] , null     , false ],
-            ['formError'   , [false] , null     , true  ],
-            ['formError'   , [false] , $this->getUser() , true  ],
-            ['formError'   , [false] , $this->getUser() , false ],
-            ['badRequest'  , [true]  , null     , false ],
-            ['badRequest'  , [true]  , null     , true  ],
-            ['badRequest'  , [true]  , $this->getUser() , false ],
-            ['formError'   , [true, false]  , $this->getUser("-92 days"), true ],
-            ['created'     , [true]  , $this->getUser() , true  ]
-
+            ['formError'   , [false]      , false, ['findOneByUsername'=>null]                                            , 0],
+            ['formError'   , [false]      , true , ['findOneByUsername'=>null]                                            , 0],
+            ['formError'   , [false]      , true , ['findOneByUsername'=>$this->getUser()]                                , 0],
+            ['formError'   , [false]      , false, ['findOneByUsername'=>$this->getUser()]                                , 0],
+            ['badRequest'  , [true]       , false, ['findOneByUsername'=>null]                                            , 0],
+            ['badRequest'  , [true]       , true , ['findOneByUsername'=>null]                                            , 0],
+            ['badRequest'  , [true]       , false, ['findOneByUsername'=>$this->getUser()]                                , 0],
+            ['formError'   , [true, false], true , ['findOneByUsername'=>$this->getUser("-92 days")]                      , 0],
+			['created'     , [true, true] , true , ['findOneByUsername'=>$this->getUser("-92 days"),'findOneByUser'=>null], 2],
+            ['created'     , [true]       , true , ['findOneByUsername'=>$this->getUser(),'findOneByUser'=>null]          , 1],
+			['created'     , [true]       , true , ['findOneByUsername'=>$this->getUser(),'findOneByUser'=>['test']]      , 0],
         ];
     }
 
@@ -61,7 +62,7 @@ class AuthTokenControllerTest extends TestCase
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($token,'findOneByUuid')        ],
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager(['findOneByUuid'=>$token])        ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse) ],
         ];
         $parameters = [];

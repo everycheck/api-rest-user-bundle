@@ -20,7 +20,7 @@ class RoleControllerTest extends TestCase
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[            
-            ['doctrine.orm.entity_manager'    , $e , $this->buildEntityManager($user,'findOneByUuid')               ],
+            ['doctrine.orm.entity_manager'    , $e , $this->buildEntityManager(['findOneByUuid'=>$user])               ],
             ['form.factory'                   , $e , $this->buildForm($formValid)                                   ],
             ['security.authorization_checker' , $e , $this->buildAuthorizationChecker($securityCountCall)        ],
             ['response'                       , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],
@@ -55,7 +55,7 @@ class RoleControllerTest extends TestCase
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[            
-            ['doctrine.orm.entity_manager'    , $e , $this->buildEntityManager($role,'findOneByUuid')               ],
+            ['doctrine.orm.entity_manager'    , $e , $this->buildEntityManager(['findOneByUuid'=>$role])               ],
             ['form.factory'                   , $e , $this->buildForm($formValid)                                   ],
             ['security.token_storage'         , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
             ['security.authorization_checker' , $e , $this->buildAuthorizationChecker($securityCountCall)           ],
@@ -92,7 +92,7 @@ class RoleControllerTest extends TestCase
         $tokenStorageUser = $isDeletingCurrentUser ? null :  $role;
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[            
-            ['doctrine.orm.entity_manager'    , $e , $this->buildEntityManager($role,'findOneByUuid')               ],
+            ['doctrine.orm.entity_manager'    , $e , $this->buildEntityManager(['findOneByUuid'=>$role])               ],
             ['security.token_storage'         , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
             ['security.authorization_checker' , $e , $this->buildAuthorizationChecker($securityCountCall)           ],
             ['response'                       , $e , $this->buildResponseBuilder($response,$expectedResponse)       ],

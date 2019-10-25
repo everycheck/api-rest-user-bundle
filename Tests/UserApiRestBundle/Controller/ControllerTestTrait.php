@@ -18,18 +18,27 @@ trait ControllerTestTrait
         return $contrainer;
     }
 
-    protected function buildEntityManager($entitiesReturned=null,$repoMethod = 'findOneByUsername')
+    protected function buildEntityManager(array $repoMethod = ['findOneByUsername'=>null], int $flushCount = null)
     {
         $repo = $this->getMockBuilder('stdClass')
-                     ->setMethods([$repoMethod])
+                     ->setMethods(array_keys($repoMethod))
                      ->getMock();
-        $repo->method($repoMethod)->willReturn($entitiesReturned);
+
+        foreach($repoMethod as $key => $value)
+		{
+			$repo->method($key)->willReturn($value);
+		}
 
         $em = $this->getMockBuilder('stdClass')
             ->setMethods(['getRepository','persist','flush','remove'])
             ->getMock();
 
-        $em->method('getRepository')->willReturn($repo);
+        if($flushCount !== null)
+		{
+			$em->expects($this->exactly($flushCount))->method('flush')->willReturn(null);
+		}
+
+		$em->method('getRepository')->willReturn($repo);
 
         return $em;
     }

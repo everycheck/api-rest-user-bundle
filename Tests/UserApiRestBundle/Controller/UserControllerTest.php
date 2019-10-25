@@ -47,7 +47,7 @@ class UserControllerTest extends TestCase
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($user,'findOneByUuid')               ],
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager(['findOneByUuid'=>$user])            ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse,$user) ],
         ];
         $container = $this->buildContainer($services);
@@ -77,7 +77,7 @@ class UserControllerTest extends TestCase
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($users,'findAll')                     ],
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager(['findAll'=>$users])                  ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse,$users) ],
         ];
         $container = $this->buildContainer($services);
@@ -106,7 +106,7 @@ class UserControllerTest extends TestCase
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($users,'findPaginatedFromRequest')                     ],
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager(['findPaginatedFromRequest'=>$users]) ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse,$users) ],
         ];
         $container = $this->buildContainer($services);
@@ -137,7 +137,7 @@ class UserControllerTest extends TestCase
         $expectedResponse = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')->getMock();
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($user,'findOneByUuid')                      ],
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager(['findOneByUuid'=>$user])                   ],
             ['form.factory'                , $e , $this->buildForm($formValid)                                          ],
             ['security.token_storage'      , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse)              ],
@@ -207,7 +207,7 @@ class UserControllerTest extends TestCase
         $tokenStorageUser = $isDeletingCurrentUser ? $user :  null;
         $e = ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE;
         $services =[
-            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager($user,'findOneByUuid')        ],
+            ['doctrine.orm.entity_manager' , $e , $this->buildEntityManager(['findOneByUuid'=>$user])      ],
             ['response'                    , $e , $this->buildResponseBuilder($response,$expectedResponse) ],
             ['security.token_storage'      , $e , $this->buildTokenStorage($tokenStorageUser, $expectedCallTokenStorage)],
             ['event_dispatcher'            , $e , $this->buildEventDispatcher()                            ]

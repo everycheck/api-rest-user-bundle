@@ -66,13 +66,17 @@ class AuthTokenController extends Controller
         switch($kind)
         {
             case 'basic' : {
-                $authToken = new AuthToken();
-                $authToken->setValue(base64_encode(random_bytes(50)));
-                $authToken->setCreatedAt(new \DateTime('now'));
-                $authToken->setUser($user);
+            	$authToken = $this->em->getRepository(AuthToken::class)->findOneByUser($user);
+            	if(empty($authToken))
+				{
+					$authToken = new AuthToken();
+					$authToken->setValue(base64_encode(random_bytes(50)));
+					$authToken->setCreatedAt(new \DateTime('now'));
+					$authToken->setUser($user);
 
-                $this->em->persist($authToken);
-                $this->em->flush();
+					$this->em->persist($authToken);
+					$this->em->flush();
+				}
                 break;
             }
             case 'jwt' : {
